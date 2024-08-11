@@ -55,7 +55,7 @@ The most up-to-date information about supported hardware is currently being main
 === How can I install FreeBSD/ppc?
 
 ISO images of FreeBSD {rel130-current} are available for download, for details on how to obtain these see the link:../../releases/{rel130-current}R/announce/[release announcement.]
-FreeBSD 12.x is not being maintained regularly and its use is *strongly discouraged*. ABI changes makes 12.x binary-incompatible with 13.x and later.
+FreeBSD 12.x is not supported any more and its use is *strongly discouraged*. ABI changes makes 12.x binary-incompatible with 13.x and later.
 
 [[ports]]
 === How to use ports on FreeBSD/ppc?
@@ -101,9 +101,9 @@ People have previously reported that FreeBSD runs on the following machines:
 |Apple |iMac G3 350 MHz |mailto:diskiller@diskiller.net[Martin Minkus] | | | Rage 128VR 
 |Apple |iMac G3 DV Special Edition |mailto:webmaster@machowto.com[David S. Besade] (https://people.FreeBSD.org/~flz/local/dmesg.ppc[dmesg]) | | | None
 |Apple |iMac G3 Revision B |mailto:grehan@FreeBSD.org[Peter Grehan] | | | Rage 3D Pro 215GP, accel disabled
-|Apple |eMac 700 MHz |mailto:grehan@FreeBSD.org[Peter Grehan] | | | Nvidia GeForce2 MX
+|Apple |eMac 700 MHz |mailto:grehan@FreeBSD.org[Peter Grehan] | | | NVIDIA(R) GeForce2 MX
 |Apple |Mac Mini G4 1.4 GHz |mailto:arved@FreeBSD.org[Tilman Linneweh] (https://people.FreeBSD.org/~arved/stuff/minimac[dmesg]) | | | None
-|Apple |Powerbook G4 1.33 GHz |mailto:grehan@FreeBSD.org[Peter Grehan] | | | Nvidia GeForce G5200
+|Apple |Powerbook G4 1.33 GHz |mailto:grehan@FreeBSD.org[Peter Grehan] | | | NVIDIA(R) GeForce G5200
 |Apple |Aluminium Powerbook G4 1.5 GHz |mailto:toa@pop.agri.ch[Andreas Tobler] | | | None
 |Apple |PowerMac G5 | |FreeBSD 8.0  | |
 |Apple |iMac G5 | |FreeBSD 8.0 | |

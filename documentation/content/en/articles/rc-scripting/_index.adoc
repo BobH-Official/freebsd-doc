@@ -62,7 +62,7 @@ With few exceptions, [.filename]#/etc/rc# had to be modified, and true hackers l
 The real problem with the monolithic approach was that it provided no control over the individual components started from [.filename]#/etc/rc#.
 For instance, [.filename]#/etc/rc# could not restart a single daemon.
 The system admin had to find the daemon process by hand, kill it, wait until it actually exited, then browse through [.filename]#/etc/rc# for the flags, and finally type the full command line to start the daemon again.
-The task would become even more difficult and prone to errors if the service to restart consisted of more than one daemon or demanded additional actions. 
+The task would become even more difficult and prone to errors if the service to restart consisted of more than one daemon or demanded additional actions.
 In a few words, the single script failed to fulfil what scripts are for: to make the system admin's life easier.
 
 Later there was an attempt to split out some parts of [.filename]#/etc/rc# for the sake of starting the most important subsystems separately.
@@ -84,7 +84,7 @@ The basic ideas behind BSD [.filename]#rc.d# are _fine modularity_ and __code re
 _Fine modularity_ means that each basic "service" such as a system daemon or primitive startup task gets its own man:sh[1] script able to start the service, stop it, reload it, check its status.
 A particular action is chosen by the command-line argument to the script.
 The [.filename]#/etc/rc# script still drives system startup, but now it merely invokes the smaller scripts one by one with the `start` argument.
-It is easy to perform shutdown tasks as well by running the same set of scripts with the `stop` argument, which is done by [.filename]#/etc/rc.shutdown#. 
+It is easy to perform shutdown tasks as well by running the same set of scripts with the `stop` argument, which is done by [.filename]#/etc/rc.shutdown#.
 Note how closely this follows the Unix way of having a set of small specialized tools, each fulfilling its task as well as possible.
 _Code reuse_ means that common operations are implemented as man:sh[1] functions and collected in [.filename]#/etc/rc.subr#.
 Now a typical script can be just a few lines' worth of man:sh[1] code.
@@ -185,7 +185,9 @@ That is, each [.filename]#rc.d# script _must_ set `name` before it calls man:rc.
 
 Now it is the right time to choose a unique name for our script once and for all.
 We will use it in a number of places while developing the script.
-For a start, let us give the same name to the script file, too.
+The content of the name variable needs to match the script name,
+some parts of FreeBSD (e.g., <<rcng-service-jails, service jails>> and the cpuset feature of the rc framework) depend upon this.
+As such the filename shall also not contain characters which may be troublesome in scripting (e.g., do not use a hyphen "-" and others).
 
 [NOTE]
 ====
@@ -504,7 +506,7 @@ The reason is that not all daemons use the same reload mechanism and some have n
 So we need to ask explicitly that the builtin functionality be provided.
 We can do so via `extra_commands`.
 
-What do we get from the default method for `reload`? Quite often daemons reload their configuration upon reception of a signal - typically, SIGHUP. 
+What do we get from the default method for `reload`? Quite often daemons reload their configuration upon reception of a signal - typically, SIGHUP.
 Therefore man:rc.subr[8] attempts to reload the daemon by sending a signal to it.
 The signal is preset to SIGHUP but can be customized via `sig_reload` if necessary.
 ====
@@ -664,14 +666,14 @@ According to the lines, our script asks man:rcorder[8] to put it after the scrip
 [NOTE]
 ====
 The `BEFORE:` line should not be abused to work around an incomplete dependency list in the other script.
-The appropriate case for using `BEFORE:` is when the other script does not care about ours, but our script can do its task better if run before the other one. 
+The appropriate case for using `BEFORE:` is when the other script does not care about ours, but our script can do its task better if run before the other one.
 A typical real-life example is the network interfaces vs. the firewall: While the interfaces do not depend on the firewall in doing their job, the system security will benefit from the firewall being ready before there is any network traffic.
 
 Besides conditions corresponding to a single service each, there are meta-conditions and their "placeholder" scripts used to ensure that certain groups of operations are performed before others.
 These are denoted by [.filename]#UPPERCASE# names.
 Their list and purposes can be found in man:rc[8].
 
-Keep in mind that putting a service name in the `REQUIRE:` line does not guarantee that the service will actually be running by the time our script starts. 
+Keep in mind that putting a service name in the `REQUIRE:` line does not guarantee that the service will actually be running by the time our script starts.
 The required service may fail to start or just be disabled in man:rc.conf[5].
 Obviously, man:rcorder[8] cannot track such details, and man:rc[8] will not do that either.
 Consequently, the application started by our script should be able to cope with any required services being unavailable.
@@ -830,6 +832,182 @@ Currently `run_rc_command` may have a bug that prevents it from keeping the orig
 That is, arguments with embedded whitespace may not be processed correctly.
 The bug stems from `$*` misuse.
 ====
+
+[[rcng-service-jails]]
+== Making a script ready for Service Jails
+
+Scripts which start a long running service are suitable for service jails, and should come with a suitable service jail configuration.
+
+Some examples of scripts which are not suitable to run in a service jail:
+
+* any script which in the start command only changes a runtime setting for programs or the kernel,
+* or tries to mount something,
+* or finds and deletes files
+
+Scripts not suitable to run in a service jail need to prevent the use within service jails.
+
+A script with a long running service which needs to do something listed above before the start or after the stop, can either be split-up into two scripts with dependencies, or use the precommand and postcommand parts of the script to perform this action.
+
+By default, only the start and stop parts of a script are run within a service jail, the rest is run outside the jail.
+As such any setting used in the start/stop parts of the script can not be set from e.g. a precommand.
+
+To make a script ready for use with extref:../../books/handbook/jails/#service-jails[Service Jails], only one more config line needs to be inserted:
+
+[.programlisting]
+....
+#!/bin/sh
+
+. /etc/rc.subr
+
+name="dummy"
+start_cmd="${name}_start"
+stop_cmd=":"
+
+: ${dummy_svcj_options:=""} <.>
+
+dummy_start()
+{
+        echo "Nothing started."
+}
+
+load_rc_config $name
+run_rc_command "$1"
+....
+
+&#10122; If it makes sense that the script runs in a jail, it must have an overridable service jails configuration.
+If it does not need network access or access to any other resource which is restricted in jails, an empty config like displayed is enough.
+
+Strictly speaking an empty config is not needed, but it explicitly describes that the script is service jails ready, and that it does not need additional jail permissions.
+As such it is highly recommended to add such an empty config in such a case.
+The most common option to use is "net_basic", which enables the use of the hosts IPv4 and IPv6 addresses.
+All possible options are explained in man:rc.conf[5].
+
+If a setting for the start/stop depends on variables from the rc-framework (e.g., set inside man:rc.conf[5]), this needs to be handled by ``load_rc_config`` and ``run_rc_command`` instead of inside a precommand.
+
+If for some reason a script can not be run within a service jail, e.g., because it is not possible to run or it does not make sense to run it in a jail, use the following:
+
+[.programlisting]
+....
+#!/bin/sh
+
+. /etc/rc.subr
+
+name="dummy"
+start_cmd="${name}_start"
+stop_cmd=":"
+
+dummy_start()
+{
+        echo "Nothing started."
+}
+
+load_rc_config $name
+dummy_svcj="NO"		# does not make sense to run in a svcj <.>
+run_rc_command "$1"
+....
+
+&#10122; The disabling needs to happen after the ``load_rc_config`` call, else a man:rc.conf[5] setting may override it.
+
+[[rcng-instancing]]
+== Advanced rc-scripting: Instancing
+
+Sometimes it is useful to run several instances of a service.
+Typically you want to be able to start/stop such instances independently,
+and you want to have a separate config file for each instance.
+Each instance should be started at boot,
+survive updates,
+and benefit from updates.
+
+Here is an example of a rc script which supports this:
+
+[.programlisting]
+....
+#!/bin/sh
+
+#
+# PROVIDE: dummy
+# REQUIRE: NETWORKING SERVERS
+# KEYWORD: shutdown
+#
+# Add these following line to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# dummy_enable (bool):	Set it to YES to enable dummy on startup.
+#			Default: NO
+# dummy_user (string):	User account to run with.
+#			Default: www
+#
+
+. /etc/rc.subr
+
+case $0 in <.>
+/etc/rc*)
+	# during boot (shutdown) $0 is /etc/rc (/etc/rc.shutdown),
+	# so get the name of the script from $_file
+	name=$_file
+	;;
+*)
+	name=$0
+	;;
+esac
+
+name=${name##*/} <.>
+rcvar="${name}_enable" <.>
+desc="Short description of this service"
+command="/usr/local/sbin/dummy"
+
+load_rc_config "$name"
+
+eval "${rcvar}=\${${rcvar}:-'NO'}" <.>
+eval "${name}_svcj_options=\${${name}_svcj_options:-'net_basic'}" <.>
+eval "_dummy_user=\${${name}_user:-'www'}" <.>
+
+_dummy_configname=/usr/local/etc/${name}.cfg <.>
+pidfile=/var/run/dummy/${name}.pid
+required_files ${_dummy_configname}
+command_args="-u ${_dummy_user} -c ${_dummy_configfile} -p ${pidfile}"
+
+run_rc_command "$1"
+....
+
+&#10122; and &#10123; make sure to set the name variable to the man:basename[1] of the script name.
+If the filename is [.filename]#/usr/local/etc/rc.d/dummy#,
+name is set to [.filename]#dummy#.
+This way changing the filename of the rc script changes automatically the content of the name variable.
+
+&#10124; specifies the variable name which is used in [.filename]#rc.conf# to enable this service based upon the filename of this script.
+In this example this resolves to dummy_enable.
+
+&#10125; makes sure the default for the _enable variable is NO.
+
+&#10126; is an example of having some defaults for service specific framework variables,
+in this case the service jails options.
+
+&#10127; and &#10128; set variables internal to the script (pay attention to the underscore in front of _dummy_user to make it different from dummy_user which can be set in [.filename]#rc.conf#).
+
+The part in &#10126; is for variables which are not used inside the script itself but in the rc framework.
+All the variables which are used as parameters somewhere in the script are assigned to a generic variable like in &#10128; to make it more easy to reference them (no need to eval them at each place of use).
+
+This script will now behave differently if the start script has a different name.
+This allows to create symlinks to it:
+
+[source,shell]
+....
+# ln -s dummy /usr/local/etc/rc.d/dummy_foo
+# sysrc dummy_foo_enable=YES
+# service dummy_foo start
+....
+
+The above creates an instance of the dummy service with the name dummy_foo.
+It does not use the config file [.filename]#/usr/local/etc/dummy.cfg# but the config file [.filename]#/usr/local/etc/dummy_foo.cfg# (&#10128;),
+and it uses the PID file [.filename]#/var/run/dummy/dummy_foo.pid# instead of [.filename]#/var/run/dummy/dummy.pid#.
+
+The services dummy and dummy_foo can be managed independently of each other,
+while having the start script update itself on package update (due to the symlink).
+This does not update the REQUIRE line,
+as such there is no easy way of depending on a specific instance.
+To depend upon a specific instance in the startup order a copy needs to be made instead of using a symlink.
+This prevents the automatic pick-up of changes to the start script when an update is installed.
 
 [[rcng-furthur]]
 == Further reading

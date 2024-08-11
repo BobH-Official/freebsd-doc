@@ -25,6 +25,21 @@
         </div>
       </div>
       <div id="frontfeaturemiddle">
+        <div class="frontgetroundbox newtofreebsd">
+            <div class="frontgettop">
+                <div>
+                <b style="display: none">.</b>
+                </div>
+            </div>
+            <div class="frontgetcontent">
+                <a href={{ "projects/newbies/" | absLangURL }}>{{ i18n "newFreeBSD" }}</a>
+            </div>
+            <div class="frontgetbot">
+            <div>
+            <b style="display: none">.</b>
+            </div>
+        </div>
+        </div>
         <div class="frontgetroundbox">
           <div class="frontgettop">
             <div>
@@ -48,12 +63,16 @@
             <ul id="frontreleaseslist">
               <li>
                 {{ i18n "production" }}:
-                <a href={{ index $.Site.Data.releases "u-rel132-announce" }}>{{ index $.Site.Data.releases "rel132-current" }}</a>
+                <a href={{ index $.Site.Data.releases "u-rel133-announce" }}>{{ index $.Site.Data.releases "rel133-current" }}</a>,
+                <a href={{ index $.Site.Data.releases "u-rel140-announce" }}>{{ index $.Site.Data.releases "rel140-current" }}</a>,
+                <a href={{ index $.Site.Data.releases "u-rel141-announce" }}>{{ index $.Site.Data.releases "rel141-current" }}</a>
               </li>
+            <!--
               <li>
                 {{ i18n "legacy" }}:
                 <a href={{ index $.Site.Data.releases "u-rel124-announce" }}>{{ index $.Site.Data.releases "rel124-current" }}</a>
               </li>
+            -->
               {{ $betaUpcoming := index $.Site.Data.releases "beta-upcoming" }}
               {{ if ne $betaUpcoming "IGNORE" }}
                 <li>
@@ -90,11 +109,7 @@
               <li><a href="{{ .Permalink }}">{{ .Language }}</a></li>
             {{ end }}
             -->
-            <li><a href="{{ $.Site.BaseURL }}de">de</a></li>
             <li><a href="{{ $.Site.BaseURL }}">en</a></li>
-            <li><a href="{{ $.Site.BaseURL }}fr">fr</a></li>
-            <li><a href="{{ $.Site.BaseURL }}ja">ja</a></li>
-            <li><a href="{{ $.Site.BaseURL }}zh-cn">zh-cn</a></li>
             <li><a href="{{ $.Site.BaseURL }}zh-tw">zh-tw</a></li>
           </ul>
         </div>
@@ -120,21 +135,6 @@
             </ul>
           </div>
         </div>
-        <div class="frontnewroundbox">
-          <div class="frontnewtop">
-            <div>
-              <b style="display: none">.</b>
-            </div>
-          </div>
-          <div class="frontnewcontent">
-            <a href={{ "projects/newbies/" | absLangURL }}>{{ i18n "newFreeBSD" }}</a>
-          </div>
-          <div class="frontnewbot">
-            <div>
-              <b style="display: none">.</b>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
     {{ $language := "" }}
@@ -153,11 +153,11 @@
             <div>
               <ul class="newseventslist">
                 <li class="first-child">
-                  <a href={{ printf "%s%s/%s" $siteBaseUrl $language "news/newsflash/" }} title={{ i18n "moreNews" }}>{{ i18n "moreNews" }}</a>
+                  <a href={{ printf "%s%s/%s" $siteBaseUrl $language "news/newsflash/" }} title={{ i18n "more" }}>{{ i18n "more" }}</a>
                 </li>
                 <li class="last-child">
                   <a href="{{ absLangURL ($.Site.BaseURL) }}news/feed.xml" title={{ i18n "rssNews" }}>
-                  <img class="rssimage" src="{{ absLangURL ($.Site.BaseURL) }}images/ico_rss.png" alt={{ i18n "rssNews" }} width="27" height="12" />
+                  <img class="rssimage" src="{{ absLangURL ($.Site.BaseURL) }}images/rss_icon.png" alt={{ i18n "rssNews" }} width="27" height="12" />
                   </a>
                 </li>
               </ul>
@@ -173,7 +173,18 @@
           <h2>{{ i18n "upcomingEvents" }}</h2>
           <div class="newseventswrap">
             {{ partial "events.html" . }}
-            <a href={{ printf "%s%s/%s" $siteBaseUrl $language "events/" }} title={{ i18n "moreEvents" }}>{{ i18n "moreEvents" }}</a>
+            <div>
+              <ul class="newseventslist">
+                <li class="first-child">
+                  <a href={{ printf "%s%s/%s" $siteBaseUrl $language "events/" }} title={{ i18n "more" }}>{{ i18n "more" }}</a>
+                </li>
+                <li class="last-child">
+                  <a href="{{ absLangURL ($.Site.BaseURL) }}events/feed.xml" title={{ i18n "rssEvents" }}>
+                    <img class="rssimage" src="{{ absLangURL ($.Site.BaseURL) }}images/rss_icon.png" alt={{ i18n "rssEvents" }} width="27" height="12" />
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -185,7 +196,18 @@
           <h2>{{ i18n "press" }}</h2>
           <div class="newseventswrap">
             {{ partial "press.html" . }}
-            <a href={{ printf "%s%s/%s" $siteBaseUrl $language "press/" }} title={{ i18n "moreMedia" }}>{{ i18n "moreMedia" }}</a>
+            <div>
+              <ul class="newseventslist">
+                <li class="first-child">
+                  <a href={{ printf "%s%s/%s" $siteBaseUrl $language "press/" }} title={{ i18n "more" }}>{{ i18n "more" }}</a>
+                </li>
+                <li class="last-child">
+                  <a href="{{ absLangURL ($.Site.BaseURL) }}press/feed.xml" title={{ i18n "rssMedia" }}>
+                    <img class="rssimage" src="{{ absLangURL ($.Site.BaseURL) }}images/rss_icon.png" alt={{ i18n "rssMedia" }} width="27" height="12" />
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -200,11 +222,11 @@
             <div>
               <ul class="newseventslist">
                 <li class="first-child">
-                  <a href={{ printf "%s%s/%s" $siteBaseUrl $language "security/advisories/" }} title={{ i18n "moreErrata" }}>{{ i18n "more" }}</a>
+                  <a href={{ printf "%s%s/%s" $siteBaseUrl $language "security/advisories/" }} title={{ i18n "more" }}>{{ i18n "more" }}</a>
                 </li>
                 <li class="last-child">
                   <a href="{{ absLangURL ($.Site.BaseURL) }}security/feed.xml" title={{ i18n "rssSecurity" }}>
-                  <img class="rssimage" src="{{ absLangURL ($.Site.BaseURL) }}images/ico_rss.png" alt="News RSS Feed" width="27" height="12" />
+                  <img class="rssimage" src="{{ absLangURL ($.Site.BaseURL) }}images/rss_icon.png" alt="News RSS Feed" width="27" height="12" />
                   </a>
                 </li>
               </ul>
@@ -217,11 +239,11 @@
             <div>
               <ul class="newseventslist">
                 <li class="first-child">
-                  <a href={{ printf "%s%s/%s" $siteBaseUrl $language "security/notices/" }} title={{ i18n "moreErrata" }}>{{ i18n "more" }}</a>
+                  <a href={{ printf "%s%s/%s" $siteBaseUrl $language "security/notices/" }} title={{ i18n "more" }}>{{ i18n "more" }}</a>
                 </li>
                 <li class="last-child">
                   <a href="{{ absLangURL ($.Site.BaseURL) }}security/feed.xml" title={{ i18n "rssSecurity" }}>
-                  <img class="rssimage" src="{{ absLangURL ($.Site.BaseURL) }}images/ico_rss.png" alt="News RSS Feed" width="27" height="12" />
+                  <img class="rssimage" src="{{ absLangURL ($.Site.BaseURL) }}images/rss_icon.png" alt="News RSS Feed" width="27" height="12" />
                   </a>
                 </li>
               </ul>

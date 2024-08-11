@@ -7,7 +7,7 @@ description: "FreeBSD provides two complementary technologies for installing thi
 tags: ["ports", "collection", "pkg", "poudriere", "management"]
 showBookMenu: true
 weight: 6
-path: "/books/handbook/"
+path: "/books/handbook/ports/"
 ---
 
 [[ports]]
@@ -158,7 +158,7 @@ The output should be similar to the following:
 [.programlisting]
 ....
 The package management tool is not yet installed on your system.
-Do you want to fetch and install it not? [y/N]
+Do you want to fetch and install it now? [y/N]
 ....
 
 man:pkg[7] will intercept the command, and if you confirm that is your intention, download the man:pkg[8] tarball, install man:pkg[8] from it, bootstrap the local package database and then proceed to run the command you originally requested.
@@ -507,7 +507,7 @@ Proceed with deinstalling packages? [y/N]:
 ....
 
 Packages installed as dependencies are called _automatic_ packages.
-Non-automatic packages, i.e the packages that were explicity installed not as a dependency to another package, can be listed using:
+Non-automatic packages, i.e the packages that were explicitly installed not as a dependency to another package, can be listed using:
 
 [source,shell]
 ....
@@ -669,7 +669,7 @@ The extract portion of building a port will automatically save the downloaded so
 === Installing the Ports Collection
 
 Before an application can be compiled using a port, the Ports Collection must first be installed.
-If it was not installed during the installation of FreeBSD, use one of the following methods to install it:
+If it was not installed during the installation of FreeBSD, use the following method to install it:
 
 [[ports-using-git-method]]
 [.procedure]
@@ -679,6 +679,9 @@ If it was not installed during the installation of FreeBSD, use one of the follo
 If more control over the ports tree is needed or if local changes need to be maintained, or if running FreeBSD-CURRENT,
 Git can be used to obtain the Ports Collection.
 Refer to extref:{committers-guide}[the Git Primer, git-primer] for a detailed description of Git.
+
+We add --depth 1 to the git command line to clone the tree without obtaining the commit history, which saves time and is acceptable for most users. 
+If you have your own changes to the ports tree, or need the history for any reason, omit the --depth 1 argument below.
 
 . Git must be installed before it can be used to check out the ports tree. If a copy of the ports tree is already present, install Git like this:
 +
@@ -699,14 +702,14 @@ If the ports tree is not available, or pkg is being used to manage packages, Git
 +
 [source,shell]
 ....
-# git clone https://git.FreeBSD.org/ports.git /usr/ports
+# git clone --depth 1 https://git.FreeBSD.org/ports.git /usr/ports
 ....
 +
 . Or, check out a copy of a quarterly branch:
 +
 [source,shell]
 ....
-# git clone https://git.FreeBSD.org/ports.git -b 2023Q1 /usr/ports
+# git clone --depth 1 https://git.FreeBSD.org/ports.git -b 2023Q1 /usr/ports
 ....
 +
 . As needed, update `/usr/ports` after the initial Git checkout:
@@ -1195,12 +1198,13 @@ The basic configuration shown here puts a single jail-, port-, and set-specific 
 The filename in this example is created by combining the jail name, port name, and set name: `13amd64-local-workstation-make.conf`.
 The system `make.conf` and this new file are combined at build time to create the `make.conf` used by the build jail.
 
-Packages to be built are entered in `13amd64-local-workstation-pkglist`:
+Packages to be built are entered in `13amd64-local-workstation-pkglist` (ports with extref:{porters-handbook}flavors[FLAVORS] can be defined with @FLAVOR):
 
 [.programlisting]
 ....
 editors/emacs
 devel/git
+devel/php-composer2@php82
 ports-mgmt/pkg
 ...
 ....

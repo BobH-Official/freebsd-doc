@@ -1,6 +1,6 @@
 #!/usr/bin/perl -T
 #
-# Copyright (c) 1996-2023 Wolfram Schneider <wosch@FreeBSD.ORG>
+# Copyright (c) 1996-2024 Wolfram Schneider <wosch@FreeBSD.ORG>
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -24,20 +24,31 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 #
-# $FreeBSD$
-#
 # ports.cgi - search engine for FreeBSD ports
-#             	o search for a port by name or description
 
 use POSIX qw(strftime);
 use Time::Local;
 
 require "./cgi-style.pl";
-$t_style = qq`<style type="text/css">
+$t_style = qq`
+<style type="text/css">
 h3 { font-size: 1.2em; border-bottom: thin solid black; }
+span.footer_links { font-size: small; }
+
+form#ports > input[name='query'] { text-align: center; }
+form#ports > input[name='query'] { width: 14em; }
+form#ports > input, form#ports > button, form#ports > select { font-size: large; }
 </style>
+
 <link rel="search" type="application/opensearchdescription+xml" href="https://www.freebsd.org/opensearch/ports.xml" title="FreeBSD Ports" />
 `;
+
+# No unlimited result set. A HTML page with 1000 results can be 10MB big.
+my $max_hits = 1000;
+my $max_hits_default = 250;
+my $max;
+
+my $debug = 1;
 
 sub init_variables {
     $localPrefix = '/usr/ports';    # ports prefix
@@ -46,11 +57,11 @@ sub init_variables {
     $portsDatabaseHeadDir = "/usr/local/www/ports";
 
     # Ports database file to use
-    if ( -f "$portsDatabaseHeadDir/INDEX-13" ) {
-        $ports_database = 'INDEX-13';
+    if ( -f "$portsDatabaseHeadDir/INDEX-14" ) {
+        $ports_database = 'INDEX-14';
     }
-    elsif ( -f "$portsDatabaseHeadDir/INDEX-12" ) {
-        $ports_database = 'INDEX-12';
+    elsif ( -f "$portsDatabaseHeadDir/INDEX-13" ) {
+        $ports_database = 'INDEX-13';
     }
     else {
         $ports_database = 'INDEX';
@@ -59,65 +70,8 @@ sub init_variables {
     # URL of ports tree for browsing
     $remotePrefixFtp = 'ports';
 
-    # 'ftp://ftp.FreeBSD.org/pub/FreeBSD/branches/-current/ports';
-
-    # where to get -current packages
-    local ($p)        = 'ftp://ftp.FreeBSD.org/pub/FreeBSD/ports/i386';
-    local ($palpha)   = 'ftp://ftp.FreeBSD.org/pub/FreeBSD/ports/alpha';
-    local ($pamd64)   = 'ftp://ftp.FreeBSD.org/pub/FreeBSD/ports/amd64';
-    local ($pia64)    = 'ftp://ftp.FreeBSD.org/pub/FreeBSD/ports/ia64';
-    local ($psparc64) = 'ftp://ftp.FreeBSD.org/pub/FreeBSD/ports/sparc64';
-
-    $remotePrefixFtpPackagesDefault = '6-STABLE/i386';
-
-    # This is currently unused
-    %remotePrefixFtpPackages = (
-        '7-CURRENT/i386', "$p/packages-7-current/All",
-        '6-STABLE/i386',  " $p/packages-6-stable/All",
-        '5-STABLE/i386',  " $p/packages-5-stable/All",
-        '4-STABLE/i386',  " $p/packages-4-stable/All",
-
-        '6.0-RELEASE/i386',  "$p/packages-6.0-release/All",
-        '5.4-RELEASE/i386',  "$p/packages-5.4-release/All",
-        '4.11-RELEASE/i386', "$p/packages-4.11-release/All",
-
-        '4-STABLE/alpha', "$palpha/packages-4-stable/All",
-
-        '5.4-RELEASE/alpha',  "$palpha/packages-5.4-release/All",
-        '4.11-RELEASE/alpha', "$palpha/packages-4.11-release/All",
-
-        '7-CURRENT/amd64', "$pamd64/packages-7-current/All",
-        '6-STABLE/amd64',  "$pamd64/packages-6-stable/All",
-        '5-STABLE/amd64',  "$pamd64/packages-5-stable/All",
-
-        '6.0-RELEASE/amd64', "$pamd64/packages-6.0-release/All",
-        '5.4-RELEASE/amd64', "$pamd64/packages-5.4-release/All",
-
-        '7-CURRENT/ia64', "$pia64/packages-7-current/All",
-        '6-STABLE/ia64',  "$pia64/packages-6-stable/All",
-
-        '6.0-RELEASE/ia64', "$pia64/packages-6.0-release/All",
-        '5.4-RELEASE/ia64', "$pia64/packages-5.4-release/All",
-
-        '7-CURRENT/sparc64', "$psparc64/packages-7-current/All",
-        '6-STABLE/sparc64',  "$psparc64/packages-6-stable/All",
-        '5-STABLE/sparc64',  "$psparc64/packages-5-stable/All",
-
-        '6.0-RELEASE/sparc64', "$psparc64/packages-6.0-release/All",
-        '5.4-RELEASE/sparc64', "$psparc64/packages-5.4-release/All",
-    );
-
-    $remotePrefixHtml = "$hsty_base/ports";
-
     # Web interface for the Ports tree
     $remotePrefixRepo = 'https://cgit.FreeBSD.org/ports';
-
-    # Ports documentation
-    $portsDesc = "$hsty_base/ports/";
-
-    # location of the tiny BSD daemon
-    $daemonGif =
-"<img src='$hsty_base/gifs/littlelogo.gif' alt='Really small BSD Daemon'>";
 
     # visible E-Mail address, plain text
     $mailto = 'www@FreeBSD.org';
@@ -133,13 +87,6 @@ sub init_variables {
 
     # security
     $ENV{'PATH'} = '/bin:/usr/bin';
-
-    # extension type for packages
-    $packageExt = 'tbz';
-
-    local ($packageDB) = '../ports/packages.exists';
-    &packages_exist( $packageDB, *packages ) if -f $packageDB;
-
 }
 
 sub packages_exist {
@@ -176,7 +123,7 @@ sub last_update {
 }
 
 sub last_update_message {
-    return "<p>Last database update: " . &last_update . "</p>\n";
+    return "<p>Last database update: @{[ &last_update ]}</p>\n";
 }
 
 sub dec {
@@ -244,7 +191,7 @@ sub readindex {
         chop;
 
         @tmp            = split(/\|/);
-        $var{"$tmp[1]"} = $_;
+        $var{"$tmp[0]"} = $_;
         @s              = split( /\s+/, $tmp[6] );
         foreach (@s) {
             $msec{"$tmp[1],$_"} = 1;
@@ -324,7 +271,6 @@ sub out {
     }
 
     $counter++;
-    $pathDownload = $path;
     $pathB        = $path;
     $pathB =~ s/^$localPrefix/ports/o;
 
@@ -345,12 +291,6 @@ sub out {
     print qq{<dd>}, &escapeHTML($comment), qq{<br />\n};
 
     print qq[<a href="$descfile?revision=HEAD">Description</a> <b>:</b>\n];
-
-  # Link package in "default" arch/release. Verify it's existence on ftp-master.
-    if ( $packages{"$version.$packageExt"} ) {
-        print
-qq[<a href="$remotePrefixFtpPackages{$remotePrefixFtpPackagesDefault}/$version.$packageExt">Package</a> <b>:</b>\n];
-    }
 
     print qq[<a href="$l">Changes</a> <br />\n];
 
@@ -404,6 +344,7 @@ sub search_ports {
 
     foreach $key ( sort keys %today ) {
         next if $today{$key} !~ /$query/oi;
+        next if $counter >= $max;
 
         @a    = split( /\|/, $today{$key} );
         $name = $a[0];                         #$name =~ s/(\W)/\\$1/g;
@@ -440,7 +381,6 @@ sub search_ports {
 sub forms {
     print qq{<p>
 The FreeBSD Ports and Packages Collection offers a simple way for users and administrators to install applications.
-<a href="$script_name?stype=faq">FAQ</a>
 </p>
 };
 
@@ -451,9 +391,9 @@ The FreeBSD Ports and Packages Collection offers a simple way for users and admi
 description about the port.
 </p>
 
-<form method="get" action="$script_name">
+<form id="ports" method="get" action="$script_name">
 Search for:
-<input name="query" value="$query" type="text" autocapitalize="none" />
+<input name="query" value="$query" type="text" autocapitalize="none" autofocus />
 <select name="stype">
 };
 
@@ -484,9 +424,11 @@ Search for:
           . qq{value="$_">$_</option>\n};
     }
 
-    print q{</select>
+    print qq{</select>
 <input type="submit" value="Submit" />
 </form>
+<br/>
+@{[ &footer_links ]}
 <hr noshade="noshade" />
 };
 
@@ -494,17 +436,20 @@ Search for:
 
 sub footer {
 
-    print qq{
-<img align="right" src="$hsty_base/gifs/powerlogo.gif" alt="Powered by FreeBSD" />
-&copy; 1996-2023 by Wolfram Schneider. All rights reserved.<br />
-};
+print <<EOF;
+<span class="footer_links">
+  <img align="right" src="$hsty_base/gifs/powerlogo.gif" alt="Powered by FreeBSD"/>
+  &copy; 1996-2024 by Wolfram Schneider. All rights reserved.<br/>
 
-#print q{$FreeBSD$} . "<br />\n";
-    print qq{General questions about FreeBSD ports should be sent to }
-      . qq{<a href="mailto:$mailtoList">}
-      . qq{<i>$mailtoList</i></a><br />\n};
-    print &last_update_message;
-    print qq{<hr noshade="noshade" />\n<p />\n};
+  General questions about FreeBSD ports should be sent to 
+  <a href="mailto:$mailtoList"><i>$mailtoList</i></a><br/>
+
+  @{[ &last_update_message ]}
+</span>
+<hr noshade="noshade" />
+<p/>
+
+EOF
 }
 
 sub check_query {
@@ -539,41 +484,65 @@ sub check_input {
           )
         {
             &warn(
-"unknown search type ``$type'', use `all', `text', `name', 'requires', or `maintainer'\n"
+"unknown search type ``$stype'', use `all', `text', `name', 'requires', or `maintainer'\n"
             );
             &exit(0);
         }
-        else {
-            return;
-        }
+    }
+
+    $max = int($max);
+    if ($max <= 0 || $max > $max_hits) {
+        warn "reset max=$max to $max_hits_default\n";
+        $max = $max_hits_default;
     }
 }
 
 sub faq {
-    print qq{<H1>FreeBSD Ports Search FAQ</h1>
+    print <<EOF
+<br/>
+<h1>FreeBSD Ports Search Help</h1>
 
 <h2>Keywords</h2>
 <dl>
-<dt><b>Description</b><dd>A more detailed description.
-<dt><b>Changes</b><dd>Read the latest changes.
+  <dt><b>Description</b></dt>
+  <dd>A more detailed description (text).</dd>
+
+  <dt><b>Changes</b></dt>
+  <dd>Read the latest changes via the git repo</dd>
 </dl>
 
-<h2>Misc</h2>
-
+<h2>Documentation</h2>
 <p>
-The script ports.cgi use the file
-<a href="$hsty_base/ports/$ports_database.xz">$ports_database</a>
-as database for its operations. $ports_database is updated automatically every
-two hours.</p>
+Handbook: <a href="https://docs.freebsd.org/en/books/handbook/ports/#ports-using">Using the Ports Collection</a>
+</p>
 
 <p>
 You may also search the
-<a href="https://man.FreeBSD.org/cgi/man.cgi?manpath=freebsd-ports">ports manual pages</a>.</p>
+<a href="https://man.FreeBSD.org/cgi/man.cgi?manpath=freebsd-ports">ports manual pages</a>.
+</p>
+
+<h2>Updates</h2>
 
 <p>
-<a href="$script_name">Back to the search engine</a></p>
+The script ports.cgi use the file
+<a href="https://download.FreeBSD.org/ports/index/$ports_database.xz">$ports_database</a>
+as database for its operations. $ports_database is updated automatically every
+two hours.
+</p>
+
+
+@{[ &footer_links ]}
 <hr noshade="noshade" />
-};
+EOF
+}
+
+sub footer_links {
+    return <<EOF;
+<span class="footer_links">
+  <a href="$script_name">home</a>
+  @{[ $stype eq "faq" ? "" : qq, | <a href="$script_name?stype=faq">help</a>, ]}
+</span>
+EOF
 }
 
 #
@@ -591,6 +560,7 @@ $query       = $form{'query'};
 $stype       = $form{'stype'};
 $sourceid    = $form{'sourceid'} // "";
 $script_name = &env('SCRIPT_NAME');
+$max         = $form{'max'} // $max_hits_default;
 
 if ( $path_info eq "/source" ) {
 
@@ -603,7 +573,7 @@ if ( $path_info eq "/source" ) {
 }
 
 if ( $stype eq "faq" ) {
-    print &short_html_header( "FreeBSD Ports Search FAQ", 1 );
+    print &short_html_header( "FreeBSD Ports Search Help", 1 );
     &faq;
     &footer;
     print &html_footer;
@@ -633,20 +603,36 @@ if ( $query_string eq "" || !$query ) {
 &check_input;
 $counter = 0;
 
+# no prefix search for requires supported yet
+$query =~ s/^\^// if $stype eq 'requires'; 
+
+# quote non characters
+$query =~ s/([^\w\^])/\\$1/g;
+
 # search
 if ($query) {
     &readindex( *today, *msec );
-    $query =~ s/([^\w\^])/\\$1/g;
     &search_ports;
 }
 
 if ( !$counter ) {
-    print "Sorry, nothing found.\n";
-    print qq{You may look for other }
-      . qq{<a href="/search/">FreeBSD Search Services</a>.\n};
+    print <<EOF;
+<p>
+Sorry, nothing found.
+You may look for other <a href="https://www.freebsd.org/search/">FreeBSD Search Services</a>
+</p>
+EOF
 }
+
 else {
     print "</dl>\n";
+    my $counter_message = $counter;
+    if ($counter >= $max) {
+        $counter_message .= " (max hit limit reached)";
+        warn "$counter_message: query=$query stype=$stype section=$section\n" if $debug >= 1;
+    }
+    print "<p>Number of hits: $counter_message\n</p>\n";
+    print &footer_links;
 }
 
 print qq{<hr noshade="noshade" />\n};

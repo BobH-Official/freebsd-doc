@@ -5,7 +5,7 @@ description: A list of changes to the sys/param.h file
 tags: ["FreeBSD versions"]
 showBookMenu: true
 weight: 18
-path: "/books/porters-handbook/"
+path: "/books/porters-handbook/versions/"
 ---
 
 [[versions]]
@@ -47,6 +47,115 @@ include::../../../../../shared/asciidoctor.adoc[]
 endif::[]
 
 Here is a convenient list of `__FreeBSD_version` values as defined in https://cgit.freebsd.org/src/tree/sys/sys/param.h[sys/param.h]:
+
+[[versions-15]]
+== FreeBSD 15 Versions
+
+[[freebsd-versions-table-15]]
+.FreeBSD 15 `__FreeBSD_version` Values
+[cols="1,1,1,1", frame="none", options="header"]
+|===
+| Value
+| Revision
+| Date
+| Release
+
+|1500000
+|gitref:29a16ce065dbc28bc9e87c9bfadb08bb58b137e4[repository="src",length=12]
+|August 24, 2023
+|15.0-CURRENT.
+
+|1500001
+|gitref:a6662c37b6ffee46e18be5f7570149edc64c1d0b[repository="src",length=12]
+|September 17, 2023
+|15.0-CURRENT after implementing `fpu_kern_enter` and `fpu_kern_leave` for powerpc.
+
+|1500002
+|gitref:17f5e2b904aff8e4863199a137ee21ef0939bcf4[repository="src",length=12]
+|October 18, 2023
+|15.0-CURRENT after changing the internal KAPI between the nfscommon and nfscl modules.
+
+|1500003
+|gitref:ef85fd507e6e1784a726bccd485129e00bb63311[repository="src",length=12]
+|November 1, 2023
+|15.0-CURRENT after removal of the forward compat code for the inode64 conversion.
+
+|1500004
+|gitref:7fabea328fed60d5207b262d2372e85a7f731eef[repository="src",length=12]
+|November 23, 2023
+|15.0-CURRENT after adding a new VFS function called `vfs_exjail_clone()`, which will be used by the ZFS module.
+
+|1500005
+|gitref:21fce617d1de231a30833cdd9819ef61277b08d8[repository="src",length=12]
+|November 27, 2023
+|15.0-CURRENT after a string of mechanical changes to the tree: SCCS IDs removed, &#35;if 0'd copyright strings removed, mechanical style fix after this churn and some macros removed from [.filename]#sys/cdefs.h#.
+
+|1500006
+|gitref:c711af7727824da79d87f375f3d6829feec3799a[repository="src",length=12]
+|December 8, 2023
+|15.0-CURRENT after upgrading llvm, clang, compiler-rt, libc++, libunwind, lld, lldb and openmp to llvmorg-17.0.6-0-g6009708b4367, a.k.a. 17.0.6 release.
+
+|1500007
+|gitref:8ccd0b876e67fda6249f294ff484798cc1e1569f[repository="src",length=12]
+|December 11, 2023
+|15.0-CURRENT after exposing execvpe for Linux compat in libc.
+
+|1500008
+|gitref:9bf957fc9b378e0f9e65eb97e84c2166b450fccc[repository="src",length=12]
+|December 24, 2023
+|15.0-CURRENT after LinuxKPI changes.
+
+|1500009
+|gitref:b068bb09a1a82d9fef0e939ad6135443a959e290[repository="src",length=12]
+|January 11, 2024
+|15.0-CURRENT after adding man:vnode_pager_clean_async[9] and man:vnode_pager_clean_sync[9].
+
+|1500010
+|gitref:a2da1bdb61bc2d9db0b4268f53281e7c0bbce0bc[repository="src",length=12]
+|January 12, 2024
+|15.0-CURRENT after changing the internal KAPI between the nfscommon and nfscl modules.
+
+|1500011
+|gitref:a2da1bdb61bc2d9db0b4268f53281e7c0bbce0bc[repository="src",length=12]
+|January 17, 2024
+|15.0-CURRENT after adding zfs.dataset support to man:jail[8].
+
+|1500012
+|gitref:120ceebab5d4947dfc80d7492effa034a925d43e[repository="src",length=12]
+|January 24, 2024
+|15.0-CURRENT after adding man:kern_openatfp[9] and man:kcmp[2].
+
+|1500013
+|gitref:d04abb05375d3525132f1e9f78090db3d0d27f14[repository="src",length=12]
+|February 7, 2024
+|15.0-CURRENT after adding libsys.
+
+|1500014
+|gitref:ed27ae8df4b10f67289a32458d89d143e758f6d4[repository="src",length=12]
+|February 11, 2024
+|15.0-CURRENT after switching clang and other LLVM executables to build as PIE.
+
+|1500015
+|gitref:a7b9f4d96e8bdc30db27ec7a193a8d8fdf7c652c[repository="src",length=12]
+|March 13, 2024
+|15.0-CURRENT after removing redundant `type` and `rid` arguments from several functions in the new-bus resource API.
+
+|1500016
+|gitref:60bc9617e79e99bdf670304923f3baed4b749ad3[repository="src",length=12]
+|March 18, 2024
+|15.0-CURRENT after introducing man:livedump_start_vnode[9].
+
+|1500017
+|gitref:bcd401b5a39c6186bb1fe450286299f2a481244c[repository="src",length=12]
+|March 20, 2024
+|15.0-CURRENT after fixing a clang assertion or crash when building recent boost libraries.
+
+|1500018
+|gitref:0192eda105b367d4670205547e8e830e3716bea3[repository="src",length=12]
+|April 6, 2024
+|15.0-CURRENT after upgrading llvm, clang, compiler-rt, libc++, libunwind, lld, lldb and openmp to llvmorg-18.1.3-0-gc13b7485b879, a.k.a. 18.1.3 release.
+
+|===
 
 [[versions-14]]
 == FreeBSD 14 Versions
@@ -464,6 +573,71 @@ Here is a convenient list of `__FreeBSD_version` values as defined in https://cg
 |gitref:ba8cc6d7271a50fec978a1d3a088aec7985fae48[repository="src",length=12]
 |July 5, 2023
 |14.0-CURRENT after using __enum_uint8 for vtype and vstate in VFS
+
+|1400097
+|gitref:29a16ce065dbc28bc9e87c9bfadb08bb58b137e4[repository="src",length=12]
+|August 24, 2023
+|14.0-STABLE after branching stable/14
+
+|1400500
+|gitref:29a16ce065dbc28bc9e87c9bfadb08bb58b137e4[repository="src",length=12]
+|September 8, 2023
+|14.0-STABLE after branching releng/14.0
+
+|1400501
+|gitref:91e53779b4fc39e755a03190f785ce0cf3f83eb7[repository="src",length=12]
+|November 19, 2023
+|14.0-STABLE after implementing `fpu_kern_enter` and `fpu_kern_leave` for powerpc.
+
+|1400502
+|gitref:092abb839d1d2826533bb9c4c93d713f8b5043f9[repository="src",length=12]
+|December 24, 2023
+|14.0-STABLE after modifying the internal API between the kgssapi and krpc modules.
+
+|1400503
+|gitref:ba99d960884d50eb7d36146914206644ee132aa4[repository="src",length=12]
+|December 29, 2023
+|14.0-STABLE after changing the internal KAPI between the nfscommon and nfscl modules.
+
+|1400504
+|gitref:68584c97ecfb3046de7fb1b16c2caa785392237c[repository="src",length=12]
+|January 7, 2024
+|14.0-STABLE after upgrading llvm, clang, compiler-rt, libc++, libunwind, lld, lldb and openmp to llvmorg-17.0.6-0-g6009708b4367, a.k.a. 17.0.6 release.
+
+|1400505
+|gitref:64e869e9b93c8ce47f874b770df696c06bcba0d3[repository="src",length=12]
+|January 7, 2024
+|14.0-STABLE after adding man:vnode_pager_clean_async[9] and man:vnode_pager_clean_sync[9].
+
+|1400506
+|gitref:d9041710958227194c5e34b169ae73d7ad411017[repository="src",length=12]
+|January 19, 2024
+|14.0-STABLE after changing the internal KAPI between the nfscommon and nfscl modules.
+
+|1400507
+|gitref:b566e44b2b88eb9f1b3b658998c7418cccab9e2f[repository="src",length=12]
+|January 31, 2024
+|14.0-STABLE after adding man:kern_openatfp[9] and man:kcmp[2].
+
+|1400508
+|gitref:2d120981e26dfef5c9cb9eb9936bb46cb6918136[repository="src",length=12]
+|February 18, 2024
+|14.0-STABLE after LinuxKPI updates.
+
+|1400509
+|gitref:b392b36d3776b696601ce0253256803276d24ea2[repository="src",length=12]
+|February 18, 2024
+|14.0-STABLE after changing net80211 `struct ieee80211vap` internals.
+
+|1400510
+|gitref:69da6e0879831f1ccc5c60135ed43fcea10a933b[repository="src",length=12]
+|March 23, 2024
+|14.0-STABLE after fixing a clang assertion or crash when building recent boost libraries.
+
+|1400511
+|gitref:7c41358a2b0a2e70a2b61ec347354f3452e4d2f3[repository="src",length=12]
+|April 20, 2024
+|14.0-STABLE after upgrading llvm, clang, compiler-rt, libc++, libunwind, lld, lldb and openmp to llvmorg-18.1.3-0-gc13b7485b879, a.k.a. 18.1.3 release.
 
 |===
 
@@ -1437,6 +1611,41 @@ Template:
 |gitref:b2acc21dfbd6fab28b1715c775b43d4914b75e0c[repository="src",length=12]
 |July 23, 2023
 |13.2-STABLE after upgrading llvm, clang, compiler-rt, libc++, libunwind, lld, lldb and openmp to llvmorg-16.0.6-0-g7cbf1a259152, a.k.a. 16.0.6 release.
+
+|1302508
+|gitref:21ccba43f511cc4089899619b5a85e6d83a200dc[repository="src",length=12]
+|September 6, 2023
+|13.2-STABLE after ptrace started clearing TDB_BORN during PT_DETACH.
+
+|1302509
+|gitref:faedeaf7377ba7253c281cf3315b17e0cb979075[repository="src",length=12]
+|December 2, 2023
+|13.2-STABLE after adding a new VFS function called `vfs_exjail_clone()`, which will be used by the ZFS module.
+
+|1302510
+|gitref:45758665781dd63dfa38bcb646d4f36b0a6a104f[repository="src",length=12]
+|January 7, 2024
+|13.2-STABLE after upgrading llvm, clang, compiler-rt, libc++, libunwind, lld, lldb and openmp to llvmorg-17.0.6-0-g6009708b4367, a.k.a. 17.0.6 release.
+
+|1303001
+|gitref:a75a3d7afcc88dc0bc9b2797cce983056acadf10[repository="src",length=12]
+|February 19, 2024
+|13.3-BETA3 after changing net80211 `struct ieee80211vap` internals.
+
+|1303501
+|gitref:a7e1fc7f620d3341549c1380f550aaafbdb45622[repository="src",length=12]
+|February 19, 2024
+|13.3-STABLE after changing net80211 `struct ieee80211vap` internals.
+
+|1303502
+|gitref:07839ae99c06fcbebd5da6ead49c160c32046542[repository="src",length=12]
+|March 23, 2024
+|13.3-STABLE after fixing a clang assertion or crash when building recent boost libraries.
+
+|1303503
+|gitref:055e875e6077ed1eb2256c3ab5de59a3f6fbce18[repository="src",length=12]
+|April 20, 2024
+|13.3-STABLE after upgrading llvm, clang, compiler-rt, libc++, libunwind, lld, lldb and openmp to llvmorg-18.1.3-0-gc13b7485b879, a.k.a. 18.1.3 release.
 
 |===
 

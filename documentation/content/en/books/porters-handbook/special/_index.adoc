@@ -6,7 +6,7 @@ description: Special considerations when creating a new FreeBSD Port
 tags: ["special considerations", "Handling Symbolic Links", "Bundled Libraries"]
 showBookMenu: true
 weight: 6
-path: "/books/porters-handbook/"
+path: "/books/porters-handbook/special/"
 ---
 
 [[special]]
@@ -49,6 +49,30 @@ endif::[]
 
 This section explains the most common things to consider when creating a port.
 
+[[splitting-long-files]]
+== Splitting long files
+
+Sometimes, port [.filename]#Makefiles# can be really long.
+For example, rust ports can have a very long `CARGO_CRATES` list.
+In other cases, the [.filename]#Makefile# might have code that varies depending on the architecture.
+In such cases, it can be convenient to split the original [.filename]#Makefile# into several files.
+[.filename]#bsd.port.mk# automatically includes some types of [.filename]#Makefiles# into the main port [.filename]#Makefile#.
+
+These are the files that the framework handles automatically if they are found:
+
+* [.filename]#Makefile.crates#. An example can be found in package:audio/ebur128[].
+* [.filename]#Makefile.inc#. An example can be found in package:net/ntp[].
+* [.filename]#Makefile.${ARCH}-${OPSYS}#
+* [.filename]#Makefile.${OPSYS}#. An example can be found in package:net/cvsup-static[].
+* [.filename]#Makefile.${ARCH}#
+* [.filename]#Makefile.local#
+
+It is also usual practice to split the packaging list of the port into several files if the list varies a lot from one architecture to another or depends on the selected flavor.
+In this case, the [.filename]#pkg-plist# file for each architecture is named following the pattern [.filename]#pkg-plist.${ARCH}# or [.filename]#pkg-plist.${FLAVOR}#.
+The framework does not create the packaging list automatically if multiple [.filename]#pkg-plist# files exist.
+It is the responsibility of the porter to select the proper [.filename]#pkg-plist# and assign it to the `PLIST` variable.
+Examples on how to deal with this can be found in package:audio/logitechmediaserver[] and package:deskutils/libportal[].
+
 [[staging]]
 == Staging
 
@@ -82,7 +106,7 @@ It sets up defaults for ports that do not fetch, build, or install anything.
 ====
 
 Staging is enabled by prepending `STAGEDIR` to paths used in the `pre-install`, `do-install`, and `post-install` targets (see the examples through the book).
-Typically, this includes `PREFIX`, `ETCDIR`, `DATADIR`, `EXAMPLESDIR`, `MANPREFIX`, `DOCSDIR`, and so on.
+Typically, this includes `PREFIX`, `ETCDIR`, `DATADIR`, `EXAMPLESDIR`, `DOCSDIR`, and so on.
 Directories should be created as part of the `post-install` target.
 Avoid using absolute paths whenever possible.
 
@@ -354,7 +378,7 @@ The same goes for `install` and `INSTALL_TARGET`.
 === `configure` Script
 
 If the port uses the `configure` script to generate [.filename]#Makefile# from [.filename]#Makefile.in#, set `GNU_CONFIGURE=yes`.
-To give extra arguments to the `configure` script (the default argument is `--prefix=${PREFIX} --infodir=${PREFIX}/${INFO_PATH} --mandir=${MANPREFIX}/man --build=${CONFIGURE_TARGET}`), set those extra arguments in `CONFIGURE_ARGS`.
+To give extra arguments to the `configure` script (the default argument is `--prefix=${PREFIX} --infodir=${PREFIX}/${INFO_PATH} --mandir=${PREFIX}/man --build=${CONFIGURE_TARGET}`), set those extra arguments in `CONFIGURE_ARGS`.
 Extra environment variables can be passed using `CONFIGURE_ENV`.
 
 [[using-configure-variables]]
@@ -820,8 +844,8 @@ In most cases, it is sufficient to set the `GO_MODULE` variable to the value spe
 [.programlisting]
 ....
 PORTNAME=       hey
-PORTVERSION=    0.1.4
-DISTVERSIONPREFIX=      v
+DISTVERSIONPREFIX=	v
+DISTVERSION=    0.1.4
 CATEGORIES=     benchmarks
 
 MAINTAINER=     dmgk@FreeBSD.org
@@ -1563,6 +1587,10 @@ DESKTOP_ENTRIES=	"ToME" "Roguelike game based on JRR Tolkien's work" \
 			"tome -v -g" "Application;Game;RolePlaying;" \
 			false
 ....
+
+`DESKTOP_ENTRIES` are installed in the directory pointed to by the `DESKTOPDIR`
+variable.
+`DESKTOPDIR` defaults to [.filename]#${PREFIX}/share/applications#
 
 
 [[using-gnome]]
@@ -3142,7 +3170,8 @@ The most current version is package:java/openjdk18[], with package:java/openjdk1
 |Define for the remaining variables to have any effect.
 
 |`JAVA_VERSION`
-|List of space-separated suitable Java versions for the port. An optional `"+"` allows specifying a range of versions (allowed values: `7[+] 8[+] 11[+] 12[+] 13[+] 14[+] 15[+] 16[+] 17[+] 18[+]`).
+|List of space-separated suitable Java versions for the port.
+An optional `\+` allows specifying a range of versions (allowed values: `8[+] 11[\+] 17[+] 18[\+] 19[+] 20[\+] 21[+]`).
 
 |`JAVA_OS`
 |List of space-separated suitable JDK port operating systems for the port (allowed values: `native linux`).
@@ -4685,6 +4714,9 @@ Applications or libraries depending on the Budgie desktop should set `USES= budg
 | `libbudgie`
 | Desktop core (library)
 
+| `libmagpie`
+| Budgie's X11 window manager and compositor library
+
 | `raven`
 | All-in-one center in panel for accessing different applications widgets
 
@@ -4983,17 +5015,20 @@ It is not necessary to make an option for it.
 If an option is used, though, always enable it in `OPTIONS_DEFAULT`.
 
 [[shell-completion-paths]]
-.Shell completion file paths
-[cols="1,1", frame="none"]
+.Full shell completion file names
+[cols="1,1,1", frame="none"]
 |===
 |`bash`
-|[.filename]#${PREFIX}/etc/bash_completion.d#
+|[.filename]#${PREFIX}/etc/bash_completion.d# or [.filename]#${PREFIX}/share/bash-completion/completions#
+|(any unique file names in one of these folders)
 
 |`fish`
-|[.filename]#${PREFIX}/share/fish/vendor_completions.d#
+|[.filename]#${PREFIX}/share/fish/completions/${PORTNAME}.fish#
+|
 
 |`zsh`
-|[.filename]#${PREFIX}/share/zsh/site-functions#
+|[.filename]#${PREFIX}/share/zsh/site-functions/_${PORTNAME}#
+|
 |===
 
 Do not register any dependencies on the shells themselves.

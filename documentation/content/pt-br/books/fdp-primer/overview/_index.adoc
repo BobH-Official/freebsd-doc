@@ -1,7 +1,7 @@
 ---
 description: 'Visão geral sobre o Processo de Documentação do FreeBSD'
 next: books/fdp-primer/tools
-path: /books/fdp-primer/
+path: "/books/fdp-primer/overview/"
 prev: books/fdp-primer/preface
 showBookMenu: 'true'
 tags: ["overview", "FreeBSD Documentation Project", "quick start"]
@@ -136,7 +136,7 @@ Para reduzir o tempo de compilação, apenas um idioma pode ser compilado:
 % make DOC_LANG=en
 ....
 +
-A saída da compilação é armazenada em [.filename]#~/documentation/public/articles/# e [.filename]#~/documentation/public/books/#.
+A saída da compilação é armazenada em [.filename]#~/doc/documentation/public/en/articles/# e [.filename]#~/doc/documentation/public/en/books/#.
 +
 . Revise a saída da compilação e certifique-se de que as edições não contenham erros de digitação, problemas de layout ou erros. Se algum erro for encontrado durante o processo de compilação, edite os arquivos com erro para corrigir quaisquer problemas que apareçam e, em seguida, execute o comando de compilação novamente até que todos os erros sejam resolvidos.
 +
@@ -173,11 +173,6 @@ No exemplo acima, foram feitas alterações na parte [.filename]#bsdinstall# do 
 
 [.procedure]
 ====
-[TIP]
-======
-Hugo versão 0.90 ou superior deve ser utilizado
-======
-
 . Instale esses pacotes em sistemas baseados em apt como Debian ou Ubuntu. Em outras distribuições GNU/Linux os nomes dos pacotes podem mudar. Consulte o gerenciador de pacotes da sua distribuição em caso de dúvida.
 +
 [source, shell]
@@ -234,10 +229,6 @@ Para tornar mais fácil para os committers aplicarem o patch em sua cópia de tr
 
 [.procedure]
 ====
-[TIP]
-======
-Hugo versão 0.90 ou superior deve ser utilizado
-======
 
 . Instale esses pacotes usando o link:https://brew.sh/[Homebrew] e o link:https://rubygems.org/[RubyGem].
 +
@@ -255,6 +246,13 @@ $ echo 'export PATH="$(brew --prefix ruby)/bin:$PATH"' >> ~/.zshrc
 $ source ~/.zshrc
 ....
 +
+. Adicione o alias do git ao Homebrew, pois `git format-patch` do git fornecido pela Apple não funcionará com o Phabricator.
++
+[source, shell]
+....
+$ echo 'alias git=/usr/local/bin/git' >> ~/.zshrc
+$ source ~/.zshrc
+....
 . Instale o pacote rouge usando RubyGem.
 +
 [source, shell]
@@ -277,7 +275,7 @@ Revise a saída e edite os arquivos para corrigir os problemas informados e, em 
 +
 [source, shell]
 ....
-$ bmake run LOCALBASE=/opt/homebrew USE_RUBYGEMS=YES
+$ bmake run USE_RUBYGEMS=YES RUBY_CMD=$(brew --prefix ruby)/bin/ruby
 ....
 . Adicione todos os arquivos com `git add .`, então revise o diff com `git diff`. Por exemplo:
 +

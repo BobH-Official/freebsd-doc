@@ -7,7 +7,7 @@ description: This chapter covers various aspects of the FreeBSD Project, such as
 tags: ["introduction", "synopsis", "about", "Who Uses FreeBSD", "goals", "history"]
 showBookMenu: true
 weight: 3
-path: "/books/handbook/"
+path: "/books/handbook/introduction/"
 ---
 
 [[introduction]]
@@ -64,7 +64,7 @@ After reading this chapter you will know:
 [[nutshell]]
 == Welcome to FreeBSD!
 
-FreeBSD is an Open Source, standards-compliant Unix-like operating system for x86 (both 32 and 64 bit), ARM(R), AArch64, RISC-V(R), MIPS(R), POWER(R), PowerPC(R), and Sun UltraSPARC(R) computers.
+FreeBSD is an Open Source, standards-compliant Unix-like operating system for x86 (both 32 and 64 bit), ARM, AArch64, RISC-V, POWER, and PowerPC computers.
 It provides all the features that are nowadays taken for granted, such as preemptive multitasking, memory protection, virtual memory, multi-user facilities, SMP support, all the Open Source development tools for different languages and frameworks, and desktop features centered around X Window System, KDE, or GNOME.
 Its particular strengths are:
 
@@ -98,12 +98,14 @@ Here is just a sampling of some of the applications in which people are currentl
 ** Firewalls and NAT ("IP masquerading") gateways
 ** FTP servers
 ** Email servers
+** Storage servers
+** Virtualization servers
 ** And more...
 
 * _Education:_ Are you a student of computer science or a related engineering field? There is no better way of learning about operating systems, computer architecture and networking than the hands-on, under-the-hood experience that FreeBSD can provide. A number of freely available CAD, mathematical and graphic design packages also make it highly useful to those whose primary interest in a computer is to get _other_ work done!
 * _Research:_ With source code for the entire system available, FreeBSD is an excellent platform for research in operating systems as well as other branches of computer science. FreeBSD's freely available nature also makes it possible for remote groups to collaborate on ideas or shared development without having to worry about special licensing agreements or limitations on what may be discussed in open forums.
 * _Networking:_ Need a new router? A name server (DNS)? A firewall to keep people out of your internal network? FreeBSD can easily turn that unused PC sitting in the corner into an advanced router with sophisticated packet-filtering capabilities.
-* _Embedded:_ FreeBSD makes an excellent platform to build embedded systems upon. With support for the ARM(R), MIPS(R) and PowerPC(R) platforms, coupled with a robust network stack, cutting edge features, and the permissive extref:{faq}[BSD license, bsd-license-restrictions], FreeBSD makes an excellent foundation for building embedded routers, firewalls, and other devices.
+* _Embedded:_ FreeBSD makes an excellent platform to build embedded systems upon. With support for the ARM, AArch64 and PowerPC platforms, coupled with a robust network stack, cutting edge features, and the permissive extref:{faq}[BSD license, bsd-license-restrictions], FreeBSD makes an excellent foundation for building embedded routers, firewalls, and other devices.
 * _Desktop:_ FreeBSD makes a fine choice for an inexpensive desktop solution using the freely available X11 server and Wayland display server. FreeBSD offers a choice from many open-source desktop environments, including the standard GNOME and KDE graphical user interfaces. FreeBSD can even boot "diskless" from a central server, making individual workstations even cheaper and easier to administer.
 * _Software Development:_ The basic FreeBSD system comes with a full suite of development tools including a full C/C++ compiler and debugger suite. Support for many other languages are also available through the ports and packages collection.
 
@@ -164,7 +166,7 @@ For now, long-term development projects continue to take place in the {rel-head}
 The goals of the FreeBSD Project are to provide software that may be used for any purpose and without strings attached.
 Many of us have a significant investment in the code (and project) and would certainly not mind a little financial compensation now and then, but we are definitely not prepared to insist on it.
 We believe that our first and foremost "mission" is to provide code to any and all comers, and for whatever purpose, so that the code gets the widest possible use and provides the widest possible benefit.
-This is, I believe, one of the most fundamental goals of Free Software and one that we enthusiastically support.
+This is, we believe, one of the most fundamental goals of Free Software and one that we enthusiastically support.
 
 That code in our source tree which falls under the GNU General Public License (GPL) or Library General Public License (LGPL) comes with slightly more strings attached, though at least on the side of enforced access rather than the usual opposite.
 Due to the additional complexities that can evolve in the commercial use of GPL software we do, however, prefer software submitted under the more relaxed BSD license when it is a reasonable option to do so.
@@ -195,7 +197,7 @@ The FreeBSD core team[[development-core]]::
 The _FreeBSD core team_ would be equivalent to the board of directors if the FreeBSD Project were a company.
 The primary task of the core team is to make sure the project, as a whole, is in good shape and is heading in the right directions.
 Inviting dedicated and responsible developers to join our group of committers is one of the functions of the core team, as is the recruitment of new core team members as others move on.
-The current core team was elected from a pool of committer candidates in May 2022.
+The current core team was elected from a pool of committer candidates in May and June 2024.
 Elections are held every 2 years.
 +
 [NOTE]
@@ -261,3 +263,5 @@ The FreeBSD FAQ::
 `/usr/local/share/doc/freebsd/en/books/faq/faq_en.pdf`
 
 You can always find up to date documentation at link:https://docs.FreeBSD.org/[The Documentation Portal].
+
+All trademarks are the property of their respective owners.

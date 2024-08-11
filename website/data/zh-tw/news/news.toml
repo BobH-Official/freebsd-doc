@@ -1,5 +1,149 @@
 # Sort news by year, month and day
 # $FreeBSD$
+[[news]]
+date = "2024-06-12"
+title = "新的 FreeBSD Core Team 已選出"
+description = "本計畫活躍的 committer 已選舉出第 13 屆 FreeBSD Core Team。詳情請見 <a href=\"https://lists.freebsd.org/archives/freebsd-announce/2024-June/000136.html\">官方公告</a>。"
+
+[[news]]
+date = "2024-06-04"
+title = "FreeBSD 14.1-RELEASE 發布了"
+description = "<a href=\"https://www.FreeBSD.org/releases/14.1R/announce/\">FreeBSD 14.1-RELEASE</a>現已發布了。安裝前，請查看 <a href=\"https://www.FreeBSD.org/releases/14.1R/relnotes/\">發布通知</a>和 <a href=\"https://www.FreeBSD.org/releases/14.1R/errata/\">發行勘誤</a>以了解 14.1 的最新消息和問題。更多資訊可查看 <a href=\"https://www.FreeBSD.org/releases/\">發行版資訊</a>頁面。"
+
+[[news]]
+date= "2024-05-03"
+title = "2024 第一季開發進度報告發布"
+description = "The <a href=\"https://www.freebsd.org/status/report-2024-01-2024-03/\">2024 第一季開發進度報告發布</a> 21則條目現已發布。"
+
+[[news]]
+date = "2024-03-05"
+title = "FreeBSD 13.3-RELEASE 發布了"
+description = "<a href=\"https://www.FreeBSD.org/releases/13.3R/announce/\">FreeBSD 13.3-RELEASE</a>現已發布了。安裝前，請查看 <a href=\"https://www.FreeBSD.org/releases/13.3R/relnotes/\">發布通知</a> 和 <a href=\"https://www.FreeBSD.org/releases/13.3R/errata/\">發行勘誤</a> 以了解 13.3 的最新消息和問題。更多資訊可查看 <a href=\"https://www.FreeBSD.org/releases/\">發行版資訊</a>頁面。"
+
+[[news]]
+date= "2024-02-16"
+title = "2023 第四季開發進度報告發布"
+description = "<a href=\"https://www.freebsd.org/status/report-2023-10-2023-12/\">2023 第四季開發進度報告發布</a> 18則條目現已發布。"
+
+[[news]]
+date = "2024-02-13"
+description = "新任 committer: <a href=\"mailto:bnovkov@FreeBSD.org\">Bojan Novković</a> (src)"
+
+[[news]]
+date = "2024-01-26"
+description = "新任 committer: <a href=\"mailto:uzsolt@FreeBSD.org\">Zsolt Udvari</a> (ports)"
+
+[[news]]
+date = "2024-01-12"
+description = "新任 committer: <a href=\"mailto:dutra@FreeBSD.org\">Gabriel M. Dutra</a> (ports)"
+
+[[news]]
+date = "2023-12-01"
+description = "新任 committer: <a href=\"mailto:olce@FreeBSD.org\">Olivier Certner</a> (src)"
+
+[[news]]
+date = "2023-11-20"
+title = "FreeBSD 14.0-RELEASE 發布了"
+description = "<a href=\"https://www.FreeBSD.org/releases/14.0R/announce/\">FreeBSD 14.0-RELEASE</a>現已發布了。安裝前，請查看 <a href=\"https://www.FreeBSD.org/releases/14.0R/relnotes/\">發布通知</a>和 <a href=\"https://www.FreeBSD.org/releases/14.0R/errata/\">發行勘誤</a>以了解 14.0 的最新消息和問題。更多資訊可查看 <a href=\"https://www.FreeBSD.org/releases/\">發行版資訊</a>頁面。"
+
+[[news]]
+date = "2023-11-17"
+description = "發行工程團隊更新： <a href=\"mailto:cperciva@FreeBSD.org\">Colin Percival</a> 晉升為首席發行工程師。"
+
+[[news]]
+date = "2023-11-14"
+description = "新任 committer: <a href=\"mailto:rcm@FreeBSD.org\">R. Christian McDonald</a> (src)"
+
+[[news]]
+date = "2023-11-14"
+description = "新任 committer: <a href=\"mailto:akiyano@FreeBSD.org\">Arthur Kiyanovski</a> (src)"
+
+[[news]]
+date = "2023-11-03"
+description = "新任 committer: <a href=\"mailto:jfree@FreeBSD.org\">Jake Freeland</a> (src)"
+
+[[news]]
+date = "2023-11-03"
+title = "FreeBSD 14.0-RC4 發布了"
+description = "FreeBSD 14.0 的第四個候選發布版本現已發布。用於 amd64、i386、powerpc、powerpc64、powerpc64le、powerpcspe、armv7、aarch64和 riscv64 的 ISO 映像檔案已經 <a href=\"https://lists.freebsd.org/archives/freebsd-snapshots/2023-October/004928.html\">發布</a>，可以在多數的 <a href=\"https://docs.freebsd.org/en/books/handbook/mirrors/#mirrors-ftp\">FreeBSD 鏡像站</a>取得。"
+
+[[news]]
+date= "2023-11-01"
+title = "2023 第三季開發進度報告發布"
+description = "<a href=\"https://www.freebsd.org/status/report-2023-07-2023-09/\">2023 第三季開發進度報告發布</a> 32則條目現已發布。"
+
+[[news]]
+date = "2023-10-27"
+title = "FreeBSD 14.0-RC3 發布了"
+description = "FreeBSD 14.0 的第三個候選發布版本現已發布。用於 amd64、i386、powerpc、powerpc64、powerpc64le、powerpcspe、armv7、aarch64和 riscv64 的 ISO 映像檔案已經 <a href=\"https://lists.freebsd.org/archives/freebsd-snapshots/2023-October/004904.html\">發布</a>，可以在多數的 <a href=\"https://docs.freebsd.org/en/books/handbook/mirrors/#mirrors-ftp\">FreeBSD 鏡像站</a>取得。"
+
+[[news]]
+date = "2023-10-20"
+title = "FreeBSD 14.0-RC2 發布了"
+description = "FreeBSD 14.0 的第二個候選發布版本現已發布。用於 amd64、i386、powerpc、powerpc64、powerpc64le、powerpcspe、armv7、aarch64和 riscv64 的 ISO 映像檔案已經 <a href=\"https://lists.freebsd.org/archives/freebsd-snapshots/2023-October/004880.html\">發布</a>，可以在多數的 <a href=\"https://docs.freebsd.org/en/books/handbook/mirrors/#mirrors-ftp\">FreeBSD 鏡像站</a>取得。"
+
+[[news]]
+date= "2023-10-16"
+description = "新任 committer: <a href=\"mailto:michaelo@FreeBSD.org\">Michael Osipov</a> (ports)"
+
+[[news]]
+date = "2023-10-13"
+title = "FreeBSD 14.0-RC1 發布了"
+description = "FreeBSD 14.0 的第一個候選發布版本現已發布。用於 amd64、i386、powerpc、powerpc64、powerpc64le、powerpcspe、armv7、aarch64和 riscv64 的 ISO 映像檔案已經 <a href=\"https://lists.freebsd.org/archives/freebsd-snapshots/2023-October/004844.html\">發布</a>，可以在多數的 <a href=\"https://docs.freebsd.org/en/books/handbook/mirrors/#mirrors-ftp\">FreeBSD 鏡像站</a>取得。"
+
+[[news]]
+date = "2023-10-06"
+title = "FreeBSD 14.0-BETA5 發布了"
+description = "FreeBSD 14.0 的第五個 BETA 版本現已發布。用於 amd64、i386、powerpc、powerpc64、powerpc64le、powerpcspe、armv7、aarch64和 riscv64 的 ISO 映像檔案已經 <a href=\"https://lists.freebsd.org/archives/freebsd-stable/2023-October/004814.html\">發布</a>，可以在多數的 <a href=\"https://docs.freebsd.org/en/books/handbook/mirrors/#mirrors-ftp\">FreeBSD 鏡像站</a>取得。"
+
+[[news]]
+date = "2023-09-30"
+title = "FreeBSD 14.0-BETA4 發布了"
+description = "FreeBSD 14.0 的第四個 BETA 版本現已發布。用於 amd64、i386、powerpc、powerpc64、powerpc64le、powerpcspe、armv7、aarch64和 riscv64 的 ISO 映像檔案已經 <a href=\"https://lists.freebsd.org/archives/freebsd-stable/2023-September/004773.html\">發布</a>，可以在多數的 <a href=\"https://docs.freebsd.org/en/books/handbook/mirrors/#mirrors-ftp\">FreeBSD 鏡像站</a>取得。"
+
+[[news]]
+date = "2023-09-22"
+title = "FreeBSD 14.0-BETA3 發布了"
+description = "FreeBSD 14.0 的第三個 BETA 版本現已發布。用於 amd64、i386、powerpc、powerpc64、powerpc64le、powerpcspe、armv7、aarch64和 riscv64 的 ISO 映像檔案已經 <a href=\"https://lists.freebsd.org/archives/freebsd-stable/2023-September/004736.html\">發布</a>，可以在多數的 <a href=\"https://docs.freebsd.org/en/books/handbook/mirrors/#mirrors-ftp\">FreeBSD 鏡像站</a>取得。"
+
+[[news]]
+date = "2023-09-16"
+title = "FreeBSD 14.0-BETA2 發布了"
+description = "FreeBSD 14.0 的第二個 BETA 版本現已發布。用於 amd64、i386、powerpc、powerpc64、powerpc64le、powerpcspe、armv7、aarch64和 riscv64 的 ISO 映像檔案已經 <a href=\"https://lists.freebsd.org/archives/freebsd-stable/2023-September/004685.html\">發布</a>，可以在多數的 <a href=\"https://docs.freebsd.org/en/books/handbook/mirrors/#mirrors-ftp\">FreeBSD 鏡像站</a>取得。"
+
+[[news]]
+date = "2023-09-08"
+title = "FreeBSD 14.0-BETA1 發布了"
+description = "FreeBSD 14.0 的第一個 BETA 版本現已發布。用於 amd64、i386、powerpc、powerpc64、powerpc64le、powerpcspe、armv7、aarch64和 riscv64 的 ISO 映像檔案已經 <a href=\"https://lists.freebsd.org/archives/freebsd-stable/2023-September/004614.html\">發布</a>，可以在多數的 <a href=\"https://docs.freebsd.org/en/books/handbook/mirrors/#mirrors-ftp\">FreeBSD 鏡像站</a>取得。"
+
+[[news]]
+date = "2023-09-06"
+description = "新任 committer: <a href=\"mailto:jbo@FreeBSD.org\">Joel Bodenmann</a> (ports)"
+
+
+[[news]]
+date= "2023-07-27"
+title = "2023 第二季開發進度報告發布"
+description = "<a href=\"https://www.freebsd.org/status/report-2023-04-2023-06/\">2023 第二季開發進度報告發布</a> 37則條目現已發布。"
+
+[[news]]
+date = "2023-05-22"
+description = "新任 committer: <a href=\"mailto:christos@FreeBSD.org\">Christos Margiolis</a> (src)"
+
+[[news]]
+date= "2023-04-19"
+title = "2023 第一季開發進度報告發布"
+description = "<a href=\"https://www.freebsd.org/status/report-2023-01-2023-03/\">2023 第一季開發進度報告發布</a> 25則條目現已發布。"
+
+[[news]]
+date = "2023-04-11"
+title = "FreeBSD 13.2-RELEASE 發布了"
+description = "<a href=\"https://www.FreeBSD.org/releases/13.2R/announce/\">FreeBSD 13.2-RELEASE</a>現已發布了。安裝前，請查看 <a href=\"https://www.FreeBSD.org/releases/13.2R/relnotes/\">發布通知</a>和 <a href=\"https://www.FreeBSD.org/releases/13.2R/errata/\">發行勘誤</a>以了解 13.2 的最新消息和問題。更多資訊可查看 <a href=\"https://www.FreeBSD.org/releases/\">發行版資訊</a>頁面。"
+
+[[news]]
+date = "2023-04-02"
+title = "FreeBSD 13.2-RC6 發布了"
+description = "FreeBSD 13.2 的第六個候選發布版本現已發布。用於 amd64、i386、powerpc、powerpc64、powerpc64le、powerpcspe、armv6、armv7、aarch64和 riscv64 的 ISO 映像檔案已經 <a href=\"https://lists.freebsd.org/archives/freebsd-snapshots/2023-April/000234.html\">發布</a>，可以在多數的 <a href=\"https://docs.freebsd.org/en/books/handbook/mirrors/#mirrors-ftp\">FreeBSD 鏡像站</a>取得。"
 
 [[news]]
 date = "2023-03-27"

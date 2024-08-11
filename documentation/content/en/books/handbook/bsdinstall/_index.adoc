@@ -7,7 +7,7 @@ description: Guide about how to install FreeBSD, the minimum hardware requiremen
 tags: ["bsdinstall", "installing FreeBSD", "requirements", "tutorial", "guide"]
 showBookMenu: true
 weight: 4
-path: "/books/handbook/"
+path: "/books/handbook/bsdinstall/"
 ---
 
 [[bsdinstall]]
@@ -82,7 +82,13 @@ The link:https://www.FreeBSD.org/where/[FreeBSD download page] also has recommen
 == Pre-Installation Tasks
 
 Once it has been determined that the system meets the minimum hardware requirements for installing FreeBSD, the installation file should be downloaded and the installation media prepared.
-Before doing this, check that the system is ready for an installation by verifying the items in this checklist:
+
+[TIP]
+====
+Consider using crossref:virtualization[virtualization,virtualization] if you want to use FreeBSD on a system that already has another operating system installed.
+====
+
+Before moving on to the installation, check that the system is ready by verifying the items in this checklist:
 
 [.procedure]
 ====
@@ -109,6 +115,8 @@ The FreeBSD boot loader requires either a primary or GPT partition.
 If all of the primary or GPT partitions are already in use, one must be freed for FreeBSD.
 To create a partition without deleting existing data, use a partition resizing tool to shrink an existing partition and create a new partition using the freed space.
 +
+An alternative to modifying the system's existing disk partitions is to use crossref:virtualization[virtualization,virtualization], which allows multiple operating systems to run at the same time without having to alter partitions.
++
 A variety of free and commercial partition resizing tools are listed at link:https://en.wikipedia.org/wiki/List_of_disk_partitioning_software[List of disk partitioning software wikipedia entry].
 link:https://gparted.org/livecd.php[GParted Live] is a free live CD which includes the GParted partition editor.
 +
@@ -119,7 +127,6 @@ Since the possibility of selecting the wrong partition exists, always backup any
 ======
 +
 Disk partitions containing different operating systems make it possible to install multiple operating systems on one computer.
-An alternative is to use crossref:virtualization[virtualization,virtualization] which allows multiple operating systems to run at the same time without modifying any disk partitions.
 . *Collect Network Information*
 +
 Some FreeBSD installation methods require a network connection in order to download the installation files.
@@ -204,7 +211,7 @@ This procedure will erase the existing data on the stick.
 [[bsdinstall-usb-dd]]
 [.procedure]
 ====
-*Procedure. Using `dd` to Write the Image* +
+*Procedure. Using `dd` to write the image* +
 
 [WARNING]
 ======
@@ -276,7 +283,7 @@ When booting from CD or DVD, turn on the computer and insert the media at the fi
 How to configure the system to boot from the inserted media depends upon the architecture.
 
 [[bsdinstall-view-probe]]
-=== FreeBSD Boot Menu
+=== FreeBSD Boot Loader Menu
 
 Once the system boots from the installation media, a menu similar to the following will be displayed:
 
@@ -308,7 +315,7 @@ The next section is used to toggle the available options to `On` or `Off` by pre
 The system will always boot using the settings for these options until they are modified.
 Several options can be toggled using this menu:
 
-* `ACPI Support`: If the system hangs during boot, try toggling this option to `Off`.
+* `ACPI Support`: If the system hangs during boot, try toggling this option to `Off`. This option is only present when ACPI support is available but not required.
 * `Safe Mode`: If the system still hangs during boot even with `ACPI Support` set to `Off`, try setting this option to `On`.
 * `Single User`: Toggle this option to `On` to fix an existing FreeBSD installation as described in crossref:boot[boot-singleuser,“Single-User Mode”]. Once the problem is fixed, set it back to `Off`.
 * `Verbose`: Toggle this option to `On` to see more detailed messages during the boot process. This can be useful when troubleshooting a piece of hardware.
@@ -465,7 +472,7 @@ Large software packages, like Firefox or LibreOffice may be tricky to install if
 
 The `/usr` partition holds many of the files which support the system, including the FreeBSD Ports Collection and system source code.
 At least 2 gigabytes of space is recommended for this partition.
-Also, note that home directories for users are placed in `/usr/home` by default, but can be placed on another partition. 
+Also, note that home directories for users are placed in `/usr/home` by default, but can be placed on another partition.
 By default, `/home` is a symbolic link to `/usr/home`.
 
 When selecting partition sizes, keep the space requirements in mind.
@@ -581,7 +588,7 @@ The other partition schemes are generally used for uncommon or older computers.
 |===
 
 After the partitioning scheme has been selected and created, select btn:[Create] again to create the partitions.
-The kbd:[Tab] key is used to move the cursor between fields.
+The kbd:[Tab] key is used to give focus to the fields (after cycling through btn:[<OK>], btn:[<Options>], and btn:[<Cancel>]).
 
 [[bsdinstall-part-manual-addpart]]
 .Manually Create Partitions
@@ -941,7 +948,7 @@ Files can be retrieved more quickly when the mirror is close to the target compu
 
 [TIP]
 ====
-Selecting `ftp://ftp.freebsd.org (Main Site)` will automatically route you to the nearest mirror.
+Selecting `ftp://download.freebsd.org (Main Site)` will automatically route to the nearest mirror.
 ====
 
 [[bsdinstall-netinstall-mirror]]

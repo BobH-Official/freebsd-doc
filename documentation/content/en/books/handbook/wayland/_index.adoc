@@ -7,7 +7,7 @@ description: This chapter describes how to install and configure Wayland and com
 tags: ["Wayland", "XWayland", "KDE", "Plasma", "Xfce", "Gnome", "Intel", "AMD", "NVIDIA", "Wayfire", "Sway", "Hikari"]
 showBookMenu: true
 weight: 8
-path: "/books/handbook/"
+path: "/books/handbook/wayland/"
 ---
 
 [[wayland]]
@@ -49,7 +49,29 @@ include::../../../../../shared/asciidoctor.adoc[]
 endif::[]
 
 [[wayland-synopsis]]
-== Wayland Synopsis
+== Synopsis
+
+An installation of FreeBSD using bsdinstall does not automatically install a graphical user interface.
+This chapter describes how to select, install, and configure a Wayland compositor, which provides a graphical environment.
+
+Before reading this chapter, you should:
+
+* Know how to install crossref:ports[ports,additional third-party software].
+
+* How to identify and configure crossref:x11[x-graphic-card-drivers,drivers for your graphics hardware].
+
+After reading this chapter, you will know:
+
+* How to configure FreeBSD to host a Wayland graphical environment.
+
+* How to install and configure a Wayland compositor.
+
+* How to run programs designed for the older X Window System.
+
+* How to configure remote desktop access to a Wayland graphical environment.
+
+[[wayland-overview]]
+== Wayland Overview
 Wayland is a new display server, but it differs from Xorg in several important ways.
 First, Wayland is only a protocol that acts as an intermediary between clients using a different mechanism which removes the dependency on an X server.
 Xorg includes both the X11 protocol, used to run remote displays and the X server will accept connections and display windows.
@@ -64,8 +86,8 @@ The `-rootless` parameter, when removed, will restore X11 window manager support
 
 [NOTE]
 ====
-The current NVidia driver should work with most wl-roots compositors, but it may be a little unstable and not support all features at this time.
-Volunteers to help work on the NVidia DRM are requested.
+The current NVIDIA(R) driver should work with most wlroots compositors, but it may be a little unstable and not support all features at this time.
+Volunteers to help work on the NVIDIA(R) DRM are requested.
 ====
 
 Currently, a lot of software will function with minimal issues on Wayland, including Firefox.
@@ -75,7 +97,7 @@ And a few desktops are also available, such as the Compiz Fusion replacement, kn
 ====
 As of May, 2021, plasma5-kwin does support Wayland on FreeBSD.
 To use Plasma under Wayland, use the `startplasma-wayland` parameter to `ck-launch-session` and tie in dbus with:
-`ck-launch-session dbus-run-session startplasma-wayland`
+`dbus-launch --exit-with-x11 ck-launch-session startplasma-wayland`
 to get it working.
 ====
 
@@ -93,7 +115,7 @@ Installing Wayland is simple; there is not a great deal of configuration for the
 Most of the composition will depend on the chosen compositor.
 By installing `seatd` now, a step is skipped as part of the compositor installation and configuration as `seatd` is needed to provide non-root access to certain devices.
 
-All of the compositors described here should work with package:graphics/drm-kmod[] open source drivers; however, the NVidia graphics cards may have issues when using the proprietary drivers.
+All of the compositors described here should work with package:graphics/drm-kmod[] open source drivers; however, the NVIDIA(R) graphics cards may have issues when using the proprietary drivers.
 Begin by installing the following packages:
 
 [source,shell]
@@ -103,7 +125,9 @@ Begin by installing the following packages:
 
 Once the protocol and supporting packages have been installed, a compositor must create the user interface.
 Several compositors will be covered in the following sections.
-All compositors using Wayland will need a runtime directory defined in the environment, which can be achieved with the following command in the bourne shell:
+All compositors using Wayland will need a runtime directory defined in the environment.
+Since FreeBSD 14.1, this is created and defined automatically.
+For previous versions, this is achieved with the following command in the bourne shell:
 
 [source,shell]
 ----
@@ -129,7 +153,7 @@ To enable and start the `seatd` daemon now, and on system initialization:
 
 [source,shell]
 ----
-# sysrc seatd_enable=”YES”
+# sysrc seatd_enable="YES"
 # service seatd start
 ----
 
@@ -205,8 +229,8 @@ The first option will lock the screen after 300 seconds, and after another 300, 
 One final thing to note is the <super> key.
 Most of the configuration mentions this key, and it is the traditional `Windows` key on the keyboard.
 Most keyboards have this super key available; however, it should be remapped within this configuration file if it is not available.
-For example, to lock the screen, press and hold the super key, the kbd:[shift] key, and press the kbd:[escape] key. 
-nless the mappings have changed, this will execute the swaylock application.
+For example, to lock the screen, press and hold the super key, the kbd:[shift] key, and press the kbd:[escape] key.
+Unless the mappings have changed, this will execute the swaylock application.
 The default configuration for `swaylock` will show a grey screen; however, the application is highly customizable and well documented.
 In addition, since the swaylock-effects is the version that was installed, there are several options available such as the blur effect, which can be seen using the following command:
 
@@ -449,7 +473,7 @@ xwayland = true
 ....
 
 For the Sway compositor, `Xwayland` should be enabled by default.
-Even so, it is recommened to manually add a configuration line in the [.filename]#~/.config/sway/config# like the following:
+Even so, it is recommended to manually add a configuration line in the [.filename]#~/.config/sway/config# like the following:
 
 [.programlisting]
 .....
@@ -478,7 +502,7 @@ DISPLAY=:0
 In this output, there is a default Wayland display and a display set for the Xwayland server.
 Another method to verify that `Xwayland` is functioning properly is to use install and test the small package:[x11/eyes] and check the output.
 If the `xeyes` application starts and the eyes follow the mouse pointer, Xwayland is functioning properly.
-If an error such as the following is displayed, something happened during the `Xwayland` intitialization and it may need reinstalled:
+If an error such as the following is displayed, something happened during the `Xwayland` initialization and it may need reinstalled:
 
 [.programlisting]
 ....

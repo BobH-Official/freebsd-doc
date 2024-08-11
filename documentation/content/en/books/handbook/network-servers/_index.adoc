@@ -7,7 +7,7 @@ description: This chapter covers some of the more frequently used network servic
 tags: ["network", "servers", "inetd", "NFS", "NIS", "LDAP", "DHCP", "DNS", "Apache HTTP", "FTP", "Samba", "NTP", "iSCSI"]
 showBookMenu: true
 weight: 37
-path: "/books/handbook/"
+path: "/books/handbook/network-servers/"
 ---
 
 [[network-servers]]
@@ -404,6 +404,8 @@ To make subsequent [.filename]#/etc/exports# edits take effect immediately, forc
 # service mountd reload
 ....
 
+Refer to man:zfs-share[8] for a description of exporting ZFS datasets via NFS using the `sharenfs` ZFS property instead of the man:exports[5] file.
+
 Refer to man:nfsv4[4] for a description of an NFS Version 4 setup.
 
 === Configuring the Client
@@ -445,20 +447,18 @@ Refer to man:fstab[5] for a description of all available options.
 === Locking
 
 Some applications require file locking to operate correctly.
-To enable locking, add these lines to [.filename]#/etc/rc.conf# on both the client and server:
+To enable locking, execute the following command on both the client and server:
 
-[.programlisting]
+[source,shell]
 ....
-rpc_lockd_enable="YES"
-rpc_statd_enable="YES"
+# sysrc rpc_lockd_enable="YES"
 ....
 
-Then start the applications:
+Then start the man:rpc.lockd[8] service:
 
 [source,shell]
 ....
 # service lockd start
-# service statd start
 ....
 
 If locking is not required on the server, the NFS client can be configured to lock locally by including `-L` when running mount.
@@ -1041,7 +1041,7 @@ When adding a new machine, login restrictions must be defined for all netgroups.
 When a new user is added, the account must be added to one or more netgroups.
 If the NIS setup is planned carefully, only one central configuration file needs modification to grant or deny access to machines.
 
-The first step is the initialization of the NIS`netgroup` map.
+The first step is the initialization of the NIS `netgroup` map.
 In FreeBSD, this map is not created by default.
 On the NIS master server, use an editor to create a map named [.filename]#/var/yp/netgroup#.
 
@@ -2003,6 +2003,33 @@ freebsd.org. (A)
 ;; Chase successful
 ....
 
+=== Authoritative Name Server Configuration
+FreeBSD does not provide authoritative name server software in the base system.
+Users are encouraged to install third party applications, like package:dns/nsd[] or package:dns/bind918[] package or port.
+
+[[network-zeroconf]]
+== Zero-configuration networking (mDNS/DNS-SD)
+
+https://en.wikipedia.org/wiki/Zero-configuration_networking[Zero-configuration networking] (sometimes referred to as zeroconf) is a set of technologies, which simplify network configuration by providing:
+
+* automatic assignment of numeric network addresses (mDNS),
+* automatic distribution and resolution of hostnames (mDNS), and
+* automatic discovery of service instances (DNS-SD).
+
+=== Configuring and Starting Avahi
+
+One of the popular implementations of zeroconf is https://avahi.org/[Avahi].
+Avahi can be installed and configured with the following commands:
+
+[source,shell]
+....
+# pkg install avahi-app nss_mdns
+# grep -q '^hosts:.*\<mdns\>' /etc/nsswitch.conf || sed -i "" 's/^hosts: .*/& mdns/' /etc/nsswitch.conf
+# service dbus enable
+# service avahi-daemon enable
+# service dbus start
+# service avahi-daemon start
+....
 
 [[network-apache]]
 == Apache HTTP Server
@@ -2023,7 +2050,7 @@ The most frequently modified directives are:
 Specifies the default directory hierarchy for the Apache installation.
 Binaries are stored in the [.filename]#bin# and [.filename]#sbin# subdirectories of the server root and configuration files are stored in the [.filename]#etc/apache2x# subdirectory.
 
-`ServerAdmin you@example.com`::
+`ServerAdmin \you@example.com`::
 Change this to the email address to receive problems with the server.
 This address also appears on some server-generated pages, such as error documents.
 
@@ -2116,7 +2143,7 @@ This section describes three of the most commonly used modules.
 
 ==== SSL support
 
-At one in point in time, support for SSL inside of Apache required a secondary module called [.filename]#mod_ssl#.
+At one point, support for SSL inside of Apache required a secondary module called [.filename]#mod_ssl#.
 This is no longer the case and the default install of Apache comes with SSL built into the web server.
 An example of how to enable support for SSL websites is available in the installed file, [.filename]#httpd-ssl.conf# inside of the [.filename]#/usr/local/etc/apache24/extra# directory
 Inside this directory is also a sample file called named [.filename]#ssl.conf-sample#.
@@ -2239,7 +2266,7 @@ The first is to install the full PHP binary and running the command to gain the 
 
 [source,shell]
 ....
-# php -i |less
+# php -i | less
 ....
 
 It is necessary to pass the output to a pager, such as the `more` or `less` to easier digest the amount of output.
@@ -2444,10 +2471,10 @@ It can be added to non-Microsoft(R) Windows(R) systems by installing the Samba c
 The protocol allows clients to access shared data and printers.
 These shares can be mapped as a local disk drive and shared printers can be used as if they were local printers.
 
-On FreeBSD, the Samba client libraries can be installed using the package:net/samba413[] port or package.
+On FreeBSD, the Samba client libraries can be installed using the package:net/samba416[] port or package.
 The client provides the ability for a FreeBSD system to access SMB/CIFS shares in a Microsoft(R) Windows(R) network.
 
-A FreeBSD system can also be configured to act as a Samba server by installing the same package:net/samba413[] port or package.
+A FreeBSD system can also be configured to act as a Samba server by installing the same package:net/samba416[] port or package.
 This allows the administrator to create SMB/CIFS shares on the FreeBSD system which can be accessed by clients running Microsoft(R) Windows(R) or the Samba client libraries.
 
 === Server Configuration
@@ -2759,7 +2786,7 @@ This section describes how to configure a FreeBSD system as a target or an initi
 To configure an iSCSI target, create the [.filename]#/etc/ctl.conf# configuration file, add a line to [.filename]#/etc/rc.conf# to make sure the man:ctld[8] daemon is automatically started at boot, and then start the daemon.
 
 The following is an example of a simple [.filename]#/etc/ctl.conf# configuration file.
-Refer to man:ctl.conf[5] for a more complete description of this file's available options.
+Refer to man:ctl.conf[5] for a complete description of this file's available options.
 
 [.programlisting]
 ....

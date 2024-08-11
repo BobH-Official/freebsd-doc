@@ -13,7 +13,6 @@
 * {dbaio}
 * {timur}
 * {jhb}
-* {gjb}
 * {lbartoletti}
 * {jbeich}
 * {kib}
@@ -24,6 +23,7 @@
 * {kaktus}
 * {tdb}
 * {zbb}
+* {jbo}
 * {novel}
 * {garga}
 * {kbowling}
@@ -41,6 +41,7 @@
 * {jchandra}
 * {acm}
 * {carlavilla}
+* {olce}
 * {gahr}
 * {adrian}
 * {dchagin}
@@ -50,6 +51,7 @@
 * {melifaro}
 * {theraven}
 * {davidcs}
+* {jrtc27}
 * {marcus}
 * {fuz}
 * {lcook}
@@ -80,6 +82,7 @@
 * {vvd}
 * {kd}
 * {ale}
+* {dutra}
 * {deischen}
 * {julian}
 * {ae}
@@ -99,6 +102,7 @@
 * {fanf}
 * {mdf}
 * {blackend}
+* {jfree}
 * {decke}
 * {sgalabov}
 * {ultima}
@@ -120,7 +124,6 @@
 * {jamie}
 * {adridg}
 * {eugen}
-* {rigoletto}
 * {anish}
 * {jmg}
 * {mjg}
@@ -157,7 +160,6 @@
 * {kan}
 * {bjk}
 * {phk}
-* {pluknet}
 * {karels}
 * {pkelsey}
 * {yasu}
@@ -166,6 +168,7 @@
 * {kientzle}
 * {stevek}
 * {jkim}
+* {akiyano}
 * {jceel}
 * {kai}
 * {corvink}
@@ -219,6 +222,7 @@
 * {mm}
 * {slavash}
 * {slm}
+* {rcm}
 * {mckusick}
 * {jmcneill}
 * {mmel}
@@ -242,7 +246,6 @@
 * {rnagy}
 * {trasz}
 * {neel}
-* {bland}
 * {joneum}
 * {gnn}
 * {khng}
@@ -250,7 +253,9 @@
 * {obrien}
 * {nick}
 * {olgeni}
+* {michaelo}
 * {osa}
+* {osamaabb}
 * {rodrigo}
 * {philip}
 * {zirias}
@@ -266,7 +271,6 @@
 * {cperciva}
 * {alfred}
 * {csjp}
-* {grahamperrin}
 * {gerald}
 * {scottph}
 * {0mp}
@@ -353,6 +357,7 @@
 * {chuck}
 * {ericbsd}
 * {andrew}
+* {uzsolt}
 * {ume}
 * {fsu}
 * {mikael}
@@ -392,3 +397,4 @@
 * {dsl}
 * {ronald}
 * {christos}
+* {bnovkov}

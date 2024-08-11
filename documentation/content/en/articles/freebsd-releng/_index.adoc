@@ -78,7 +78,7 @@ The default minimum timeframe before merging to {branchStable} branches is three
 
 Although a general rule to wait a minimum of three days before merging from {branchHead}, there are a few special circumstances where an immediate merge may be necessary, such as a critical security fix, or a bug fix that directly inhibits the release build process.
 
-After several months, and the number of changes in the {branchStable} branch have grown significantly, it is time to release the next version of FreeBSD. 
+After several months, and the number of changes in the {branchStable} branch have grown significantly, it is time to release the next version of FreeBSD.
 These releases have been historically referred to as "point" releases.
 
 In between releases from the {branchStable} branches, approximately every two (2) years, a release will be cut directly from {branchHead}.
@@ -290,7 +290,7 @@ The files specified throughout this section are relative to the `{branchHead}` b
 [[releng-website-prerelease]]
 === Website Changes Before the Release Cycle Begins
 
-When the release cycle schedule is available, these files need to be updated to enable various different functionalities on the FreeBSD Project website:
+When the release cycle schedule is available, these files need to be updated to enable different functionalities on the FreeBSD Project website:
 
 [.informaltable]
 [cols="1,1", frame="none", options="header"]
@@ -426,7 +426,7 @@ a|
 |Move `REPRODUCIBLE_BUILD` from `\__DEFAULT_NO_OPTIONS` to `__DEFAULT_YES_OPTIONS`
 
 |[.filename]#share/mk/src.opts.mk#
-|Move `LLVM_ASSERTIONS` from `\__DEFAULT_YES_OPTIONS` to `__DEFAULT_NO_OPTIONS` (FreeBSD 13.x and later only)
+|Move `LLVM_ASSERTIONS` from `\__DEFAULT_YES_OPTIONS` to `__DEFAULT_NO_OPTIONS`
 
 |[.filename]#libexec/rc/rc.conf#
 |Set `dumpdev` from `AUTO` to `NO` (it is configurable via for those that want it enabled by default)
@@ -764,7 +764,6 @@ When a release reaches End-of-Life, references to that release should be removed
 | File
 | What to Change
 
-
 |[.filename]#~/website/themes/beastie/layouts/index.html#
 |Remove `u-relXXX-announce` and `u-relXXX-announce` references.
 
@@ -772,10 +771,13 @@ When a release reaches End-of-Life, references to that release should be removed
 |Move the `u-relXXX-*` variables from the supported release list to the Legacy Releases list.
 
 |[.filename]#~/website/content/en/releng/_index.adoc#
-|Update the appropriate releng branch to refelect the branch is no longer supported.
+|Update the appropriate releng branch to reflect the branch is no longer supported.
 
 |[.filename]#~/website/content/en/security/_index.adoc#
 |Remove the branch from the supported branch list.
+
+|[.filename]#~/website/content/en/security/unsupported.adoc#
+|Add the branch to the unsupported branch list.
 
 |[.filename]#~/website/content/en/where.adoc#
 |Remove the URLs for the release.

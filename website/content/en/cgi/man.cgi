@@ -1,6 +1,6 @@
 #!/usr/local/bin/perl -T
 #
-# Copyright (c) 1996-2023 Wolfram Schneider <wosch@FreeBSD.org>
+# Copyright (c) 1996-2024 Wolfram Schneider <wosch@FreeBSD.org>
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -33,7 +33,6 @@
 #	BSDI	Id: bsdi-man,v 1.2 1995/01/11 02:30:01 polk Exp
 # Dual CGI/Plexus mode and new interface by sanders@bsdi.com 9/22/1995
 #
-# $FreeBSD$
 
 ############################################################################
 # !!! man.cgi is stale perl4 code !!!
@@ -51,10 +50,15 @@ package main;
 $debug        = 2;
 $www{'title'} = 'FreeBSD Manual Pages';
 $www{'home'}  = 'https://www.FreeBSD.org';
+$www{'home_man'}  = 'https://man.FreeBSD.org';
+$www{'cgi_man'}  = '/cgi/man.cgi';
 $www{'head'}  = $www{'title'};
 
 # set to zero if your front-end cache has low memory
 my $download_streaming_caching = 0;
+
+# enable to download the manual pages as a tarball
+my $enable_download = 1;
 
 #$command{'man'} = '/usr/bin/man';    # 8Bit clean man
 $command{'man'} = '/usr/local/www/bin/man.wrapper';    # set CPU limits
@@ -183,9 +187,12 @@ $sectionpath = {
     'OpenBSD 7.1' => { 'path' => '1:2:3:3p:4:5:6:7:8:9', },
     'OpenBSD 7.2' => { 'path' => '1:2:3:3p:4:5:6:7:8:9', },
     'OpenBSD 7.3' => { 'path' => '1:2:3:3p:4:5:6:7:8:9', },
+    'OpenBSD 7.4' => { 'path' => '1:2:3:3p:4:5:6:7:8:9', },
+    'OpenBSD 7.5' => { 'path' => '1:2:3:3p:4:5:6:7:8:9', },
 
     'CentOS 3.9' => { 'path' => '1:2:3:3p:4:5:6:7:8:9:n', },
     'CentOS 4.8' => { 'path' => '1:1p:2:3:3p:4:5:6:7:8:9:n:0p', },
+
     'CentOS 5.3' => { 'path' => '0p:1:1p:1x:2:2x:3:3p:3x:4:4x:5:5x:6:6x:7:7x:8:8x:9:9x:l:n' },
     'CentOS 5.4' => { 'path' => '0p:1:1p:1x:2:2x:3:3p:3x:4:4x:5:5x:6:6x:7:7x:8:8x:9:9x:l:n' },
     'CentOS 5.5' => { 'path' => '0p:1:1p:1x:2:2x:3:3p:3x:4:4x:5:5x:6:6x:7:7x:8:8x:9:9x:l:n' },
@@ -195,6 +202,7 @@ $sectionpath = {
     'CentOS 5.9' => { 'path' => '0p:1:1p:1x:2:2x:3:3p:3x:4:4x:5:5x:6:6x:7:7x:8:8x:9:9x:l:n' },
     'CentOS 5.10' => { 'path' => '0p:1:1p:1x:2:2x:3:3p:3x:4:4x:5:5x:6:6x:7:7x:8:8x:9:9x:l:n' },
     'CentOS 5.11' => { 'path' => '0p:1:1p:1x:2:2x:3:3p:3x:4:4x:5:5x:6:6x:7:7x:8:8x:9:9x:l:n' },
+
     'CentOS 6.0' => { 'path' => '0p:1:1p:1x:2:2x:3:3p:3x:4:4x:5:5x:6:6x:7:7x:8:8x:9:9x:l:n' },
     'CentOS 6.1' => { 'path' => '0p:1:1p:1x:2:2x:3:3p:3x:4:4x:5:5x:6:6x:7:7x:8:8x:9:9x:l:n' },
     'CentOS 6.2' => { 'path' => '0p:1:1p:1x:2:2x:3:3p:3x:4:4x:5:5x:6:6x:7:7x:8:8x:9:9x:l:n' },
@@ -202,8 +210,33 @@ $sectionpath = {
     'CentOS 6.4' => { 'path' => '0p:1:1p:1x:2:2x:3:3p:3x:4:4x:5:5x:6:6x:7:7x:8:8x:9:9x:l:n' },
     'CentOS 6.5' => { 'path' => '0p:1:1p:1x:2:2x:3:3p:3x:4:4x:5:5x:6:6x:7:7x:8:8x:9:9x:l:n' },
     'CentOS 6.6' => { 'path' => '0p:1:1p:1x:2:2x:3:3p:3x:4:4x:5:5x:6:6x:7:7x:8:8x:9:9x:l:n' },
+    'CentOS 6.7' => { 'path' => '0p:1:1p:2:3:3p:3t:4:5:6:7:8:9:n' },
+    'CentOS 6.8' => { 'path' => '0p:1:1p:2:3:3p:3t:4:5:6:7:8:9:n' },
+    'CentOS 6.9' => { 'path' => '0p:1:1p:2:3:3p:3t:4:5:6:7:8:9:n' },
+    'CentOS 6.10' => { 'path' => '0p:1:1p:2:3:3p:3t:4:5:6:7:8:9:n' },
+
     'CentOS 7.0' => { 'path' => '0p:1:1p:1x:2:2x:3:3p:3t:3x:4:4x:5:5x:6:6x:7:7x:8:8x:9:9x:n' },
     'CentOS 7.1' => { 'path' => '0p:1:1p:2:3:3p:3t:4:5:6:7:8:9:n' },
+    'CentOS 7.2' => { 'path' => '0p:1:1p:2:3:3p:3t:4:5:6:7:8:9:n' },
+    'CentOS 7.3' => { 'path' => '0p:1:1p:2:3:3p:3t:4:5:6:7:8:9:n' },
+    'CentOS 7.4' => { 'path' => '0p:1:1p:2:3:3p:3t:4:5:6:7:8:9:n' },
+    'CentOS 7.5' => { 'path' => '0p:1:1p:2:3:3p:3t:4:5:6:7:8:9:n' },
+    'CentOS 7.6' => { 'path' => '0p:1:1p:2:3:3p:3t:4:5:6:7:8:9:n' },
+    'CentOS 7.7' => { 'path' => '0p:1:1p:2:3:3p:3t:4:5:6:7:8:9:n' },
+    'CentOS 7.8' => { 'path' => '0p:1:1p:2:3:3p:3t:4:5:6:7:8:9:n' },
+    'CentOS 7.9' => { 'path' => '0p:1:1p:2:3:3p:3t:4:5:6:7:8:9:n' },
+
+    'Rocky 9.3' => { 'path' => '0p:1:1p:2:3:3p:4:5:6:7:8:9:n', },
+    'Rocky 9.2' => { 'path' => '0p:1:1p:2:3:3p:4:5:6:7:8:9:n', },
+    'Rocky 9.1' => { 'path' => '0p:1:1p:2:3:3p:4:5:6:7:8:9:n', },
+    'Rocky 9.0' => { 'path' => '0p:1:1p:2:3:3p:4:5:6:7:8:9:n', },
+    'Rocky 8.9' => { 'path' => '0p:1:1p:2:3:3p:4:5:6:7:8:9:n', },
+    'Rocky 8.8' => { 'path' => '0p:1:1p:2:3:3p:4:5:6:7:8:9:n', },
+    'Rocky 8.7' => { 'path' => '0p:1:1p:2:3:3p:4:5:6:7:8:9:n', },
+    'Rocky 8.6' => { 'path' => '0p:1:1p:2:3:3p:4:5:6:7:8:9:n', },
+    'Rocky 8.5' => { 'path' => '0p:1:1p:2:3:3p:4:5:6:7:8:9:n', },
+    'Rocky 8.4' => { 'path' => '0p:1:1p:2:3:3p:4:5:6:7:8:9:n', },
+    'Rocky 8.3' => { 'path' => '0p:1:1p:2:3:3p:4:5:6:7:8:9:n', },
 
     'SuSE 4.3'  => { 'path' => '0p:1:1p:2:3:3p:4:5:6:7:8:9:n:s', },
     'SuSE 5.0'  => { 'path' => '0p:1:1p:2:3:3p:4:5:6:7:8:9:n:s', },
@@ -251,10 +284,17 @@ foreach my $os ( keys %$sectionpath ) {
 
 $manLocalDir    = '/usr/local/www/bsddoc/man';
 # this should be the latest "release and ports"
-$manPathDefault = 'FreeBSD 13.2-RELEASE and Ports';
+$manPathDefault = 'FreeBSD 14.1-RELEASE and Ports';
 
 %manPath = (
     # supported RELEASES / STABLE / CURRENT 
+    'FreeBSD 14.1-RELEASE and Ports',
+"$manLocalDir/FreeBSD-14.1-RELEASE/man:$manLocalDir/FreeBSD-14.1-RELEASE/openssl/man:$manLocalDir/FreeBSD-ports-14.1-RELEASE/man:$manLocalDir/FreeBSD-ports-14.1-RELEASE/misc",
+    'FreeBSD 14.0-RELEASE and Ports',
+"$manLocalDir/FreeBSD-14.0-RELEASE/man:$manLocalDir/FreeBSD-14.0-RELEASE/openssl/man:$manLocalDir/FreeBSD-ports-14.0-RELEASE/man:$manLocalDir/FreeBSD-ports-14.0-RELEASE/misc",
+
+    'FreeBSD 13.3-RELEASE and Ports',
+"$manLocalDir/FreeBSD-13.3-RELEASE/man:$manLocalDir/FreeBSD-13.3-RELEASE/openssl/man:$manLocalDir/FreeBSD-ports-13.3-RELEASE/man:$manLocalDir/FreeBSD-ports-13.3-RELEASE/misc",
     'FreeBSD 13.2-RELEASE and Ports',
 "$manLocalDir/FreeBSD-13.2-RELEASE/man:$manLocalDir/FreeBSD-13.2-RELEASE/openssl/man:$manLocalDir/FreeBSD-ports-13.2-RELEASE/man:$manLocalDir/FreeBSD-ports-13.2-RELEASE/misc",
     'FreeBSD 13.1-RELEASE and Ports',
@@ -317,11 +357,20 @@ $manPathDefault = 'FreeBSD 13.2-RELEASE and Ports';
     'FreeBSD 6.4-RELEASE and Ports',
 "$manLocalDir/FreeBSD-6.4-RELEASE/man:$manLocalDir/FreeBSD-6.4-RELEASE/openssl/man:$manLocalDir/FreeBSD-ports-6.2-RELEASE",
 
-    'FreeBSD 14.0-CURRENT',
-"$manLocalDir/FreeBSD-14.0-CURRENT/man:$manLocalDir/FreeBSD-14.0-CURRENT/openssl/man",
+    'FreeBSD 15.0-CURRENT',
+"$manLocalDir/FreeBSD-15.0-CURRENT/man:$manLocalDir/FreeBSD-15.0-CURRENT/openssl/man",
 
-    'FreeBSD 13.2-STABLE',
-"$manLocalDir/FreeBSD-13.2-STABLE/man:$manLocalDir/FreeBSD-13.2-STABLE/openssl/man",
+    'FreeBSD 14.1-STABLE',
+"$manLocalDir/FreeBSD-14.1-STABLE/man:$manLocalDir/FreeBSD-14.1-STABLE/openssl/man",
+    'FreeBSD 14.1-RELEASE',
+"$manLocalDir/FreeBSD-14.1-RELEASE/man:$manLocalDir/FreeBSD-14.1-RELEASE/openssl/man",
+    'FreeBSD 14.0-RELEASE',
+"$manLocalDir/FreeBSD-14.0-RELEASE/man:$manLocalDir/FreeBSD-14.0-RELEASE/openssl/man",
+
+    'FreeBSD 13.3-STABLE',
+"$manLocalDir/FreeBSD-13.3-STABLE/man:$manLocalDir/FreeBSD-13.3-STABLE/openssl/man",
+    'FreeBSD 13.3-RELEASE',
+"$manLocalDir/FreeBSD-13.3-RELEASE/man:$manLocalDir/FreeBSD-13.3-RELEASE/openssl/man",
     'FreeBSD 13.2-RELEASE',
 "$manLocalDir/FreeBSD-13.2-RELEASE/man:$manLocalDir/FreeBSD-13.2-RELEASE/openssl/man",
     'FreeBSD 13.1-RELEASE',
@@ -329,8 +378,6 @@ $manPathDefault = 'FreeBSD 13.2-RELEASE and Ports';
     'FreeBSD 13.0-RELEASE',
 "$manLocalDir/FreeBSD-13.0-RELEASE/man:$manLocalDir/FreeBSD-13.0-RELEASE/openssl/man",
 
-    'FreeBSD 12.4-STABLE',
-"$manLocalDir/FreeBSD-12.4-STABLE/man:$manLocalDir/FreeBSD-12.4-STABLE/openssl/man",
     'FreeBSD 12.4-RELEASE',
 "$manLocalDir/FreeBSD-12.4-RELEASE/man:$manLocalDir/FreeBSD-12.4-RELEASE/openssl/man",
     'FreeBSD 12.3-RELEASE',
@@ -443,6 +490,9 @@ $manPathDefault = 'FreeBSD 13.2-RELEASE and Ports';
     'FreeBSD Ports 13.0', "$manLocalDir/FreeBSD-ports-13.0-RELEASE/man:$manLocalDir/FreeBSD-ports-13.0-RELEASE/misc",
     'FreeBSD Ports 13.1', "$manLocalDir/FreeBSD-ports-13.1-RELEASE/man:$manLocalDir/FreeBSD-ports-13.1-RELEASE/misc",
     'FreeBSD Ports 13.2', "$manLocalDir/FreeBSD-ports-13.2-RELEASE/man:$manLocalDir/FreeBSD-ports-13.2-RELEASE/misc",
+    'FreeBSD Ports 13.3', "$manLocalDir/FreeBSD-ports-13.3-RELEASE/man:$manLocalDir/FreeBSD-ports-13.3-RELEASE/misc",
+    'FreeBSD Ports 14.0', "$manLocalDir/FreeBSD-ports-14.0-RELEASE/man:$manLocalDir/FreeBSD-ports-14.0-RELEASE/misc",
+    'FreeBSD Ports 14.1', "$manLocalDir/FreeBSD-ports-14.1-RELEASE/man:$manLocalDir/FreeBSD-ports-14.1-RELEASE/misc",
 
 
     # FreeBSD Releases + Ports
@@ -614,6 +664,8 @@ $manPathDefault = 'FreeBSD 13.2-RELEASE and Ports';
     'OpenBSD 7.1', "$manLocalDir/OpenBSD-7.1",
     'OpenBSD 7.2', "$manLocalDir/OpenBSD-7.2",
     'OpenBSD 7.3', "$manLocalDir/OpenBSD-7.3",
+    'OpenBSD 7.4', "$manLocalDir/OpenBSD-7.4",
+    'OpenBSD 7.5', "$manLocalDir/OpenBSD-7.5",
 
     #'NetBSD 0.9',            "$manLocalDir/NetBSD-0.9",
     'NetBSD 1.0',   "$manLocalDir/NetBSD-1.0",
@@ -655,6 +707,7 @@ $manPathDefault = 'FreeBSD 13.2-RELEASE and Ports';
     'NetBSD 9.1',   "$manLocalDir/NetBSD-9.1",
     'NetBSD 9.2',   "$manLocalDir/NetBSD-9.2",
     'NetBSD 9.3',   "$manLocalDir/NetBSD-9.3",
+    'NetBSD 10.0',  "$manLocalDir/NetBSD-10.0",
 
     '2.8 BSD',      "$manLocalDir/2.8BSD",
     '2.9.1 BSD',    "$manLocalDir/2.9.1BSD",
@@ -677,10 +730,11 @@ $manPathDefault = 'FreeBSD 13.2-RELEASE and Ports';
     'Red Hat 7.2', "$manLocalDir/RedHat-7.2-i386",
     'Red Hat 7.3', "$manLocalDir/RedHat-7.3-i386",
     'Red Hat 8.0', "$manLocalDir/RedHat-8.0-i386",
-    'Red Hat 9',   "$manLocalDir/RedHat-9-i386",
+    'Red Hat 9.0', "$manLocalDir/RedHat-9.0-i386",
 
     'CentOS 3.9', "$manLocalDir/CentOS-3.9",
     'CentOS 4.8', "$manLocalDir/CentOS-4.8",
+
     'CentOS 5.4', "$manLocalDir/CentOS-5.4",
     'CentOS 5.5', "$manLocalDir/CentOS-5.5",
     'CentOS 5.6', "$manLocalDir/CentOS-5.6",
@@ -689,6 +743,7 @@ $manPathDefault = 'FreeBSD 13.2-RELEASE and Ports';
     'CentOS 5.9', "$manLocalDir/CentOS-5.9",
     'CentOS 5.10', "$manLocalDir/CentOS-5.10",
     'CentOS 5.11', "$manLocalDir/CentOS-5.11",
+
     'CentOS 6.0', "$manLocalDir/CentOS-6.0",
     'CentOS 6.1', "$manLocalDir/CentOS-6.1",
     'CentOS 6.2', "$manLocalDir/CentOS-6.2",
@@ -696,8 +751,33 @@ $manPathDefault = 'FreeBSD 13.2-RELEASE and Ports';
     'CentOS 6.4', "$manLocalDir/CentOS-6.4",
     'CentOS 6.5', "$manLocalDir/CentOS-6.5",
     'CentOS 6.6', "$manLocalDir/CentOS-6.6",
+    'CentOS 6.7', "$manLocalDir/CentOS-6.7",
+    'CentOS 6.8', "$manLocalDir/CentOS-6.8",
+    'CentOS 6.9', "$manLocalDir/CentOS-6.9",
+    'CentOS 6.10', "$manLocalDir/CentOS-6.10",
+
     'CentOS 7.0', "$manLocalDir/CentOS-7.0",
     'CentOS 7.1', "$manLocalDir/CentOS-7.1",
+    'CentOS 7.2', "$manLocalDir/CentOS-7.2",
+    'CentOS 7.3', "$manLocalDir/CentOS-7.3",
+    'CentOS 7.4', "$manLocalDir/CentOS-7.4",
+    'CentOS 7.5', "$manLocalDir/CentOS-7.5",
+    'CentOS 7.6', "$manLocalDir/CentOS-7.6",
+    'CentOS 7.7', "$manLocalDir/CentOS-7.7",
+    'CentOS 7.8', "$manLocalDir/CentOS-7.8",
+    'CentOS 7.9', "$manLocalDir/CentOS-7.9",
+
+    'Rocky 9.3', "$manLocalDir/Rocky-9.3",
+    'Rocky 9.2', "$manLocalDir/Rocky-9.2",
+    'Rocky 9.1', "$manLocalDir/Rocky-9.1",
+    'Rocky 9.0', "$manLocalDir/Rocky-9.0",
+    'Rocky 8.9', "$manLocalDir/Rocky-8.9",
+    'Rocky 8.8', "$manLocalDir/Rocky-8.8",
+    'Rocky 8.7', "$manLocalDir/Rocky-8.7",
+    'Rocky 8.6', "$manLocalDir/Rocky-8.6",
+    'Rocky 8.5', "$manLocalDir/Rocky-8.5",
+    'Rocky 8.4', "$manLocalDir/Rocky-8.4",
+    'Rocky 8.3', "$manLocalDir/Rocky-8.3",
 
     'SuSE 4.3',  "$manLocalDir/SuSE-4.3-i386",
     'SuSE 5.0',  "$manLocalDir/SuSE-5.0-i386",
@@ -727,13 +807,38 @@ $manPathDefault = 'FreeBSD 13.2-RELEASE and Ports';
 
     'SuSE ES 10 SP1', "$manLocalDir/SLES-10-SP1-i386",
 
+    'Debian 2.0.0', "$manLocalDir/Debian-2.0r0/man:$manLocalDir/Debian-2.0r0/misc",
     'Debian 2.2.7', "$manLocalDir/Debian-2.2r7/man:$manLocalDir/Debian-2.2r7/misc",
     'Debian 3.1.8', "$manLocalDir/Debian-31r8/man:$manLocalDir/Debian-31r8/misc",
     'Debian 4.0.9', "$manLocalDir/Debian-40r9/man:$manLocalDir/Debian-40r9/misc",
-    'Debian 5.0.10', "$manLocalDir/Debian-5.0.10/man:$manLocalDir/Debian-5.0.10/misc",
+    'Debian 5.0.10', "$manLocalDir/Debian-5010/man:$manLocalDir/Debian-5010/misc",
     'Debian 6.0.10', "$manLocalDir/Debian-6.0.10/man:$manLocalDir/Debian-6.0.10/misc",
-    'Debian 7.8.0', "$manLocalDir/Debian-7.8.0/man:$manLocalDir/Debian-7.8.0/misc",
-    'Debian 8.1.0', "$manLocalDir/Debian-8.1.0/man:$manLocalDir/Debian-8.1.0/misc",
+    'Debian 7.11.0', "$manLocalDir/Debian-7.11.0/man:$manLocalDir/Debian-7.11.0/misc",
+    'Debian 8.11.1', "$manLocalDir/Debian-8.11.1/man:$manLocalDir/Debian-8.11.1/misc",
+    'Debian 9.13.0', "$manLocalDir/Debian-9.13.0/man:$manLocalDir/Debian-9.13.0/misc",
+    'Debian 10.13.0', "$manLocalDir/Debian-10.13.0/man:$manLocalDir/Debian-10.13.0/misc",
+    'Debian 11.9.0', "$manLocalDir/Debian-11.9.0/man:$manLocalDir/Debian-11.9.0/misc",
+    'Debian 12.5.0', "$manLocalDir/Debian-12.5.0/man:$manLocalDir/Debian-12.5.0/misc",
+    'Debian 13.0 unstable', "$manLocalDir/Debian-unstable/man:$manLocalDir/Debian-unstable/misc",
+
+    'Ubuntu 23.10 mantic', "$manLocalDir/Ubuntu-mantic-23.10/man:$manLocalDir/Ubuntu-mantic-23.10/misc",
+
+    'Ubuntu 24.04 noble', "$manLocalDir/Ubuntu-noble-24.04/man:$manLocalDir/Ubuntu-noble-24.04/misc",
+    'Ubuntu 22.04 jammy', "$manLocalDir/Ubuntu-jammy-22.04/man:$manLocalDir/Ubuntu-jammy-22.04/misc",
+    'Ubuntu 20.04 focal', "$manLocalDir/Ubuntu-focal-20.04/man:$manLocalDir/Ubuntu-focal-20.04/misc",
+    'Ubuntu 18.04 bionic', "$manLocalDir/Ubuntu-bionic-18.04/man:$manLocalDir/Ubuntu-bionic-18.04/misc",
+    'Ubuntu 16.04 xenial', "$manLocalDir/Ubuntu-xenial-16.04/man:$manLocalDir/Ubuntu-xenial-16.04/misc",
+    'Ubuntu 14.04 trusty', "$manLocalDir/Ubuntu-trusty-14.04/man:$manLocalDir/Ubuntu-trusty-14.04/misc",
+
+    'DragonFly 6.4.0',  "$manLocalDir/DragonFly-6.4.0",
+    'DragonFly 5.8.3',  "$manLocalDir/DragonFly-5.8.3",
+    'DragonFly 4.8.1',  "$manLocalDir/DragonFly-4.8.1",
+    'DragonFly 3.8.2',  "$manLocalDir/DragonFly-3.8.2",
+    'DragonFly 2.10.1', "$manLocalDir/DragonFly-2.10.1",
+    'DragonFly 1.12.1', "$manLocalDir/DragonFly-1.12.1",
+    'DragonFly 1.0A',   "$manLocalDir/DragonFly-1.0A",
+
+    'Dell UNIX SVR4 2.2', "$manLocalDir/Dell-SVR4-2.2",
 
     'HP-UX 11.22', "$manLocalDir/HP-UX-11.22",
     'HP-UX 11.20', "$manLocalDir/HP-UX-11.20",
@@ -760,6 +865,10 @@ $manPathDefault = 'FreeBSD 13.2-RELEASE and Ports';
     # alias SunOS 0.4, apparently released in April 1983 based on 4.2BSD beta
     'Sun UNIX 0.4', "$manLocalDir/Sun-UNIX-0.4",
 
+    'macOS 14.3.1', "$manLocalDir/macOS-14.3.1/man:$manLocalDir/macOS-14.3.1/developer-man:$manLocalDir/macOS-14.3.1/developer-platform-man:$manLocalDir/macOS-14.3.1/developer-platform-sdk-man:$manLocalDir/macOS-14.3.1/xctoolchain-man",  
+    'macOS 13.6.5', "$manLocalDir/macOS-13.6.5/man:$manLocalDir/macOS-13.6.5/developer-man:$manLocalDir/macOS-13.6.5/developer-platform-man:$manLocalDir/macOS-13.6.5/developer-platform-sdk-man:$manLocalDir/macOS-13.6.5/xctoolchain-man",  
+    'macOS 12.7.3', "$manLocalDir/macOS-12.7.3/man:$manLocalDir/macOS-12.7.3/developer-man:$manLocalDir/macOS-12.7.3/developer-platform-man:$manLocalDir/macOS-12.7.3/developer-platform-sdk-man:$manLocalDir/macOS-12.7.3/xctoolchain-man",
+    'macOS 10.13.6', "$manLocalDir/macOS-10.13.6",
 
     #'XFree86 3.2',      "$manLocalDir/XFree86-3.2",
     'XFree86 2.1',      "$manLocalDir/XFree86-2.1",
@@ -793,7 +902,14 @@ $manPathDefault = 'FreeBSD 13.2-RELEASE and Ports';
 
     'Inferno 4th Edition',         "$manLocalDir/Inferno",
     'Plan 9',                      "$manLocalDir/plan9",
-    'Minix 2.0',                   "$manLocalDir/Minix-2.0",
+    'Minix 2.0.0',                 "$manLocalDir/Minix-2.0.0",
+    'Minix 3.1.5',                 "$manLocalDir/Minix-3.1.5",
+    'Minix 3.1.6',                 "$manLocalDir/Minix-3.1.6",
+    'Minix 3.1.7',                 "$manLocalDir/Minix-3.1.7",
+    'Minix 3.1.7',                 "$manLocalDir/Minix-3.1.8",
+    'Minix 3.2.0',                 "$manLocalDir/Minix-3.2.0",
+    'Minix 3.2.1',                 "$manLocalDir/Minix-3.2.1",
+    'Minix 3.3.0',                 "$manLocalDir/Minix-3.3.0",
     'Unix Seventh Edition',        "$manLocalDir/v7man",
 
     "Darwin 1.3.1/x86",            "$manLocalDir/Darwin-1.3.1-x86",
@@ -857,6 +973,7 @@ my @no_pdf_output = (
     'OpenBSD 4.8',
     'OpenBSD 4.9',
     'IRIX 6.5.30',
+    'Dell UNIX SVR4 2.2',
 );
 
 my %no_pdf_output = map { $_ => 1 } @no_pdf_output;
@@ -897,6 +1014,7 @@ my %arch = (
 'NetBSD 9.1' => { 'arch' => [qw/acorn26 acorn32 algor alpha amd64 amiga arc atari bebox cats cesfic cobalt dreamcast emips evbarm evbmips evbppc evbsh3 hp300 hpcarm hpcmips hpcsh hppa i386 ibmnws luna68k mac68k macppc mipsco mmeye mvme68k mvmeppc netwinder news68k newsmips next68k ofppc playstation2 pmax prep sandpoint sbmips sgimips shark sparc sparc64 sun2 sun3 vax x68k x86/] } ,
 'NetBSD 9.2' => { 'arch' => [qw/acorn26 acorn32 algor alpha amd64 amiga arc atari bebox cats cesfic cobalt dreamcast emips evbarm evbmips evbppc evbsh3 hp300 hpcarm hpcmips hpcsh hppa i386 ibmnws luna68k mac68k macppc mipsco mmeye mvme68k mvmeppc netwinder news68k newsmips next68k ofppc playstation2 pmax prep sandpoint sbmips sgimips shark sparc sparc64 sun2 sun3 vax x68k x86/] } ,
 'NetBSD 9.3' => { 'arch' => [qw/acorn26 acorn32 algor alpha amd64 amiga arc atari bebox cats cesfic cobalt dreamcast emips evbarm evbmips evbppc evbsh3 hp300 hpcarm hpcmips hpcsh hppa i386 ibmnws luna68k mac68k macppc mipsco mmeye mvme68k mvmeppc netwinder news68k newsmips next68k ofppc playstation2 pmax prep sandpoint sbmips sgimips shark sparc sparc64 sun2 sun3 vax x68k x86/] } ,
+'NetBSD 10.0' => { 'arch' => [qw/acorn26 acorn32 algor alpha amd64 amiga arc atari bebox cats cesfic cobalt dreamcast emips evbarm evbmips evbppc evbsh3 hp300 hpcarm hpcmips hpcsh hppa i386 ibmnws luna68k mac68k macppc mipsco mmeye mvme68k mvmeppc netwinder news68k newsmips next68k ofppc playstation2 pmax prep sandpoint sbmips sgimips shark sparc sparc64 sun2 sun3 vax x68k x86/] } ,
 'OpenBSD 4.7' => { 'arch' => [qw/alpha amd64 armish aviion hp300 hppa hppa64 i386 landisk loongson luna88k mac68k macppc mvme68k mvme88k mvmeppc palm sgi socppc sparc sparc64 vax zaurus/] }, 
 'OpenBSD 4.8' => { 'arch' => [qw/alpha amd64 armish aviion hp300 hppa hppa64 i386 landisk loongson luna88k mac68k macppc mvme68k mvme88k mvmeppc palm sgi socppc sparc sparc64 vax zaurus/] }, 
 'OpenBSD 4.9' => { 'arch' => [qw/alpha amd64 armish aviion hp300 hppa hppa64 i386 landisk loongson luna88k mac68k macppc mvme68k mvme88k mvmeppc palm sgi socppc sparc sparc64 vax zaurus/] }, 
@@ -924,6 +1042,8 @@ my %arch = (
 'OpenBSD 7.1' => { 'arch' => [qw/alpha amd64 arm64 armv7 hppa i386 landisk loongson luna88k macppc octeon powerpc64 riscv64 sparc64/] }, 
 'OpenBSD 7.2' => { 'arch' => [qw/alpha amd64 arm64 armv7 hppa i386 landisk loongson luna88k macppc octeon powerpc64 riscv64 sparc64/] }, 
 'OpenBSD 7.3' => { 'arch' => [qw/alpha amd64 arm64 armv7 hppa i386 landisk loongson luna88k macppc octeon powerpc64 riscv64 sparc64/] }, 
+'OpenBSD 7.4' => { 'arch' => [qw/alpha amd64 arm64 armv7 hppa i386 landisk loongson luna88k macppc octeon powerpc64 riscv64 sparc64/] }, 
+'OpenBSD 7.5' => { 'arch' => [qw/alpha amd64 arm64 armv7 hppa i386 landisk loongson luna88k macppc octeon powerpc64 riscv64 sparc64/] }, 
 );
 
 # delete not existing releases
@@ -944,29 +1064,32 @@ while ( ( $key, $val ) = each %manPath ) {
 
 # keywords must be in lower cases.
 %manPathAliases = (
-    'freebsd',         'FreeBSD 13.2-RELEASE',
-    'freebsd-release', 'FreeBSD 13.2-RELEASE',
+    'freebsd',         'FreeBSD 14.1-RELEASE',
+    'freebsd-release', 'FreeBSD 14.1-RELEASE',
 
-    'freebsd-stable',   'FreeBSD 13.2-STABLE',
-    'freebsd-stable13', 'FreeBSD 13.2-STABLE',
-    'freebsd-stable12', 'FreeBSD 12.4-STABLE',
+    'freebsd-stable',   'FreeBSD 14.1-STABLE',
+    'freebsd-stable14', 'FreeBSD 14.1-STABLE',
+    'freebsd-stable13', 'FreeBSD 13.3-STABLE',
 
-    'freebsd-current',       'FreeBSD 14.0-CURRENT',
-    'freebsd-release-ports', 'FreeBSD 13.2-RELEASE and Ports',
-    'freebsd-ports', 'FreeBSD Ports 13.2',
+    'freebsd-current',       'FreeBSD 15.0-CURRENT',
+    'freebsd-release-ports', 'FreeBSD 14.1-RELEASE and Ports',
+    'freebsd-ports', 'FreeBSD Ports 14.1',
 
     'slackware',  'Linux Slackware 3.1',
     'redhat',     'Red Hat 9',
     'suse',       'SuSE 11.3',
-    'debian',     'Debian 7.7.0',
-    'centos',     'CentOS 7.1',
-    'linux',      'Debian 7.7.0',
+    'debian',     'Debian 12.5.0',
+    'ubuntu',     'Ubuntu 24.04 noble',
+    'dragonfly',  'DragonFly 6.4.0',
+    'centos',     'CentOS 7.9',
+    'rocky',      'Rocky 9.3',
+    'linux',      'Debian 12.5.0',
     'darwin',     'Darwin 8.0.1/ppc',
     'opendarwin', 'OpenDarwin 7.2.1',
     'macosx',     'Darwin 8.0.1/ppc',
 
-    'netbsd',        'NetBSD 9.3',
-    'openbsd',       'OpenBSD 7.3',
+    'netbsd',        'NetBSD 10.0',
+    'openbsd',       'OpenBSD 7.5',
     'v7',            'Unix Seventh Edition',
     'v7man',         'Unix Seventh Edition',
     'x11',           'X11R7.4',
@@ -978,12 +1101,38 @@ while ( ( $key, $val ) = each %manPath ) {
     'sunos5',        'SunOS 5.10',
     'sunos4',        'SunOS 4.1.3',
     'sunos',         'SunOS 4.1.3',
-    'freebsd ports', 'FreeBSD Ports',
-    'ports',         'FreeBSD Ports',
+    'macos',         'macOS 14.3.1',
     'plan9',         'Plan 9',
     'osf1',          'OSF1 V5.1/alpha',
     'true64',        'OSF1 V5.1/alpha',
+    'minix',         'Minix 3.3.0',
 );
+
+# pre-build a hash to get relevant information for sorting
+my $sort_manpath_hash;
+sub sort_manpath {
+    my $manpath = shift;
+    my @list = keys %$manpath;
+
+    $sort_manpath_hash = {};
+    foreach my $name (@list) {
+        my $name_lc = lc($name);
+        my $os_lc;
+
+        # a release has at least 2 numbers seperated by a dot:
+        # FreeBSD 11.1-RELEASE ports
+        # X11R7.4
+        my ($os, $version, $ports) = ( $name =~ m,^(.*?)(\d+\.[\d\.]+)(.*)$, );
+        $os //= $name;
+        $os_lc = lc($os);
+        $version //= "0.0";
+        $ports //= "";
+
+        $sort_manpath_hash->{$name} = { 'os' => $os, 'os_lc' => $os_lc, 'version' => $version, 'ports' => $ports };
+    } 
+
+    return sort { &sort_versions } keys %$manpath;
+}
 
 #
 # sort by OS release number, highest version first
@@ -1000,24 +1149,17 @@ while ( ( $key, $val ) = each %manPath ) {
 # XFree86 10.0
 #
 sub sort_versions {
-
-    # a release has at least 2 numbers seperated by a dot:
-    # FreeBSD 11.1-RELEASE ports
-    # X11R7.4
-    my @a = ( lc($a) =~ m,^(.*?)(\d+\.[\d\.]+)(.*)$, );
-    my @b = ( lc($b) =~ m,^(.*?)(\d+\.[\d\.]+)(.*)$, );
-
-    if (@a and @b) {
-	return $a[0] cmp $b[0]   || # FreeBDS <=> IRIX
-	  &version($a[1], $b[1]) || # 6.5.30 <=> 6.5.31  
-	  $a[2] cmp $a[2] ||        # RELEASE <=> ports 
-	  $a cmp $b;		    # rest
-    } else {
-    	# for the rest: basic string compare
-    	return $a cmp $b;
-    }
+   my $h = $sort_manpath_hash;
+  
+   return 
+     $h->{$a}->{'os_lc'} cmp $h->{$b}->{'os_lc'} ||            # freebsd <=> irix
+     $h->{$a}->{'os'} cmp $h->{$b}->{'os'} ||                  # FreeBSD <=> freebsd
+     &version($h->{$a}->{'version'}, $h->{$b}->{'version'}) || # 6.5.30 <=> 6.5.31  
+     $h->{$a}->{'ports'} cmp $h->{$b}->{'ports'} ||            # RELEASE <=> ports (release first)
+     $a cmp $b;                                                # for the rest: basic string compare
 }
 
+# reverse order, newest release first
 sub version {
     return &version_compare(@_) * -1;
 }
@@ -1058,7 +1200,7 @@ sub freebsd_first {
     return @data;
 }
 
-foreach ( sort { &sort_versions } keys %manPathAliases ) {
+foreach ( &sort_manpath(\%manPathAliases) ) {
 
     # delete non-existing aliases
     if ( !defined( $manPath{ $manPathAliases{$_} } ) ) {
@@ -1092,13 +1234,6 @@ $want_to_link_to_this_page = 1;
 &do_man( &env('SCRIPT_NAME'), &env('PATH_INFO'), &env('QUERY_STRING') )
   unless defined($main'plexus_configured);
 
-$enable_include_links = 0;
-$enable_mailto_links  = 0;
-
-my $enable_section_indexes = 0;
-my $enable_intro = 0;
-
-
 #
 # end of config
 #######################################################################################
@@ -1106,9 +1241,10 @@ my $enable_intro = 0;
 sub html_footer {
     my %args = @_;
 
-    print
-qq{<span class="footer_links"><a href="$BASE?manpath=$m">home</a> | <a href="$BASE/help.html">help</a></span>\n}
-      if !$args{'no_home_link'};
+    print qq[<span class="footer_links">\n];
+    print qq[  <a href="$www{'cgi_man'}">home</a>\n] if !$args{'no_home_link'};
+    print qq[| <a href="$www{'cgi_man'}/help.html">help</a>\n] if !$args{'no_help_link'};
+    print qq[</span>\n\n];
 
     if (cgi_style::HAS_FREEBSD_CGI_STYLE) {
         print q{<hr noshade="noshade" />};
@@ -1127,24 +1263,27 @@ sub html_header {
 <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
 <link rel="search" type="application/opensearchdescription+xml" href="https://www.freebsd.org/opensearch/man.xml" title="FreeBSD Man" />
 <link rel="search" type="application/opensearchdescription+xml" href="https://www.freebsd.org/opensearch/man-freebsd-release-ports.xml" title="FreeBSD Man+P" />
+
 <style type="text/css">
-<!--
-b { color: #996600; }
-i { color: #008000; }
--->
 span.footer_links { font-size: small; }
 span.space { font-size: xx-small; }
 form#man > input, form#man > button { font-size: large; }
 form#man > input[name='query'] { text-align: center; }
 
 @media only screen and (max-height: 640px), (max-width: 760px) {
-div#header, div#menu { display: none !important; }
-div#content { padding-top: 4.9em; }
-form#man > input, button { font-size: 200%; }
-form#man > button { font-size: 200%; }
-form#man > input[name='query'] { width: 12em; }
-form#man > select { font-size: 140%; }
-span.spaces { display: none; }
+  /* hide logo color top */
+  body { background: #fff !important; } 
+
+  /* hide menu top */
+  div#header, div#menu { display: none !important; }
+  // div#content { padding-top: 4.9em; }
+  span.spaces { display: none; }
+
+  /* larger search form */
+  form#man > input, button { font-size: 200%; }
+  form#man > button { font-size: 200%; }
+  form#man > input[name='query'] { width: 12em; }
+  form#man > select { font-size: 140%; }
 }
 </style>
 |;
@@ -1169,9 +1308,6 @@ sub do_man {
 
     return &faq_output($u)  if ( $path =~ /\/(faq|help)\.html$/ );
     return &get_the_sources if ( $path =~ /source$/ );
-
-    return &include_output($path)
-      if ( $enable_include_links && $path =~ m%^/usr/include/% && -f $path );
 
     return &indexpage if ( $form eq "" );
 
@@ -1267,7 +1403,7 @@ sub do_man {
     }
     else { $section = ''; }
 
-    $apropos ? &apropos($query) : &man( $name, $section, $arch );
+    $apropos ? &apropos($query, $section) : &man( $name, $section, $arch );
 }
 
 # --------------------- support routines ------------------------
@@ -1290,9 +1426,11 @@ sub get_the_sources {
 # download a manual directory as gzip'd tar archive
 sub download {
 
+    if (!$enable_download) {
     # 2019-05-31: allanjude: Disable downloading as it is being abused.
     print qq{Status: 418 No Downloads For You\n\n};
     exit(0);
+    }
 
     $| = 1;
     my $filename = $manpath;
@@ -1341,7 +1479,7 @@ sub http_header {
 sub env { defined( $main'ENV{ $_[0] } ) ? $main'ENV{ $_[0] } : undef; }
 
 sub apropos {
-    local ($query) = @_;
+    local ($query, $sektion) = @_;
     local ( $_,     $title,   $head, *APROPOS );
     local ( $names, $section, $msg,  $key );
     local ($prefix);
@@ -1359,7 +1497,9 @@ sub apropos {
 
     &http_header("text/html");
     print &html_header("Apropos $title");
-    print "<h1>", $www{'head'}, "</h1>\n\n";
+    print "<br/>\n<h1>$www{'head'}</h1>\n\n";
+
+    $section = $sektion;
     &formquery;
 
     local ($mpath) = $manPath{$manpath};
@@ -1384,6 +1524,8 @@ sub apropos {
     print qq{<dl>\n};
     while (<APROPOS>) {
         next if !/$q/oi;
+        next if $sektion && !/\($sektion\)/oi;
+
         $acounter++;
 
         # matches whatis.db lines: name[, name ...] (sect) - msg
@@ -1435,6 +1577,18 @@ sub manpath_without_ports {
     return join(":", @list);
 }
 
+# strip trailing dots, comma etc. from an URL
+sub url_strip {
+    my $url = shift;
+    my $part = shift;
+
+    if ($url =~ m/(.+)([,\.])$/) {
+       return ($1, $1, $2);
+    } else {
+       return ($url, $url, "");
+    }
+}
+
 sub man {
     local ( $name, $section, $arch ) = @_;
     local ( $_, $title, $head, *MAN );
@@ -1463,7 +1617,7 @@ sub man {
     if ( $format eq "html" ) {
         &http_header("text/html");
         print &html_header("$title");
-        print "<h1>", $www{'head'}, "</h1>\n\n";
+        print "<br/>\n<h1>$www{'head'}</h1>\n\n";
         &formquery;
         print "<pre>\n";
     }
@@ -1501,8 +1655,6 @@ sub man {
     $html_name    = &encode_data($name);
     $html_section = &encode_data($section);
 
-    #print Dumper($sectionpath);
-    #print "yy $section yy $manpath\n";
     if ( $name =~ /^\s*$/ ) {
 	print "</pre><hr/>";
         print "Empty input. Please type a manual page and search again.\n";
@@ -1681,27 +1833,15 @@ qq{Please try a <a href="$BASE?apropos=1&amp;manpath=freebsd-release-ports&amp;q
         }
 
         $_ = &encode_data($_);
-        if ( $enable_include_links
-            && m,(<b>)?\#include(</b>)?\s+(<b>)?\&lt\;(.*\.h)\&gt\;(</b>)?, )
-        {
-            $match = $4;
-            ( $regexp = $match ) =~ s/\./\\\./;
-            s,$regexp,\<a href=\"$BASE/usr/include/$match\"\>$match\</A\>,;
-        }
 
 	# detect references to other manual pages and set link
 	if (/^\s/) {  # skip man headers / first line
 	    s,((<[IB]>)?[\w\_\.\-]+(</[IB]>)?\(([1-9ln][a-zA-Z]*)\)),&mlnk($1),oige;
         }
 
-        # detect E-Mail Addreses in manpages
-        if ( $enable_mailto_links && /\@/ ) {
-s/([a-z0-9_\-\.]+\@[a-z0-9\-\.]+\.[a-z]+)/<a href="mailto:$1">$1<\/A>/gi;
-        }
-
         # detect URLs in manpages
-        if (m,\b(ftp|http|https)://,) {
-            s,((ftp|http|https)://[^\s<>\)]+),<a href="$1">$1</a>,gi;
+        if (m,\b(http|https)://,) {
+            s|(https?://[^\s\)&<>'`";\]\[]+)|sprintf("<a href=\"%s\">%s</a>%s", &url_strip($1))|egi;
         }
 
         if (s%^(<b>.*?</b>)+\n?$% ($str = $1) =~ s,(<b>|</b>),,g; $str%ge) {
@@ -1857,86 +1997,164 @@ sub encode_attribute {
     $_;
 }
 
+sub escape_word {
+    my $word = shift;
+
+    return join( '', map { escape_char($_) } @$word );
+}
+
+sub escape_char {
+    my $c = shift;
+
+    return
+        $c eq '&'             ? "&amp;"
+      : $c eq '<'             ? "&lt;"
+      : $c eq '>'             ? "&gt;"
+      : $c eq '_BULLET_ITEM_' ? "&bull;"
+      :                         $c;
+}
+
+sub tag_ib {
+    my $tag  = shift;
+    my $word = shift;
+
+    my $data = escape_word($word);
+
+    return
+        $tag eq 'ib' ? "<i><b>$data</b></i>"
+      : $tag eq 'b'  ? "<b>$data</b>"
+      : $tag eq 'i'  ? "<i>$data</i>"
+      :                $data;
+}
+
 # encode unknown text data for using as HTML,
 # treats ^H as overstrike ala nroff.
 sub encode_data {
-    local ($_) = @_;
-    local ($str);
+    my $line = shift;
 
-    # Escape &, < and >
-    s,\010[><&],,g;
-    s/\&/\&amp\;/g;
-    s/\</\&lt\;/g;
-    s/\>/\&gt\;/g;
+    # optimize for speed: most lines have no special characters
+    if ($line !~ /[<>&\010]/) {
+      return $line;
+    }
 
-    # bold bullet
-    s,\+\010\+\010o\010o,<b>o</b>,g;
+    # work on a list of characters
+    my @l = split( '', $line );
 
-    # underline: _^H.^H(.)
-    s,((_\010[^_]\010.)+),($str = $1) =~ s/_\010..//g; "<I>$str</I>";,ge;
+    my $data = "";
+    my $flag = "";
+    my @word = ();
 
-    # italic:  _^H(.)
-    s,((_\010[^_])+),($str = $1) =~ s/.\010//g; "<i>$str</i>";,ge;
+    my $end_of_word = sub {
+        my $new_flag = shift;
 
-    # bold: .^H(.) 
-    s,(([^_]\010.)+),($str = $1) =~ s/.\010//g; "<b>$str</b>";,ge;
+        return if !scalar(@word);
 
-    # cleanup all the rest
-    s,.\010,,g;
+        # a tag ended, and a new started immediately
+        if ( $flag ne "" && $new_flag ne $flag ) {
+            $data .= tag_ib( $flag, \@word );
+            @word = ();
+        }
+    };
 
-    $_;
+    for ( my $i = 0 ; $i <= $#l ; $i++ ) {
+
+        # 7 characters: +^H+^Ho^Ho - bullet list
+        if (   $i <= ( $#l - 6 )
+            && $l[$i] eq "+"
+            && $l[ $i + 1 ] eq "\010"
+            && $l[ $i + 2 ] eq "+"
+            && $l[ $i + 3 ] eq "\010"
+            && $l[ $i + 4 ] eq "o"
+            && $l[ $i + 5 ] eq "\010"
+            && $l[ $i + 6 ] eq "o" )
+        {
+            push @word, '_BULLET_ITEM_';
+            $i += 6;
+            $flag = 'b';
+        }
+
+        # 2 characters: +^Ho - bullet list
+        elsif (   $i <= ( $#l - 2 )
+            && $l[$i] eq "+"
+            && $l[ $i + 1 ] eq "\010"
+            && $l[ $i + 2 ] eq "o" )
+        {
+            push @word, '_BULLET_ITEM_';
+            $i += 2;
+            $flag = 'b';
+        }
+
+        # 5 characters: _\010x\010x - bold and italic
+        elsif ($i <= ( $#l - 4 )
+            && $l[ $i + 1 ] eq "\010"
+            && $l[ $i + 3 ] eq "\010"
+            && $l[ $i + 2 ] eq $l[ $i + 4 ] )
+        {
+            $end_of_word->('ib');
+            push @word, $l[ $i + 2 ];
+            $i += 4;
+            $flag = 'ib';
+        }
+
+        # 3 characters: _\010 - bold or italic
+        elsif ( $i <= ( $#l - 2 ) && $l[ $i + 1 ] eq "\010" ) {
+
+            # bold
+            # take care of links with underlines, which are alwasy italic
+            if ( $l[$i] eq $l[ $i + 2 ] && $flag ne 'i' ) {
+                $end_of_word->('b');
+                push @word, $l[$i];
+                $i += 2;
+                $flag = 'b';
+            }
+
+            # italic
+            elsif ( $l[$i] eq "_" && $i + 2 <= $#l ) {
+                $end_of_word->('i');
+                push @word, $l[ $i + 2 ];
+                $i += 2;
+                $flag = 'i';
+            }
+        }
+
+        # other, one or two characters
+        else {
+            # italic/bold ends here
+            $end_of_word->('ANY');
+
+            # simple backslash
+            if ( $l[$i] eq "\010" ) {
+
+                # just ignore
+            }
+            elsif ( $i <= ( $#l - 1 ) && $l[ $i + 1 ] eq "\010" ) {
+                $i++;
+            }
+            else {
+                $data .= escape_char( $l[$i] );
+            }
+            $flag = "";
+        }
+    }
+
+    # last character
+    $end_of_word->('ANY');
+
+    return $data;
 }
 
 sub indexpage {
     &http_header("text/html");
-    print &html_header("$www{'title'}") . "<h1><br/>", $www{'head'},
-      "</h1>\n\n"; 
+    print &html_header("$www{'title'}");
+    print "<br/>\n<h1>$www{'head'}</h1>\n\n"; 
+
     # print &intro;
     &formquery;
 
     local ($m) = ( $manpath ? $manpath : $manPathDefault );
     $m = &encode_url($m);
 
-    if ($enable_section_indexes) {
-    print "<b><i>Section Indexes</i></b>:\n";
-    foreach ( '1', '2', '3', '4', '5', '6', '7', '8', '9', 'n' ) {
-        print qq{&#164; } if $_ ne '1';
-        print
-qq{<a href="$BASE?query=($_)&amp;sektion=&amp;apropos=1&amp;manpath=$m&amp;title=Section%20$_Index">$_</a>\n};
-    }
-    }
-
-    if ($enable_intro) {
-    print "<br /><b><i>Explanations of Man Sections:</i></b>\n";
-    foreach ( '1', '2', '3', '4', '5', '6', '7', '8', '9' ) {
-        print qq{&#164; } if $_ ne '1';
-        print
-qq{<a href="$BASE?query=intro&amp;sektion=$_&amp;apropos=0&amp;manpath=$m&amp;title=Introduction%20Section%20$_">intro($_)</a>\n};
-    }
-    }
-
-    if (0) {
-        print "<br />\n<b><i>Quick Reference Categories:</i></b>\n";
-        foreach (
-            'database', 'disk',   'driver', 'ethernet',  'mail',
-            'net',      'nfs',    'nis',    'protocol',  'ppp',
-            'roff',     'string', 'scsi',   'statistic', 'tcl',
-            'tcp',      'time'
-          )
-        {
-            print
-qq{&#164; <a href="$BASE?query=$_&amp;sektion=&amp;apropos=1&amp;manpath=$m&amp;title=Quick%20Ref%20$_">$_</a>\n};
-        }
-    }
-
-    print <<ETX if 0 && $mailto;
-URL:  <a href="$BASE" target="_parent">$www{'home'}$BASE</a><br />
-ETX
-
-    if ($enable_section_indexes || $enable_intro) {
-        print "<br />\n";
-    }
-    &html_footer( 'no_home_link' => 1 );
+    &html_footer( 'no_home_link' => 1, 'no_help_link' => 1 );
 }
 
 sub formquery {
@@ -1973,7 +2191,7 @@ ETX
     print qq{</select>\n<select name="manpath">\n};
 
     local ($l) = ( $manpath ? $manpath : $manPathDefault );
-    foreach ( &freebsd_first( sort { &sort_versions } keys %manPath) ) {
+    foreach ( &freebsd_first( &sort_manpath(\%manPath)) ) {
         $key = $_;
         print "<option"
           . ( ( $key eq $l ) ? ' selected="selected" ' : ' ' )
@@ -2027,84 +2245,73 @@ ETX
 </form>
 
 <br/>
-<span class="footer_links"><a href="$BASE?manpath=$m">home</a> | <a href="$BASE/help.html">help</a></span>
+<span class="footer_links">
+  <a href="$www{'cgi_man'}">home</a> |
+  <a href="$www{'cgi_man'}/help.html">help</a>
+</span>
 ETX
     if ($query) {
 	print "<hr/>\n";
     }
-    0;
 }
 
 sub faq {
 
     local ( @list, @list2 );
     local ($url);
-    foreach ( &freebsd_first (sort { &sort_versions } keys %manPath )) {
+    foreach ( &freebsd_first (&sort_manpath(\%manPath) )) {
         $url = &encode_url($_);
-        push( @list,
-                qq{<li><a href="$BASE?apropos=2&amp;manpath=$url">[download]}
-              . qq{</a> "$_" -> $BASE?manpath=$url}
-              . qq{</li>\n} );
+        my $download_link = $enable_download ? qq[<a href="/cgi/man.cgi?apropos=2&amp;manpath=$url">tarball</a>] : '';
+        push( @list, qq{<li>$_: <a href="$BASE?manpath=$url">permalink</a> | $download_link</li>\n} );
     }
 
-    foreach ( &freebsd_first (sort { &sort_versions } keys %manPathAliases )) {
+    foreach ( &freebsd_first (&sort_manpath(\%manPathAliases) )) {
+        next if !$manPathAliases{$_};
+
+        my $encode_url = &encode_url($_);
         push( @list2,
-                qq[<li>"$_" -> "$manPathAliases{$_}" -> ]
-              . qq{<a href="$BASE?manpath=}
-              . &encode_url($_)
-              . qq{">$BASE?manpath=}
-              . &encode_url($_)
-              . "</a></li>\n" )
-          if $manPathAliases{$_};
+                qq[<li>"$_" -> "$manPathAliases{$_}" -> ] . 
+                qq[<a href="$www{'home_man'}/cgi/man.cgi?manpath=$encode_url">$www{'home_man'}/cgi/man.cgi?manpath=$encode_url</a></li>\n] )
     }
 
     return qq{\
+<h2>Copyright</h2>
 <pre>
-Copyright (c) 1996-2022 <a href="$mailtoURL">Wolfram Schneider</a>
+Copyright (c) 1996-2024 <a href="$mailtoURL">Wolfram Schneider</a>
 Copyright (c) 1993-1995 Berkeley Software Design, Inc.
-
-This data is part of a licensed program from BERKELEY SOFTWARE
-DESIGN, INC.  Portions are copyrighted by BSDI, The Regents of
-the University of California, Massachusetts Institute of
-Technology, Free Software Foundation, The FreeBSD Project, and others.
-
-</pre>\n
-<p />
-
-Copyright (c) for man pages by OS vendors.
+</pre>
 <p/>
-<a href="ftp://ftp.2bsd.com">2.11 BSD</a>,
+
+Copyright (c) for manual pages by OS vendors:
+<p/>
+<a href="https://en.wikipedia.org/wiki/History_of_the_Berkeley_Software_Distribution">2.11 BSD</a>,
 <a href="https://www.apple.com">Apple</a>,
-<a href="https://www.hp.com">HP</a>,
+<a href="https://www.centos.org">CentOS</a>,
+<a href="https://www.dell.com">Dell</a>,
+<a href="https://www.debian.org">Debian</a>,
+<a href="https://www.dragonflybsd.org">DragonFly BSD</a>,
 <a href="https://www.freebsd.org">FreeBSD</a>,
-<a href="http://www.minix3.org">Minix</a>,
+<a href="https://www.hp.com">HP</a>,
+<a href="https://en.wikipedia.org/wiki/IRIX">IRIX</a>,
+<a href="https://www.minix3.org">Minix</a>,
 <a href="https://www.netbsd.org">NetBSD</a>,
+<a href="https://en.wikipedia.org/wiki/NeXTSTEP">NeXTSTEP</a>,
 <a href="https://www.openbsd.org">OpenBSD</a>,
 <a href="https://9p.io/plan9/">Plan 9</a>,
 <a href="https://www.redhat.com">Red Hat</a>,
-<a href="https://www.slackware.com">Slackware Linux</a>,
-<a href="https://www.sun.com">SunOS</a>,
+<a href="https://www.slackware.com">Slackware</a>,
+<a href="https://en.wikipedia.org/wiki/OSF/1">OSF</a>,
+<a href="https://9p.io/plan9/">Plan 9</a>,
+<a href="https://en.wikipedia.org/wiki/Rhapsody_(operating_system)">Rhapsody</a>,
+<a href="https://www.oracle.com/solaris/technologies/">SunOS</a>,
+<a href="https://rockylinux.org/">Rocky</a>,
 <a href="https://www.suse.com">SuSE</a>,
+<a href="https://ubuntu.com">Ubuntu</a>,
 <a href="https://en.wikipedia.org/wiki/Ultrix">ULTRIX</a>,
-<a href="http://www.plan9.bell-labs.com/7thEdMan/">Unix Seventh Edition</a>,
+<a href="https://en.wikipedia.org/wiki/Version_7_Unix">Unix Seventh Edition</a>,
 <a href="https://www.xfree86.org">XFree86</a>,
 <a href="https://www.x.org">X11R6</a>
 
-<h2>FAQ</h2>
-<ul>
-<li>Get the <a href="$BASE/source">source</a> of the man.cgi script</li>
-<li>Troff macros works only if defined in FreeBSD/groff. OS specific
-macros like `appeared in NetBSD version 1.2' are not supported.</li>
-<li>Some OSs provide only formatted manual pages (catpages), e.g., NetBSD
-and OpenBSD. In this case it is not possible to create Postscript
-and troff output.</li>
-<li>The <a href="https://cgit.freebsd.org/src/tree/share/misc/bsd-family-tree">
-Unix family tree, BSD part</a>.</li>
-<li>The <a href="https://ports.freebsd.org/cgi/ports.cgi">
-FreeBSD Ports Changes</a> script.</li>
-<li>Copyright (c) and download for man pages by 
-OS vendors</li>
-</ul>
 
 <h2>Shortcuts for FreeBSD manual pages</h2>
 
@@ -2116,30 +2323,55 @@ OS vendors</li>
 <p />
 
 <ul>
-<li>which manpage: <a href="$BASE?which">$full_url?which</a></li>
-<li>socket(2) manpage: <a href="$BASE?socket(2)">$full_url?socket(2)</a></li>
+<li>which manpage: <a href="$full_url?which">$full_url?which</a></li>
+<li>socket(2) manpage: <a href="$full_url?socket(2)">$full_url?socket(2)</a></li>
 </ul>
 
 
-<h2>Releases</h2>
+<h2>Release Permalinks and tarballs</h2>
 
-Releases and Releases Aliases are information how 
+<p>
+Releases and releases aliases permalinks are information how 
 to make a link to this script to the right OS version.
-<p />
-You may download the manpages as gzip'd tar archive
-for private use. A tarball is usually 5MB big.
-<p />
+</p>
+
+<p>
+You may download the manual pages as gzip'd tar archive for private or educational purposes.
+A tarball is normally 5-25 MB in size.
+</p>
+
 <ul>
 @list
 </ul>
 
-<h2>Releases Aliases</h2>
+
+<h2>Releases Aliases Permalinks</h2>
+
+<p>
 Release aliases are for lazy people. Plus, they have a longer
-lifetime, eg. 'openbsd' points always to the latest OpenBSD release.
+lifetime, eg. 'netbsd' points always to the latest NetBSD release.
+</p>
+
 <ul>
 @list2
 </ul>
+
+<h2>FAQ</h2>
+
+<ul>
+<li>Get the <a href="$BASE/source">source</a> of the man.cgi script</li>
+<li>Troff macros works only if defined in FreeBSD/groff. OS specific
+macros like `appeared in NetBSD version 1.2' are not supported.</li>
+<li>Some OSs provide only formatted manual pages (catpages), e.g., 
+older NetBSD and OpenBSD releases. In this case it is not possible to create Postscript
+and troff output.</li>
+<li>The <a href="https://cgit.freebsd.org/src/tree/share/misc/bsd-family-tree">
+Unix family tree, BSD part</a>.</li>
+<li>The <a href="https://ports.freebsd.org/cgi/ports.cgi">
+FreeBSD Ports Search</a> script.</li>
+</ul>
 };
+
 }
 
 sub intro {
@@ -2158,14 +2390,11 @@ sections.
 }
 
 sub faq_output {
-    my $base = $BASE;
-    $base =~ s,[^/]*$,,;
-    $base = 'https://www.freebsd.org/cgi/';    # XXX
-
     &http_header("text/html");
-    print &html_header( "FreeBSD manual page help", $base ) . "<h1>",
-      $www{'head'}, "</h1>\n" . &faq . qq{<br />\n};
-    &html_footer;
+    print &html_header( "FreeBSD manual page help", '/cgi/' );
+    print "<br/>\n<h1>$www{'head'}</h1>\n";
+    print &faq . "<br/>\n";
+    &html_footer('no_help_link' => 1);
 }
 
 sub html_header2 {
@@ -2208,10 +2437,6 @@ sub mydie {
     print &html_header("Error");
     print $message;
 
-    print qq{
-<p />
-<a href="$BASE">home</a>
-};
     &html_footer;
     exit(0);
 }

@@ -28,7 +28,7 @@ For all other architectures, please see the link:../platforms/#_supported_platfo
 [[choose-image]]
 == Choosing an Image
 
-For the FreeBSD installer: formats include CD (disc1), DVD (dvd1), and network install (bootonly) sized ISO, plus regular and mini USB memory sticks.
+For the FreeBSD installer: formats include DVD (disc1, dvd1), and network install (bootonly) sized ISO, plus regular and mini USB memory sticks.
 
 For virtual machines: virtual disk images have FreeBSD preinstalled.
 
@@ -39,62 +39,62 @@ For embedded platforms: SD card images are available.
 
 `RELEASE` versions of FreeBSD are the end result of _release engineering_.
 
-[[download-rel132]]
-=== FreeBSD {rel132-current}-RELEASE
+[[download-rel141]]
+=== FreeBSD {rel141-current}-RELEASE
+
 [.tblbasic]
 [.tblDownload]
 [width="100%",cols="25%,25%,25%,25%",options="header",]
 |===
 |Installer |VM |SD Card |Documentation
 a|
-* link:{url-rel}/amd64/amd64/ISO-IMAGES/{rel132-current}/[amd64]
-* link:{url-rel}/i386/i386/ISO-IMAGES/{rel132-current}/[i386]
-* link:{url-rel}/powerpc/powerpc/ISO-IMAGES/{rel132-current}/[powerpc]
-* link:{url-rel}/powerpc/powerpc64/ISO-IMAGES/{rel132-current}/[powerpc64]
-* link:{url-rel}/powerpc/powerpc64le/ISO-IMAGES/{rel132-current}/[powerpc64le]
-* link:{url-rel}/powerpc/powerpcspe/ISO-IMAGES/{rel132-current}/[powerpcspe]
-* link:{url-rel}/arm/armv6/ISO-IMAGES/{rel132-current}/[armv6]
-* link:{url-rel}/arm/armv7/ISO-IMAGES/{rel132-current}/[armv7]
-* link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel132-current}/[aarch64]
-* link:{url-rel}/riscv/riscv64/ISO-IMAGES/{rel132-current}/[riscv64]
+* link:{url-rel}/amd64/amd64/ISO-IMAGES/{rel141-current}/[amd64]
+* link:{url-rel}/i386/i386/ISO-IMAGES/{rel141-current}/[i386]
+* link:{url-rel}/powerpc/powerpc/ISO-IMAGES/{rel141-current}/[powerpc]
+* link:{url-rel}/powerpc/powerpc64/ISO-IMAGES/{rel141-current}/[powerpc64]
+* link:{url-rel}/powerpc/powerpc64le/ISO-IMAGES/{rel141-current}/[powerpc64le]
+* link:{url-rel}/powerpc/powerpcspe/ISO-IMAGES/{rel141-current}/[powerpcspe]
+* link:{url-rel}/arm/armv7/ISO-IMAGES/{rel141-current}/[armv7]
+* link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel141-current}/[aarch64]
+* link:{url-rel}/riscv/riscv64/ISO-IMAGES/{rel141-current}/[riscv64]
 
 a|
 * link:{url-rel}/VM-IMAGES/README.txt[README]
-* link:{url-rel}/VM-IMAGES/{rel132-current}-RELEASE/amd64/Latest/[amd64]
-* link:{url-rel}/VM-IMAGES/{rel132-current}-RELEASE/i386/Latest/[i386]
-* link:{url-rel}/VM-IMAGES/{rel132-current}-RELEASE/aarch64/Latest/[aarch64]
-* link:{url-rel}/VM-IMAGES/{rel132-current}-RELEASE/riscv64/Latest/[riscv64]
-* link:{url-rel}/CI-IMAGES/{rel132-current}-RELEASE/amd64/Latest/[amd64] (BASIC-CI)
+* link:{url-rel}/VM-IMAGES/{rel141-current}-RELEASE/amd64/Latest/[amd64]
+* link:{url-rel}/VM-IMAGES/{rel141-current}-RELEASE/i386/Latest/[i386]
+* link:{url-rel}/VM-IMAGES/{rel141-current}-RELEASE/aarch64/Latest/[aarch64]
+* link:{url-rel}/VM-IMAGES/{rel141-current}-RELEASE/riscv64/Latest/[riscv64]
+* link:{url-rel}/CI-IMAGES/{rel141-current}-RELEASE/amd64/Latest/[amd64] (BASIC-CI)
 
 a|
 * aarch64
 * {blank}
-** link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel132-current}/[PINE64]
-** link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel132-current}/[PINE64-LTS]
-** link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel132-current}/[ROCK64]
-** link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel132-current}/[ROCKPRO64]
-** link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel132-current}/[RPI] (3/4)
-* armv6/armv7
+** link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel141-current}/[PINE64]
+** link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel141-current}/[PINE64-LTS]
+** link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel141-current}/[ROCK64]
+** link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel141-current}/[ROCKPRO64]
+** link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel141-current}/[RPI] (3/4)
+* armv7
 * {blank}
-** link:{url-rel}/arm/armv7/ISO-IMAGES/{rel132-current}/[GENERICSD]
-** link:{url-rel}/arm/armv6/ISO-IMAGES/{rel132-current}/[RPI-B]
+** link:{url-rel}/arm/armv7/ISO-IMAGES/{rel141-current}/[GENERICSD]
 * riscv64
 * {blank}
-** link:{url-rel}/riscv/riscv64/ISO-IMAGES/{rel132-current}/[GENERICSD]
+** link:{url-rel}/riscv/riscv64/ISO-IMAGES/{rel141-current}/[GENERICSD]
 
 a|
-* link:../releases/#current[Released]: {rel132-current-date}
-* link:{u-rel132-notes}[Release Notes]
-* link:{u-rel132-readme}[Readme]
-* link:{u-rel132-hardware}[Hardware Compatibility List]
-* link:{u-rel132-installation}[Installation Instructions]
-* link:{u-rel132-errata}[Errata]
-* link:{u-rel132-signatures}[Signed Checksums]
+* {blank}
+* link:../releases/#current[Released]: {rel141-current-date}
+* link:{u-rel141-notes}[Release Notes]
+* link:{u-rel141-readme}[Readme]
+* link:{u-rel141-hardware}[Hardware Compatibility List]
+* link:{u-rel141-installation}[Installation Instructions]
+* link:{u-rel141-errata}[Errata]
+* link:{u-rel141-signatures}[Signed Checksums]
 
 |===
 
-[[download-rel124]]
-=== FreeBSD {rel124-current}-RELEASE
+[[download-rel140]]
+=== FreeBSD {rel140-current}-RELEASE
 
 [.tblbasic]
 [.tblDownload]
@@ -102,47 +102,103 @@ a|
 |===
 |Installer |VM |SD Card |Documentation
 a|
-* link:{url-rel}/amd64/amd64/ISO-IMAGES/{rel124-current}/[amd64]
-* link:{url-rel}/i386/i386/ISO-IMAGES/{rel124-current}/[i386]
-* link:{url-rel}/powerpc/powerpc/ISO-IMAGES/{rel124-current}/[powerpc]
-* link:{url-rel}/powerpc/powerpc64/ISO-IMAGES/{rel124-current}/[powerpc64]
-* link:{url-rel}/powerpc/powerpcspe/ISO-IMAGES/{rel124-current}/[powerpcspe]
-* link:{url-rel}/sparc64/sparc64/ISO-IMAGES/{rel124-current}/[sparc64]
-* link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel124-current}/[aarch64]
+* link:{url-rel}/amd64/amd64/ISO-IMAGES/{rel140-current}/[amd64]
+* link:{url-rel}/i386/i386/ISO-IMAGES/{rel140-current}/[i386]
+* link:{url-rel}/powerpc/powerpc/ISO-IMAGES/{rel140-current}/[powerpc]
+* link:{url-rel}/powerpc/powerpc64/ISO-IMAGES/{rel140-current}/[powerpc64]
+* link:{url-rel}/powerpc/powerpc64le/ISO-IMAGES/{rel140-current}/[powerpc64le]
+* link:{url-rel}/powerpc/powerpcspe/ISO-IMAGES/{rel140-current}/[powerpcspe]
+* link:{url-rel}/arm/armv7/ISO-IMAGES/{rel140-current}/[armv7]
+* link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel140-current}/[aarch64]
+* link:{url-rel}/riscv/riscv64/ISO-IMAGES/{rel140-current}/[riscv64]
 
 a|
 * link:{url-rel}/VM-IMAGES/README.txt[README]
-* link:{url-rel}/VM-IMAGES/{rel124-current}-RELEASE/amd64/Latest/[amd64]
-* link:{url-rel}/VM-IMAGES/{rel124-current}-RELEASE/i386/Latest/[i386]
-* link:{url-rel}/VM-IMAGES/{rel124-current}-RELEASE/aarch64/Latest/[aarch64]
+* link:{url-rel}/VM-IMAGES/{rel140-current}-RELEASE/amd64/Latest/[amd64]
+* link:{url-rel}/VM-IMAGES/{rel140-current}-RELEASE/i386/Latest/[i386]
+* link:{url-rel}/VM-IMAGES/{rel140-current}-RELEASE/aarch64/Latest/[aarch64]
+* link:{url-rel}/VM-IMAGES/{rel140-current}-RELEASE/riscv64/Latest/[riscv64]
+* link:{url-rel}/CI-IMAGES/{rel140-current}-RELEASE/amd64/Latest/[amd64] (BASIC-CI)
 
 a|
-* link:{url-rel}/arm/armv6/ISO-IMAGES/{rel124-current}/FreeBSD-{rel124-current}-RELEASE-arm-armv6-RPI-B.img.xz[RPI-B]
-* link:{url-rel}/arm/armv7/ISO-IMAGES/{rel124-current}/FreeBSD-{rel124-current}-RELEASE-arm-armv7-BANANAPI.img.xz[BANANAPI]
-* link:{url-rel}/arm/armv7/ISO-IMAGES/{rel124-current}/FreeBSD-{rel124-current}-RELEASE-arm-armv7-CUBIEBOARD.img.xz[CUBIEBOARD]
-* link:{url-rel}/arm/armv7/ISO-IMAGES/{rel124-current}/FreeBSD-{rel124-current}-RELEASE-arm-armv7-CUBIEBOARD2.img.xz[CUBIEBOARD2]
-* link:{url-rel}/arm/armv7/ISO-IMAGES/{rel124-current}/FreeBSD-{rel124-current}-RELEASE-arm-armv7-CUBOX-HUMMINGBOARD.img.xz[CUBOX-HUMMINGBOARD]
-* link:{url-rel}/arm/armv7/ISO-IMAGES/{rel124-current}/FreeBSD-{rel124-current}-RELEASE-arm-armv7-GENERICSD.img.xz[GENERICSD]
-* link:{url-rel}/arm/armv7/ISO-IMAGES/{rel124-current}/FreeBSD-{rel124-current}-RELEASE-arm-armv7-RPI2.img.xz[RPI2]
-* link:{url-rel}/arm/armv7/ISO-IMAGES/{rel124-current}/FreeBSD-{rel124-current}-RELEASE-arm-armv7-PANDABOARD.img.xz[PANDABOARD]
-* link:{url-rel}/arm/armv7/ISO-IMAGES/{rel124-current}/FreeBSD-{rel124-current}-RELEASE-arm-armv7-WANDBOARD.img.xz[WANDBOARD]
-* link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel124-current}/FreeBSD-{rel124-current}-RELEASE-arm64-aarch64-PINE64.img.xz[PINE64]
-* link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel124-current}/FreeBSD-{rel124-current}-RELEASE-arm64-aarch64-PINE64-LTS.img.xz[PINE64-LTS]
-* link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel124-current}/FreeBSD-{rel124-current}-RELEASE-arm64-aarch64-RPI3.img.xz[RPI3]
+* aarch64
+* {blank}
+** link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel140-current}/[PINE64-LTS]
+** link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel140-current}/[ROCK64]
+** link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel140-current}/[ROCKPRO64]
+** link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel140-current}/[RPI] (3/4)
+* armv7
+* {blank}
+** link:{url-rel}/arm/armv7/ISO-IMAGES/{rel140-current}/[GENERICSD]
+* riscv64
+* {blank}
+** link:{url-rel}/riscv/riscv64/ISO-IMAGES/{rel140-current}/[GENERICSD]
 
 a|
 * {blank}
-* link:../releases/#current[Released]: {rel124-current-date}
-* link:{u-rel124-notes}[Release Notes]
-* link:{u-rel124-readme}[Readme]
-* link:{u-rel124-hardware}[Hardware Compatibility List]
-* link:{u-rel124-installation}[Installation Instructions]
-* link:{u-rel124-errata}[Errata]
-* link:{u-rel124-signatures}[Signed Checksums]
+* link:../releases/#current[Released]: {rel140-current-date}
+* link:{u-rel140-notes}[Release Notes]
+* link:{u-rel140-readme}[Readme]
+* link:{u-rel140-hardware}[Hardware Compatibility List]
+* link:{u-rel140-installation}[Installation Instructions]
+* link:{u-rel140-errata}[Errata]
+* link:{u-rel140-signatures}[Signed Checksums]
 
 |===
 
-////
+[[download-rel133]]
+=== FreeBSD {rel133-current}-RELEASE
+[.tblbasic]
+[.tblDownload]
+[width="100%",cols="25%,25%,25%,25%",options="header",]
+|===
+|Installer |VM |SD Card |Documentation
+a|
+* link:{url-rel}/amd64/amd64/ISO-IMAGES/{rel133-current}/[amd64]
+* link:{url-rel}/i386/i386/ISO-IMAGES/{rel133-current}/[i386]
+* link:{url-rel}/powerpc/powerpc/ISO-IMAGES/{rel133-current}/[powerpc]
+* link:{url-rel}/powerpc/powerpc64/ISO-IMAGES/{rel133-current}/[powerpc64]
+* link:{url-rel}/powerpc/powerpc64le/ISO-IMAGES/{rel133-current}/[powerpc64le]
+* link:{url-rel}/powerpc/powerpcspe/ISO-IMAGES/{rel133-current}/[powerpcspe]
+* link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel133-current}/[aarch64]
+* link:{url-rel}/riscv/riscv64/ISO-IMAGES/{rel133-current}/[riscv64]
+
+a|
+* link:{url-rel}/VM-IMAGES/README.txt[README]
+* link:{url-rel}/VM-IMAGES/{rel133-current}-RELEASE/amd64/Latest/[amd64]
+* link:{url-rel}/VM-IMAGES/{rel133-current}-RELEASE/i386/Latest/[i386]
+* link:{url-rel}/VM-IMAGES/{rel133-current}-RELEASE/aarch64/Latest/[aarch64]
+* link:{url-rel}/VM-IMAGES/{rel133-current}-RELEASE/riscv64/Latest/[riscv64]
+* link:{url-rel}/CI-IMAGES/{rel133-current}-RELEASE/amd64/Latest/[amd64] (BASIC-CI)
+
+a|
+* aarch64
+* {blank}
+** link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel133-current}/[PINE64]
+** link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel133-current}/[PINE64-LTS]
+** link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel133-current}/[PINEBOOK]
+** link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel133-current}/[ROCK64]
+** link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel133-current}/[ROCKPRO64]
+** link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel133-current}/[RPI] (3/4)
+* armv6/armv7
+* {blank}
+** link:{url-rel}/arm/armv7/ISO-IMAGES/{rel133-current}/[GENERICSD]
+** link:{url-rel}/arm/armv6/ISO-IMAGES/{rel133-current}/[RPI-B]
+* riscv64
+* {blank}
+** link:{url-rel}/riscv/riscv64/ISO-IMAGES/{rel133-current}/[GENERICSD]
+
+a|
+* link:../releases/#current[Released]: {rel133-current-date}
+* link:{u-rel133-notes}[Release Notes]
+* link:{u-rel133-readme}[Readme]
+* link:{u-rel133-hardware}[Hardware Compatibility List]
+* link:{u-rel133-installation}[Installation Instructions]
+* link:{u-rel133-errata}[Errata]
+* link:{u-rel133-signatures}[Signed Checksums]
+
+|===
+
 [[helptest]]
 == Development and Testing
 
@@ -155,67 +211,10 @@ Pre-`RELEASE` versions of FreeBSD, not intended for use in production environmen
 Uppercase has special meaning. For example:
 
 * a first _beta release_ is not a (production) `RELEASE`.
+
 The word `CURRENT` is sometimes a source of confusion:
 
-* if you are looking for the _current version_ of FreeBSD, you most likely want a `RELEASE` version (see above) – **not** `CURRENT`
-
-– `CURRENT` has special meaning in the development process.
-
-[[download-rel132]]
-=== FreeBSD {rel132-current}-RC6
-
-[.tblbasic]
-[.tblDownload]
-[width="100%",cols="25%,25%,25%,25%",options="header",]
-|===
-|Installer |VM |SD Card |Documentation
-a|
-* link:{url-rel}/amd64/amd64/ISO-IMAGES/{rel132-current}/[amd64]
-* link:{url-rel}/i386/i386/ISO-IMAGES/{rel132-current}/[i386]
-* link:{url-rel}/powerpc/powerpc/ISO-IMAGES/{rel132-current}/[powerpc]
-* link:{url-rel}/powerpc/powerpc64/ISO-IMAGES/{rel132-current}/[powerpc64]
-* link:{url-rel}/powerpc/powerpc64le/ISO-IMAGES/{rel132-current}/[powerpc64le]
-* link:{url-rel}/powerpc/powerpcspe/ISO-IMAGES/{rel132-current}/[powerpcspe]
-* link:{url-rel}/arm/armv6/ISO-IMAGES/{rel132-current}/[armv6]
-* link:{url-rel}/arm/armv7/ISO-IMAGES/{rel132-current}/[armv7]
-* link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel132-current}/[aarch64]
-* link:{url-rel}/riscv/riscv64/ISO-IMAGES/{rel132-current}/[riscv64]
-
-a|
-* link:{url-rel}/VM-IMAGES/README.txt[README]
-* link:{url-rel}/VM-IMAGES/{rel132-current}-RC6/amd64/Latest/[amd64]
-* link:{url-rel}/VM-IMAGES/{rel132-current}-RC6/i386/Latest/[i386]
-* link:{url-rel}/VM-IMAGES/{rel132-current}-RC6/aarch64/Latest/[aarch64]
-* link:{url-rel}/VM-IMAGES/{rel132-current}-RC6/riscv64/Latest/[riscv64]
-
-a|
-* aarch64
-* {blank}
-** link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel132-current}/[PINE64]
-** link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel132-current}/[PINE64-LTS]
-** link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel132-current}/[ROCK64]
-** link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel132-current}/[ROCKPRO64]
-** link:{url-rel}/arm64/aarch64/ISO-IMAGES/{rel132-current}/[RPI] (3/4)
-* armv6/armv7
-* {blank}
-** link:{url-rel}/arm/armv7/ISO-IMAGES/{rel132-current}/[GENERICSD]
-** link:{url-rel}/arm/armv6/ISO-IMAGES/{rel132-current}/[RPI-B]
-* riscv64
-* {blank}
-** link:{url-rel}/riscv/riscv64/ISO-IMAGES/{rel132-current}/[GENERICSD]
-
-a|
-* {blank}
-//* link:../releases/#current[Released]: {rel132-current-date}
-* link:{u-rel132-notes}[Release Notes]
-//* link:{u-rel132-readme}[Readme]
-//* link:{u-rel132-hardware}[Hardware Compatibility List]
-//* link:{u-rel132-installation}[Installation Instructions]
-//* link:{u-rel132-errata}[Errata]
-* link:{u-rel132-signatures}[Signed Checksums]
-
-|===
-////
+* if you are looking for the _current version_ of FreeBSD, you most likely want a `RELEASE` version (see above) – **not** `CURRENT` – `CURRENT` has special meaning in the development process.
 
 [[download-snapshots]]
 === Development Snapshots
@@ -224,21 +223,21 @@ See link:../snapshots/[FreeBSD Snapshot Releases].
 
 === FreeBSD {rel-head}-CURRENT
 
-Installer and SD card images are available for link:{url-snapshot}/amd64/amd64/ISO-IMAGES/{rel-head}/[amd64], link:{url-snapshot}/i386/i386/ISO-IMAGES/{rel-head}/[i386], link:{url-snapshot}/powerpc/powerpc/ISO-IMAGES/{rel-head}/[powerpc], link:{url-snapshot}/powerpc/powerpc64/ISO-IMAGES/{rel-head}/[powerpc64], link:{url-snapshot}/powerpc/powerpc64le/ISO-IMAGES/{rel-head}/[powerpc64le], link:{url-snapshot}/powerpc/powerpcspe/ISO-IMAGES/{rel-head}/[powerpcspe], link:{url-snapshot}/arm/armv6/ISO-IMAGES/{rel-head}/[armv6], link:{url-snapshot}/arm/armv7/ISO-IMAGES/{rel-head}/[armv7], link:{url-snapshot}/arm64/aarch64/ISO-IMAGES/{rel-head}/[aarch64], and link:{url-snapshot}/riscv/riscv64/ISO-IMAGES/{rel-head}/[riscv64].
+Installer and SD card images are available for link:{url-snapshot}/amd64/amd64/ISO-IMAGES/{rel-head}/[amd64], link:{url-snapshot}/i386/i386/ISO-IMAGES/{rel-head}/[i386], link:{url-snapshot}/powerpc/powerpc/ISO-IMAGES/{rel-head}/[powerpc], link:{url-snapshot}/powerpc/powerpc64/ISO-IMAGES/{rel-head}/[powerpc64], link:{url-snapshot}/powerpc/powerpc64le/ISO-IMAGES/{rel-head}/[powerpc64le], link:{url-snapshot}/powerpc/powerpcspe/ISO-IMAGES/{rel-head}/[powerpcspe], link:{url-snapshot}/arm/armv7/ISO-IMAGES/{rel-head}/[armv7], link:{url-snapshot}/arm64/aarch64/ISO-IMAGES/{rel-head}/[aarch64], and link:{url-snapshot}/riscv/riscv64/ISO-IMAGES/{rel-head}/[riscv64].
 
 VM images are available for link:{url-snapshot}/VM-IMAGES/{rel-head}-CURRENT/amd64/Latest/[amd64], link:{url-snapshot}/VM-IMAGES/{rel-head}-CURRENT/i386/Latest/[i386], link:{url-snapshot}/VM-IMAGES/{rel-head}-CURRENT/aarch64/Latest/[aarch64], and link:{url-snapshot}/VM-IMAGES/{rel-head}-CURRENT/riscv64/Latest/[riscv64].
 
-=== FreeBSD {rel132-current}-STABLE
+=== FreeBSD {rel141-current}-STABLE
 
-Installer and SD card images are available for link:{url-snapshot}/amd64/amd64/ISO-IMAGES/{rel132-current}/[amd64], link:{url-snapshot}/i386/i386/ISO-IMAGES/{rel132-current}/[i386], link:{url-snapshot}/powerpc/powerpc/ISO-IMAGES/{rel132-current}/[powerpc], link:{url-snapshot}/powerpc/powerpc64/ISO-IMAGES/{rel132-current}/[powerpc64], link:{url-snapshot}/powerpc/powerpc64le/ISO-IMAGES/{rel132-current}/[powerpc64le], link:{url-snapshot}/powerpc/powerpcspe/ISO-IMAGES/{rel132-current}/[powerpcspe], link:{url-snapshot}/arm/armv6/ISO-IMAGES/{rel132-current}/[armv6], link:{url-snapshot}/arm/armv7/ISO-IMAGES/{rel132-current}/[armv7], link:{url-snapshot}/arm64/aarch64/ISO-IMAGES/{rel132-current}/[aarch64], and link:{url-snapshot}/riscv/riscv64/ISO-IMAGES/{rel132-current}/[riscv64].
+Installer and SD card images are available for link:{url-snapshot}/amd64/amd64/ISO-IMAGES/{rel141-current}/[amd64], link:{url-snapshot}/i386/i386/ISO-IMAGES/{rel141-current}/[i386], link:{url-snapshot}/powerpc/powerpc/ISO-IMAGES/{rel141-current}/[powerpc], link:{url-snapshot}/powerpc/powerpc64/ISO-IMAGES/{rel141-current}/[powerpc64], link:{url-snapshot}/powerpc/powerpc64le/ISO-IMAGES/{rel141-current}/[powerpc64le], link:{url-snapshot}/powerpc/powerpcspe/ISO-IMAGES/{rel141-current}/[powerpcspe], link:{url-snapshot}/arm/armv7/ISO-IMAGES/{rel141-current}/[armv7], link:{url-snapshot}/arm64/aarch64/ISO-IMAGES/{rel141-current}/[aarch64], and link:{url-snapshot}/riscv/riscv64/ISO-IMAGES/{rel141-current}/[riscv64].
 
-VM images are available for link:{url-snapshot}/VM-IMAGES/{rel132-current}-STABLE/amd64/Latest/[amd64], link:{url-snapshot}/VM-IMAGES/{rel132-current}-STABLE/i386/Latest/[i386], link:{url-snapshot}/VM-IMAGES/{rel132-current}-STABLE/aarch64/Latest/[aarch64], and link:{url-snapshot}/VM-IMAGES/{rel132-current}-STABLE/riscv64/Latest/[riscv64].
+VM images are available for link:{url-snapshot}/VM-IMAGES/{rel141-current}-STABLE/amd64/Latest/[amd64], link:{url-snapshot}/VM-IMAGES/{rel141-current}-STABLE/i386/Latest/[i386], link:{url-snapshot}/VM-IMAGES/{rel141-current}-STABLE/aarch64/Latest/[aarch64], and link:{url-snapshot}/VM-IMAGES/{rel141-current}-STABLE/riscv64/Latest/[riscv64].
 
-=== FreeBSD {rel124-current}-STABLE
+=== FreeBSD {rel133-current}-STABLE
 
-Installer and SD card images are available for link:{url-snapshot}/amd64/amd64/ISO-IMAGES/{rel124-current}/[amd64], link:{url-snapshot}/i386/i386/ISO-IMAGES/{rel124-current}/[i386], link:{url-snapshot}/powerpc/powerpc/ISO-IMAGES/{rel124-current}/[powerpc], link:{url-snapshot}/powerpc/powerpc64/ISO-IMAGES/{rel124-current}/[powerpc64], link:{url-snapshot}/powerpc/powerpcspe/ISO-IMAGES/{rel124-current}/[powerpcspe], link:{url-snapshot}/sparc64/sparc64/ISO-IMAGES/{rel124-current}/[sparc64], link:{url-snapshot}/arm/armv6/ISO-IMAGES/{rel124-current}/[armv6], link:{url-snapshot}/arm/armv7/ISO-IMAGES/{rel124-current}/[armv7], and link:{url-snapshot}/arm64/aarch64/ISO-IMAGES/{rel124-current}/[aarch64].
+Installer and SD card images are available for link:{url-snapshot}/amd64/amd64/ISO-IMAGES/{rel133-current}/[amd64], link:{url-snapshot}/i386/i386/ISO-IMAGES/{rel133-current}/[i386], link:{url-snapshot}/powerpc/powerpc/ISO-IMAGES/{rel133-current}/[powerpc], link:{url-snapshot}/powerpc/powerpc64/ISO-IMAGES/{rel133-current}/[powerpc64], link:{url-snapshot}/powerpc/powerpc64le/ISO-IMAGES/{rel133-current}/[powerpc64le], link:{url-snapshot}/powerpc/powerpcspe/ISO-IMAGES/{rel133-current}/[powerpcspe], link:{url-snapshot}/arm/armv6/ISO-IMAGES/{rel133-current}/[armv6], link:{url-snapshot}/arm/armv7/ISO-IMAGES/{rel133-current}/[armv7], link:{url-snapshot}/arm64/aarch64/ISO-IMAGES/{rel133-current}/[aarch64], and link:{url-snapshot}/riscv/riscv64/ISO-IMAGES/{rel133-current}/[riscv64].
 
-VM images are available for link:{url-snapshot}/VM-IMAGES/{rel124-current}-STABLE/amd64/Latest/[amd64] and link:{url-snapshot}/VM-IMAGES/{rel124-current}-STABLE/i386/Latest/[i386].
+VM images are available for link:{url-snapshot}/VM-IMAGES/{rel133-current}-STABLE/amd64/Latest/[amd64], link:{url-snapshot}/VM-IMAGES/{rel133-current}-STABLE/i386/Latest/[i386], link:{url-snapshot}/VM-IMAGES/{rel133-current}-STABLE/aarch64/Latest/[aarch64], and link:{url-snapshot}/VM-IMAGES/{rel133-current}-STABLE/riscv64/Latest/[riscv64].
 
 [[install]]
 == Installation
@@ -255,7 +254,7 @@ If you plan to get FreeBSD via FTP or HTTPS, check the FreeBSD Handbook for link
 [[distribution]]
 == Purchase FreeBSD Media
 
-FreeBSD can be acquired on CD-ROM or DVD from https://www.freebsdmall.com/[FreeBSD Mall], and other link:{handbook}mirrors/#mirrors-cdrom[CD-ROM and DVD publishers].
+FreeBSD can be acquired on DVD from https://www.freebsdmall.com/[FreeBSD Mall], and other link:{handbook}mirrors/#mirrors-disc[DVD publishers].
 
 [[apps]]
 == Applications and Utility Software
@@ -266,7 +265,7 @@ A diverse collection of utility and application software that has been _ported_ 
 
 * link:../ports/[About FreeBSD Ports]
 * https://www.freshports.org/[FreshPorts - a more advanced web interface to the Collection]
-* link:{handbook}#ports[Installing Applications: Packages and Ports] in the FreeBSD Handbook
+* link:{handbook}ports/[Installing Applications: Packages and Ports] in the FreeBSD Handbook
 * Browse the Collection: https://cgit.freebsd.org/ports/tree/[FreeBSD ports Git repository] | https://download.freebsd.org/ports/[web].
 
 For information about how _you_ can contribute _your_ favorite piece of software to the Collection, have a look at _link:{porters-handbook}[The Porter's Handbook]_ and _link:{contributing}[Contributing to FreeBSD]_.
@@ -278,7 +277,7 @@ FreeBSD is widely used as a building block for other commercial and open-source 
 The projects below are of particular interest.
 
 * https://www.truenas.com/[TrueNAS] is network attached storage (NAS) software that shares and protects data from modern-day threats like ransomware and malware. TrueNAS makes it easy for users and client devices to access shared data through virtually any sharing protocol.
-* https://ghostbsd.org[GhostBSD] is derived from FreeBSD, and uses the GTK environment to provide a beautiful look and a comfortable experience on a modern BSD platform offering a natural and native UNIX(R)-like work environment.
+* https://www.ghostbsd.org[GhostBSD] is derived from FreeBSD, and uses the GTK environment to provide a beautiful look and a comfortable experience on a modern BSD platform offering a natural and native UNIX(R)-like work environment.
 * https://www.midnightbsd.org[MidnightBSD] was forked from FreeBSD 6.1 beta, and continues to use parts of more recent FreeBSD code bases. Developed with desktop users in mind, MidnightBSD includes everything that you would expect for your daily tasks: mail, web browsing, word processing, gaming, and much more.
 * https://www.nomadbsd.org[NomadBSD] is a persistent live system for USB flash drives, based on FreeBSD. Together with automatic hardware detection and setup, it is configured to be used as a desktop system that works out of the box, but can also be used for data recovery, for educational purposes, or to test FreeBSD hardware compatibility.
 * https://www.pfsense.org/[pfSense] is a FreeBSD-based customized distribution tailored for use as a firewall and router.

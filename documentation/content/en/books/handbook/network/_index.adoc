@@ -7,7 +7,7 @@ description: This chapter delves into the topic of network configuration and per
 tags: ["network", "ipv4", "ipv6", "wireless", "wpa_supplicant", "static ip", "dynamic ip"]
 showBookMenu: true
 weight: 9
-path: "/books/handbook/"
+path: "/books/handbook/network/"
 ---
 
 [[network]]
@@ -495,7 +495,7 @@ To assign a default router, specify its address executing the following command:
 If the network has a DHCP server, it is very easy to configure the network interface to use DHCP.
 man:dhclient[8] will provide automatically the IP, the netmask and the default router.
 
-To make the interface works with DHCP execute the following command:
+To make the interface work without DHCP, execute the following commands:
 
 [source,shell]
 ....
@@ -619,14 +619,14 @@ To find out what wireless network cards are in the system check the section <<co
 
 [source,shell]
 ....
-# ifconfig wlan0 create wlandevice iwm0
+# ifconfig wlan0 create wlandev iwm0
 ....
 
 To make the change persist across reboots execute the following command:
 
 [source,shell]
 ....
-# sysrc wlans_iwn0="wlan0"
+# sysrc wlans_iwm0="wlan0"
 ....
 
 [NOTE]
@@ -681,7 +681,7 @@ MacOS                             46:48:b9:b3:c3:ff   44   54M  -84:-96   100 EP
 [[wireless-authentication]]
 === Connection and Authentication to a Wireless Network
 
-Once a wireless network has been selected from the list of scanned networks, it is necessary to perform the connection ant the authentication.
+Once a wireless network has been selected from the list of scanned networks, it is necessary to perform the connection and the authentication.
 In the vast majority of wireless networks, authentication is done with a password configured in the router.
 Other schemes require cryptographic handshakes to be completed before data traffic can flow, either using pre-shared keys or secrets, or more complex schemes that involve backend services such as RADIUS.
 
@@ -706,7 +706,7 @@ network={
 
 <.> SSID scan technique. Only need to use this option if the network is hidden.
 <.> Network name.
-<.> Passwork of the wireless network.
+<.> Password of the wireless network.
 
 The next step will be to configure the wireless connection in the file [.filename]#/etc/rc.conf#.
 
@@ -721,7 +721,7 @@ To use a dynamic address it will be necessary to execute the following command:
 
 [source,shell]
 ....
-# ifconfig_wlan0="WPA DHCP"
+# sysrc ifconfig_wlan0="WPA DHCP"
 ....
 
 Then restart the network executing the following command:
@@ -808,7 +808,7 @@ To change the hostname of the host and persist it across reboots execute the fol
 [[dns]]
 == DNS
 
-The DNS could be understanded as a link:https://en.wikipedia.org/wiki/Telephone_directory[telephone directory] in which an IP is identified to a hostname and vice versa.
+The DNS could be understood as a link:https://en.wikipedia.org/wiki/Telephone_directory[telephone directory] in which an IP is identified to a hostname and vice versa.
 
 There are three files that handle how a FreeBSD system interact with the DNS.
 These three files are man:hosts[5], man:resolv.conf[5] and man:nsswitch.conf[5]

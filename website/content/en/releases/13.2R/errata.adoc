@@ -24,6 +24,7 @@ This errata document for FreeBSD {release} will be maintained until the release 
 * <<errata,Errata Notices>>
 * <<open-issues,Open Issues>>
 * <<late-news,Late-Breaking News>>
+* <<erratas-announcement,Erratas in Announcement>>
 
 [[intro]]
 == Introduction
@@ -44,6 +45,25 @@ For a list of all FreeBSD CERT security advisories, see https://www.FreeBSD.org/
 [width="100%",cols="40%,30%,30%",options="header",]
 |===
 |Advisory |Date |Topic
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-SA-23:04.pam_krb5.asc[FreeBSD-SA-23:04.pam_krb5] |21 June 2023 |Network authentication attack via pam_krb5
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-SA-23:06.ipv6.asc[FreeBSD-SA-23:06.ipv6] |1 August 2023 |Remote denial of service in IPv6 fragment reassembly
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-SA-23:07.bhyve.asc[FreeBSD-SA-23:07.bhyve] |1 August 2023 |bhyve privileged guest escape via fwctl
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-SA-23:08.ssh.asc[FreeBSD-SA-23:08.ssh] |1 August 2023 |Potential remote code execution via ssh-agent forwarding
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-SA-23:09.pam_krb5.asc[FreeBSD-SA-23:09.pam_krb5] |1 August 2023 |Network authentication attack via pam_krb5
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-SA-23:10.pf.asc[FreeBSD-SA-23:10.pf] |6 September 2023 |pf incorrectly handles multiple IPv6 fragment headers
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-SA-23:11.wifi.asc[FreeBSD-SA-23:11.wifi] |6 September 2023 |Wi-Fi encryption bypass
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-SA-23:12.msdosfs.asc[FreeBSD-SA-23:12.msdosfs] |3 October 2023 |msdosfs data disclosure
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-SA-23:13.capsicum.asc[FreeBSD-SA-23:13.capsicum] |3 October 2023 |copy_file_range insufficient capability rights check
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-SA-23:14.smccc.asc[FreeBSD-SA-23:14.smccc] |3 October 2023 |arm64 boot CPUs may lack speculative execution protections
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-SA-23:15.stdio.asc[FreeBSD-SA-23:15.stdio] |8 November 2023 |libc stdio buffer overflow
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-SA-23:16.cap_net.asc[FreeBSD-SA-23:16.cap_net] |8 November 2023 |Incorrect libcap_net limitation list manipulation
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-SA-23:17.pf.asc[FreeBSD-SA-23:17.pf] |5 December 2023 |TCP spoofing vulnerability in pf(4)
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-SA-23:18.nfsclient.asc[FreeBSD-SA-23:18.nfsclient] |12 December 2023 |NFS client data corruption and kernel memory disclosure
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-SA-23:19.openssh.asc[FreeBSD-SA-23:19.openssh] |19 December 2023 |Prefix Truncation Attack in the SSH protocol
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-SA-24:01.bhyveload.asc[FreeBSD-SA-24:01.bhyveload] |14 February 2024 |bhyveload(8) host file access
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-SA-24:02.tty.asc[FreeBSD-SA-24:02.tty] |14 February 2024 |jail(2) information leak
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-SA-24:03.unbound.asc[FreeBSD-SA-24:03.unbound] |28 March 2024 |Multiple vulnerabilities in unbound
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-SA-24:04.openssh.asc[FreeBSD-SA-24:04.openssh] |1 July 2024 |OpenSSH pre-authentication remote code execution
 |===
 
 [[errata]]
@@ -52,6 +72,21 @@ For a list of all FreeBSD CERT security advisories, see https://www.FreeBSD.org/
 [width="100%",cols="40%,30%,30%",options="header",]
 |===
 |Errata |Date |Topic
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-EN-23:06.loader.asc[FreeBSD-EN-23:06.loader] |21 June 2023 |x86 kernel console configuration
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-EN-23:07.mpr.asc[FreeBSD-EN-23:07.mpr] |21 June 2023 |mpr(4) may fail to initialize devices
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-EN-23:08.vnet.asc[FreeBSD-EN-23:08.vnet] |1 August 2023 |VNET and DPCPU module panic on arm64
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-EN-23:09.freebsd-update.asc[FreeBSD-EN-23:09.freebsd-update] |6 September 2023 |freebsd-update incorrectly merges files on upgrade
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-EN-23:10.pci.asc[FreeBSD-EN-23:10.pci] |6 September 2023 |PCI-e hot-plug is broken with certain devices
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-EN-23:11.caroot.asc[FreeBSD-EN-23:11.caroot] |6 September 2023 |Root certificate bundle update
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-EN-23:12.freebsd-update.asc[FreeBSD-EN-23:12.freebsd-update] |3 October 2023 |freebsd-update to 14.0 fails
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-EN-23:13.freebsd-update.asc[FreeBSD-EN-23:13.freebsd-update] |8 November 2023 |freebsd-update does not handle deep boot environments
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-EN-23:14.regcomp.asc[FreeBSD-EN-23:14.regcomp] |8 November 2023 |Incorrect regular expression escape handling
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-EN-23:16.openzfs.asc[FreeBSD-EN-23:16.openzfs] |1 December 2023 |OpenZFS data corruption
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-EN-24:01.tzdata.asc[FreeBSD-EN-24:01.tzdata] |14 February 2024 |Timezone database information update
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-EN-24:02.libutil.asc[FreeBSD-EN-24:02.libutil] |14 February 2024 |Login class resource limits and CPU mask bypass
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-EN-24:03.kqueue.asc[FreeBSD-EN-24:03.kqueue] |14 February 2024 |kqueue_close(2) page fault on exit using rfork(2)
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-EN-24:05.tty.asc[FreeBSD-EN-24:05.tty] |28 March 2024 |TTY Kernel Panic
+|link:https://www.FreeBSD.org/security/advisories/FreeBSD-EN-24:06.wireguard.asc[FreeBSD-EN-24:06.wireguard] |28 March 2024 |Insufficient barriers in WireGuard if_wg(4)
 |===
 
 [[open-issues]]
@@ -63,3 +98,9 @@ No open issues.
 == Late-Breaking News
 
 No late-breaking news.
+
+[[erratas-announcement]]
+== Erratas in Announcement
+
+* tzdata version is 2023c and not 2023b.
+* OpenSSH version is 9.3p1 and not 9.2p1.

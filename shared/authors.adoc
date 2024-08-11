@@ -92,6 +92,10 @@
 :akiyama-email: akiyama@FreeBSD.org
 :akiyama: {akiyama-name} <{akiyama-email}>
 
+:akiyano-name: Arthur Kiyanovski
+:akiyano-email: akiyano@FreeBSD.org
+:akiyano: {akiyano-name} <{akiyano-email}>
+
 :alane-name: Alan Eldridge
 :alane-email: \alane@FreeBSD.org
 :alane: {alane-name} <{alane-email}>
@@ -439,6 +443,10 @@
 :bms-name: Bruce M. Simpson
 :bms-email: bms@FreeBSD.org
 :bms: {bms-name} <{bms-email}>
+
+:bnovkov-name: Bojan Novković
+:bnovkov-email: bnovkov@FreeBSD.org
+:bnovkov: {bnovkov-name} <{bnovkov-email}>
 
 :bofh-name: Muhammad Moinur Rahman
 :bofh-email: bofh@FreeBSD.org
@@ -964,6 +972,10 @@
 :dutchdaemon-email: dutchdaemon@FreeBSD.org
 :dutchdaemon: {dutchdaemon-name} <{dutchdaemon-email}>
 
+:dutra-name: Gabriel M. Dutra
+:dutra-email: dutra@FreeBSD.org
+:dutra: {dutra-name} <{dutra-email}>
+
 :dvl-name: Dan Langille
 :dvl-email: dvl@FreeBSD.org
 :dvl: {dvl-name} <{dvl-email}>
@@ -1452,6 +1464,10 @@
 :jbeich-email: jbeich@FreeBSD.org
 :jbeich: {jbeich-name} <{jbeich-email}>
 
+:jbo-name: Joel Bodenmann
+:jbo-email: jbo@FreeBSD.org
+:jbo: {jbo-name} <{jbo-email}>
+
 :jcamou-name: Jesus R. Camou
 :jcamou-email: jcamou@FreeBSD.org
 :jcamou: {jcamou-name} <{jcamou-email}>
@@ -1511,6 +1527,10 @@
 :jfitz-name: James FitzGibbon
 :jfitz-email: jfitz@FreeBSD.org
 :jfitz: {jfitz-name} <{jfitz-email}>
+
+:jfree-name: Jake Freeland
+:jfree-email: jfree@FreeBSD.org
+:jfree: {jfree-name} <{jfree-email}>
 
 :jfv-name: Jack F. Vogel
 :jfv-email: jfv@FreeBSD.org
@@ -1703,6 +1723,10 @@
 :jrm-name: Joseph Mingrone
 :jrm-email: jrm@FreeBSD.org
 :jrm: {jrm-name} <{jrm-email}>
+
+:jrtc27-name: Jessica Clarke
+:jrtc27-email: jrtc27@FreeBSD.org
+:jrtc27: {jrtc27-name} <{jrtc27-email}>
 
 :jsa-name: Joseph S. Atkinson
 :jsa-email: jsa@FreeBSD.org
@@ -2228,6 +2252,10 @@
 :mich-email: mich@FreeBSD.org
 :mich: {mich-name} <{mich-email}>
 
+:michaelo-name: Michael Osipov
+:michaelo-email: michaelo@FreeBSD.org
+:michaelo: {michaelo-name} <{michaelo-email}>
+
 :mikael-name: Mikaël Urankar
 :mikael-email: mikael@FreeBSD.org
 :mikael: {mikael-name} <{mikael-email}>
@@ -2508,6 +2536,10 @@
 :olah-email: olah@FreeBSD.org
 :olah: {olah-name} <{olah-email}>
 
+:olce-name: Olivier Certner
+:olce-email: olce@FreeBSD.org
+:olce: {olce-name} <{olce-email}>
+
 :oleg-name: Oleg Bulyzhin
 :oleg-email: oleg@FreeBSD.org
 :oleg: {oleg-name} <{oleg-email}>
@@ -2543,6 +2575,10 @@
 :osa-name: Sergey A. Osokin
 :osa-email: osa@FreeBSD.org
 :osa: {osa-name} <{osa-email}>
+
+:osamaabb-name: Osama Abboud
+:osamaabb-email: osamaabb@FreeBSD.org
+:osamaabb: {osamaabb-name} <{osamaabb-email}>
 
 :oshogbo-name: Mariusz Zaborski
 :oshogbo-email: oshogbo@FreeBSD.org
@@ -2731,6 +2767,10 @@
 :ray-name: Aleksandr Rybalko
 :ray-email: ray@FreeBSD.org
 :ray: {ray-name} <{ray-email}>
+
+:rcm-name: R. Christian McDonald
+:rcm-email: rcm@FreeBSD.org
+:rcm: {rcm-name} <{rcm-email}>
 
 :rcyu-name: Ruey-Cherng Yu
 :rcyu-email: rcyu@FreeBSD.org
@@ -3448,6 +3488,10 @@
 :uqs-email: uqs@FreeBSD.org
 :uqs: {uqs-name} <{uqs-email}>
 
+:uzsolt-name: Zsolt Udvari
+:uzsolt-email: uzsolt@FreeBSD.org
+:uzsolt: {uzsolt-name} <{uzsolt-email}>
+
 :vangyzen-name: Eric van Gyzen
 :vangyzen-email: vangyzen@FreeBSD.org
 :vangyzen: {vangyzen-name} <{vangyzen-email}>
@@ -3694,7 +3738,7 @@
 :core-secretary-email: core-secretary@FreeBSD.org
 
 // FreeBSD Doc Engineering Team
-:doceng-members: {gjb}, {carlavilla}, {blackend}, {dbaio}, {bcr}, {hrs}, {fernape}
+:doceng-members: {blackend}, {carlavilla}, {dbaio}, {fernape}, {hrs}
 :doceng-secretary-email: <doceng-secretary@FreeBSD.org>
 
 // FreeBSD Donations Liaison
@@ -3711,9 +3755,8 @@
 
 // FreeBSD Release Engineering Teams
 :re: re@FreeBSD.org
-:re-members: {gjb}, {kib}, {blackend}, {karels}, {delphij}, {cperciva}
-:re-members-email: {gjb-email}, {kib-email}, {blackend-email}, {karels-email}, {delphij-email}, {cperciva-email}
-:re-builders: {marcel}, {nyan}, {nwhitehorn}
+:re-members: {kib}, {dch}, {blackend}, {jhixson}, {delphij}, {emaste}, {mmokhi}, {cperciva}, {dfr}, {bofh}
+:re-members-email: {kib-email}, {dch-email}, {blackend-email}, {jhixson-email}, {delphij-email}, {emaste-email}, {mmokhi-email}, {cperciva-email}, {dfr-email}, {bofh-email}
 
 // FreeBSD Security Officer
 :so: {gordon}

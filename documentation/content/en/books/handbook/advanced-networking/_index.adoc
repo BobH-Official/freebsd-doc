@@ -7,7 +7,7 @@ description: "Advanced networking in FreeBSD:  basics of gateways and routes, CA
 tags: ["Advanced Networking", "Handbook", "gateway", "routes", "wireless", "tethering", "bluetooth", "bridging", "CARP", "VLAN"]
 showBookMenu: true
 weight: 39
-path: "/books/handbook/"
+path: "/books/handbook/advanced-networking/"
 ---
 
 [[advanced-networking]]
@@ -1961,6 +1961,12 @@ After the host computer receives this information, it downloads the boot loader 
 In FreeBSD, the boot loader file is [.filename]#/boot/pxeboot#.
 After [.filename]#/boot/pxeboot# executes, the FreeBSD kernel is loaded and the rest of the FreeBSD bootup sequence proceeds, as described in crossref:boot[boot,The FreeBSD Booting Process].
 
+[NOTE]
+====
+For UEFI PXE based boot, the actual boot loader file to use is [.filename]#/boot/loader.efi#.
+See the below section crossref:advanced-networking[_debugging_pxe_problems,Debugging PXE Problems] on how to use [.filename]#/boot/loader.efi#.
+====
+
 This section describes how to configure these services on a FreeBSD system so that other systems can PXE boot into FreeBSD.
 Refer to man:diskless[8] for more information.
 
@@ -2025,11 +2031,12 @@ inetd_enable="YES"
 +
 [.programlisting]
 ....
-tftp dgram udp wait root /usr/libexec/tftpd tftpd -l -s /b/tftpboot
+tftp dgram udp wait root /usr/libexec/tftpd tftpd blocksize 1468 -l -s /b/tftpboot
 ....
 +
 [NOTE]
 ====
+The specified tftp blocksize, e.g. 1468 bytes, replaces the default size 512 bytes.
 Some PXE versions require the TCP version of TFTP.
 In this case, uncomment the second `tftp` line which contains `stream tcp`.
 ====
@@ -2180,6 +2187,14 @@ The `BUGS` sections in man:tftpd[8] and man:tftp[1] document some limitations wi
 ....
 # mount -t nfs 192.168.0.1:/b/tftpboot/FreeBSD/install /mnt
 ....
++
+. For UEFI PXE based booting, replace the [.filename]#boot/pxeboot# file with the [.filename]#boot/loader.efi# file:
+[source,shell]
+....
+# chroot ${NFSROOTDIR}
+# mv boot/pxeboot boot/pxeboot.original
+# cp boot/loader.efi boot/pxeboot
+....
 ****
 
 [[carp]]
@@ -2206,7 +2221,7 @@ The backup machine has two additional CARP interfaces, one for each of the maste
 When a failure occurs, the backup server will pick up the failed master machine's IP address.
 
 [[carp-10x]]
-=== Using CARP on FreeBSD 10 and Later
+=== Using CARP
 
 Enable boot-time support for CARP by adding an entry for the [.filename]#carp.ko# kernel module in [.filename]#/boot/loader.conf#:
 
@@ -2284,89 +2299,6 @@ High availability is now enabled.
 CARP functionality can be controlled via several man:sysctl[8] variables documented in the man:carp[4] manual pages.
 Other actions can be triggered from CARP events by using man:devd[8].
 
-[[carp-9x]]
-=== Using CARP on FreeBSD 9 and Earlier
-
-The configuration for these versions of FreeBSD is similar to the one described in the previous section, except that a CARP device must first be created and referred to in the configuration.
-
-Enable boot-time support for CARP by loading the [.filename]#if_carp.ko# kernel module in [.filename]#/boot/loader.conf#:
-
-[.programlisting]
-....
-if_carp_load="YES"
-....
-
-To load the module now without rebooting:
-
-[source,shell]
-....
-# kldload carp
-....
-
-For users who prefer to use a custom kernel, include the following line in the custom kernel configuration file and compile the kernel as described in crossref:kernelconfig[kernelconfig,Configuring the FreeBSD Kernel]:
-
-[.programlisting]
-....
-device	carp
-....
-
-Next, on each host, create a CARP device:
-
-[source,shell]
-....
-# ifconfig carp0 create
-....
-
-Set the hostname, management IP address, the shared IP address, and VHID by adding the required lines to [.filename]#/etc/rc.conf#.
-Since a virtual CARP device is used instead of an alias, the actual subnet mask of `/24` is used instead of `/32`.
-Here are the entries for `hosta.example.org`:
-
-[.programlisting]
-....
-hostname="hosta.example.org"
-ifconfig_fxp0="inet 192.168.1.3 netmask 255.255.255.0"
-cloned_interfaces="carp0"
-ifconfig_carp0="vhid 1 pass testpass 192.168.1.50/24"
-....
-
-On `hostb.example.org`:
-
-[.programlisting]
-....
-hostname="hostb.example.org"
-ifconfig_fxp0="inet 192.168.1.4 netmask 255.255.255.0"
-cloned_interfaces="carp0"
-ifconfig_carp0="vhid 2 pass testpass 192.168.1.51/24"
-....
-
-The third machine, `hostc.example.org`, is configured to handle failover from either of the master hosts:
-
-[.programlisting]
-....
-hostname="hostc.example.org"
-ifconfig_fxp0="inet 192.168.1.5 netmask 255.255.255.0"
-cloned_interfaces="carp0 carp1"
-ifconfig_carp0="vhid 1 advskew 100 pass testpass 192.168.1.50/24"
-ifconfig_carp1="vhid 2 advskew 100 pass testpass 192.168.1.51/24"
-....
-
-[NOTE]
-====
-Preemption is disabled in the [.filename]#GENERIC# FreeBSD kernel.
-If preemption has been enabled with a custom kernel, `hostc.example.org` may not release the IP address back to the original content server.
-The administrator can force the backup server to return the IP address to the master with the command:
-
-[source,shell]
-....
-# ifconfig carp0 down && ifconfig carp0 up
-....
-
-This should be done on the [.filename]#carp# interface which corresponds to the correct host.
-====
-
-Once the configuration is complete, either restart networking or reboot each system.
-High availability is now enabled.
-
 [[network-vlan]]
 == VLANs
 
@@ -2391,6 +2323,17 @@ To configure VLANs at run time, with a NIC of `em0` and a VLAN tag of `5` the co
 See how the interface name includes the NIC driver name and the VLAN tag, separated by a period? This is a best practice to make maintaining the VLAN configuration easy when many VLANs are present on a machine.
 ====
 
+[NOTE]
+====
+When defining VLANs, ensure that the parent network interface is also configured and enabled.
+The minimum configuration for the above example would be:
+
+[source,shell]
+....
+# ifconfig em0 up
+....
+====
+
 To configure VLANs at boot time, [.filename]#/etc/rc.conf# must be updated.
 To duplicate the configuration above, the following will need to be added:
 
@@ -2401,6 +2344,17 @@ ifconfig_em0_5="inet 192.168.20.20/24"
 ....
 
 Additional VLANs may be added, by simply adding the tag to the `vlans_em0` field and adding an additional line configuring the network on that VLAN tag's interface.
+
+[NOTE]
+====
+When defining VLANs in [.filename]#/etc/rc.conf#, make sure that the parent network interface is configured and enabled as well.
+The minimum configuration for the above example would be:
+
+[.programlisting]
+....
+ifconfig_em0="up"
+....
+====
 
 It is useful to assign a symbolic name to an interface so that when the associated hardware is changed, only a few configuration variables need to be updated.
 For example, security cameras need to be run over VLAN 1 on `em0`.

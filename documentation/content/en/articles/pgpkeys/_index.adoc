@@ -75,29 +75,29 @@ include::{include-path}doceng-secretary.key[]
 [[pgpkeys-core]]
 == Core Team Members
 
-=== `{bapt}`
-include::{include-path}bapt.key[]
+=== `{allanjude}`
+include::{include-path}allanjude.key[]
 
-=== `{bcr}`
-include::{include-path}bcr.key[]
+=== `{dch}`
+include::{include-path}dch.key[]
 
-=== `{grog}`
-include::{include-path}grog.key[]
+=== `{glebius}`
+include::{include-path}glebius.key[]
 
-=== `{jhb}`
-include::{include-path}jhb.key[]
+=== `{hrs}`
+include::{include-path}hrs.key[]
 
 === `{lwhsu}`
 include::{include-path}lwhsu.key[]
 
-=== `{manu}`
-include::{include-path}manu.key[]
+=== `{mat}`
+include::{include-path}mat.key[]
+
+=== `{olivier}`
+include::{include-path}olivier.key[]
 
 === `{tcberner}`
 include::{include-path}tcberner.key[]
-
-=== `{0mp}`
-include::{include-path}0mp.key[]
 
 [[pgpkeys-developers]]
 == Developers
@@ -207,6 +207,9 @@ include::{include-path}mbr.key[]
 === `{bvs}`
 include::{include-path}bvs.key[]
 
+=== `{jbo}`
+include::{include-path}jbo.key[]
+
 === `{novel}`
 include::{include-path}novel.key[]
 
@@ -260,6 +263,9 @@ include::{include-path}jcamou.key[]
 
 === `{acm}`
 include::{include-path}acm.key[]
+
+=== `{olce}`
+include::{include-path}olce.key[]
 
 === `{gahr}`
 include::{include-path}gahr.key[]
@@ -326,6 +332,9 @@ include::{include-path}alc.key[]
 
 === `{olivier}`
 include::{include-path}olivier.key[]
+
+=== `{dch}`
+include::{include-path}dch.key[]
 
 === `{bcran}`
 include::{include-path}bcran.key[]
@@ -672,6 +681,9 @@ include::{include-path}jkim.key[]
 === `{zack}`
 include::{include-path}zack.key[]
 
+=== `{akiyano}`
+include::{include-path}akiyano.key[]
+
 === `{jceel}`
 include::{include-path}jceel.key[]
 
@@ -870,6 +882,9 @@ include::{include-path}mm.key[]
 === `{sem}`
 include::{include-path}sem.key[]
 
+=== `{rcm}`
+include::{include-path}rcm.key[]
+
 === `{mckusick}`
 include::{include-path}mckusick.key[]
 
@@ -1014,6 +1029,9 @@ include::{include-path}rpaulo.key[]
 === `{misha}`
 include::{include-path}misha.key[]
 
+=== `{dumbbell}`
+include::{include-path}dumbbell.key[]
+
 === `{rpokala}`
 include::{include-path}rpokala.key[]
 
@@ -1106,6 +1124,9 @@ include::{include-path}roberto.key[]
 
 === `{rodrigc}`
 include::{include-path}rodrigc.key[]
+
+=== `{michaelo}`
+include::{include-path}michaelo.key[]
 
 === `{ler}`
 include::{include-path}ler.key[]
@@ -1338,6 +1359,9 @@ include::{include-path}tuexen.key[]
 === `{gonzo}`
 include::{include-path}gonzo.key[]
 
+=== `{uzsolt}`
+include::{include-path}uzsolt.key[]
+
 === `{ume}`
 include::{include-path}ume.key[]
 
@@ -1463,6 +1487,9 @@ include::{include-path}vvd.key[]
 
 === `{gbe}`
 include::{include-path}gbe.key[]
+
+=== `{bnovkov}`
+include::{include-path}bnovkov.key[]
 
 [[pgpkeys-other]]
 == Other Cluster Account Holders

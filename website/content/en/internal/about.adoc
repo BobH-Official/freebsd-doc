@@ -1,11 +1,11 @@
 ---
-title: "About the FreeBSD WWW Server"
+title: "About the FreeBSD Web Server"
 sidenav: docs
 ---
 
 include::shared/en/urls.adoc[]
 
-= About the FreeBSD WWW Server
+= About the FreeBSD Web Server
 
 == The Machine
 
@@ -26,6 +26,7 @@ Naturally, all systems in the FreeBSD.org cluster run FreeBSD. The hardware and 
 * https://www.metapeer.com/[MetaPeer]
 * https://www.nyi.net/[New York Internet]
 * https://nic.br/[NIC.br]
+* https://www.teleservice.net/[Teleservice Skåne AB]
 * https://your.org/[Your.Org]
 
 -- and other link:../../donations/donors[contributors] to the FreeBSD project.

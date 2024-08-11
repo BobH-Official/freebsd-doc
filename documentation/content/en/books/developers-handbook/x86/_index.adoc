@@ -7,7 +7,7 @@ description: x86 Assembly Language Programming
 tags: ["x86", "guide"]
 showBookMenu: true
 weight: 15
-path: "/books/developers-handbook/"
+path: "/books/developers-handbook/x86/"
 ---
 
 [[x86]]
@@ -79,14 +79,11 @@ Copyright (R) 2000-2001 G. Adam Stanislav. All rights reserved.
 
 The most important tool for assembly language programming is the assembler, the software that converts assembly language code into machine language.
 
-Two very different assemblers are available for FreeBSD.
-One is  man:as[1], which uses the traditional UNIX(R) assembly language syntax.
-It comes with the system.
+Three very different assemblers are available for FreeBSD.
+Both man:llvm-as[1] (included in package:devel/llvm[]) and man:as[1] (included in package:devel/binutils[]) use the traditional UNIX(R) assembly language syntax.
 
-The other is /usr/ports/devel/nasm.
-It uses the Intel syntax.
+On the other hand, man:nasm[1] (installed through package:devel/nasm[]) uses the Intel syntax.
 Its main advantage is that it can assemble code for many operating systems.
-It needs to be installed separately, but is completely free.
 
 This chapter uses nasm syntax because most assembly language programmers coming to FreeBSD from other operating systems will find it easier to understand.
 And, because, quite frankly, that is what I am used to.
@@ -544,22 +541,22 @@ We are now ready for our first program, the mandatory Hello, World!
 
 [.programlisting]
 ....
-1:	%include	'system.inc'
- 2:
- 3:	section	.data
- 4:	hello	db	'Hello, World!', 0Ah
- 5:	hbytes	equ	$-hello
- 6:
- 7:	section	.text
- 8:	global	_start
- 9:	_start:
-10:	push	dword hbytes
-11:	push	dword hello
-12:	push	dword stdout
-13:	sys.write
-14:
-15:	push	dword 0
-16:	sys.exit
+	%include	'system.inc'
+
+	section	.data
+	hello	db	'Hello, World!', 0Ah
+	hbytes	equ	$-hello
+
+	section	.text
+	global	_start
+_start:
+	push	dword hbytes
+	push	dword hello
+	push	dword stdout
+	sys.write
+
+	push	dword 0
+	sys.exit
 ....
 
 Here is what it does: Line 1 includes the defines, the macros, and the code from [.filename]#system.inc#.
@@ -589,7 +586,7 @@ Which one it is, is for the system to figure out.
 [[x86-assemble-1]]
 === Assembling the Code
 
-Type the code (except the line numbers) in an editor, and save it in a file named [.filename]#hello.asm#.
+Type the code in an editor, and save it in a file named [.filename]#hello.asm#.
 You need nasm to assemble it.
 
 [[x86-get-nasm]]

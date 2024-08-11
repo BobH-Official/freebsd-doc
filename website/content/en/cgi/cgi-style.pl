@@ -1,4 +1,3 @@
-# $FreeBSD$
 #
 # Perl routines to encapsulate various elements of HTML page style.
 
@@ -25,7 +24,7 @@ if (!defined($hsty_email)) {
     $hsty_email = 'Contact';
 }
 if (!defined($hsty_author)) {
-    $hsty_author = "<a href='$hsty_base/mailto.html'>$hsty_email</a>";
+    $hsty_author = "<a href='$hsty_base/mailto/'>$hsty_email</a>";
 }
 
 if (!defined($hsty_date)) {
@@ -57,7 +56,7 @@ $i_topbar = qq`
 
             <div id="headerlogoleft">
               <a href="$hsty_base" title="FreeBSD"><img
-              src="$hsty_base/layout/images/logo-red.png" width="457"
+              src="$hsty_base/layout/images/banner-red.png" width="457"
               height="75" alt="FreeBSD" /></a>
             </div>
 
@@ -151,7 +150,7 @@ $i_topbar = qq`
 	      <li><a href="$hsty_base/projects/index.html">Developers</a>
 		<ul>
 		  <li><a href="$hsty_base/projects/ideas/ideas.html">Project Ideas</a></li>
-		  <li><a href="//cgit.FreeBSD.org">GIT Repository</a></li>
+		  <li><a href="https://cgit.FreeBSD.org">GIT Repository</a></li>
 		</ul>
 	      </li>
 	    </ul>
@@ -159,16 +158,16 @@ $i_topbar = qq`
 	      <li><a href="$hsty_base/support.html">Support</a>
 		<ul>
 		  <li><a href="$hsty_base/commercial/commercial.html">Vendors</a></li>
-		  <li><a href="//security.FreeBSD.org/">Security Information</a></li>
+		  <li><a href="https://security.FreeBSD.org/">Security Information</a></li>
 		  <li><a href="https://bugs.freebsd.org/search/">Bug Reports</a></li>
 		  <li><a href="$hsty_base/support.html">Submit Bug-report</a></li>
 		</ul>
 	      </li>
 	    </ul>
 	    <ul>
-	      <li><a href="//www.freebsdfoundation.org/">Foundation</a>
+	      <li><a href="https://www.freebsdfoundation.org/">Foundation</a>
 		<ul>
-		  <li><a href="//www.freebsdfoundation.org/donate/">Donate</a></li>
+		  <li><a href="https://www.freebsdfoundation.org/donate/">Donate</a></li>
 		</ul>
 	      </li>
 	    </ul>
@@ -187,7 +186,7 @@ if (!defined($hsty_home)) {
 sub html_header {
     local ($title, $xhtml) = @_;
 
-    return short_html_header($title, $xhtml) . "<h1>$title</h1>\n";
+    return short_html_header($title, $xhtml) . "<br/>\n<h1>$title</h1>\n";
 }
 
 sub short_html_header {
@@ -236,7 +235,7 @@ sub html_footer {
     return qq`
 	</div>
         <div id="footer">
-          <a href="$hsty_base/copyright/">Legal Notices</a> | &copy; 1995-2023
+          <a href="$hsty_base/copyright/">Legal Notices</a> | &copy; 1995-2024
           The FreeBSD Project. All rights reserved.<br />
 	  <address>$hsty_author<br />$hsty_date</address>
         </div>

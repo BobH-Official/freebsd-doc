@@ -2,6 +2,118 @@
 # $FreeBSD$
 
 [[notices]]
+name = "FreeBSD-EN-24:14.ifconfig"
+date = "2024-08-07"
+
+[[notices]]
+name = "FreeBSD-EN-24:13.libc++"
+date = "2024-06-19"
+
+[[notices]]
+name = "FreeBSD-EN-24:12.killpg"
+date = "2024-06-19"
+
+[[notices]]
+name = "FreeBSD-EN-24:11.ldns"
+date = "2024-06-19"
+
+[[notices]]
+name = "FreeBSD-EN-24:10.zfs"
+date = "2024-06-19"
+
+[[notices]]
+name = "FreeBSD-EN-24:09.zfs"
+date = "2024-04-24"
+
+[[notices]]
+name = "FreeBSD-EN-24:08.kerberos"
+date = "2024-03-28"
+
+[[notices]]
+name = "FreeBSD-EN-24:07.clang"
+date = "2024-03-28"
+
+[[notices]]
+name = "FreeBSD-EN-24:06.wireguard"
+date = "2024-03-28"
+
+[[notices]]
+name = "FreeBSD-EN-24:05.tty"
+date = "2024-03-28"
+
+[[notices]]
+name = "FreeBSD-EN-24:04.ip"
+date = "2024-02-14"
+
+[[notices]]
+name = "FreeBSD-EN-24:03.kqueue"
+date = "2024-02-14"
+
+[[notices]]
+name = "FreeBSD-EN-24:02.libutil"
+date = "2024-02-14"
+
+[[notices]]
+name = "FreeBSD-EN-24:01.tzdata"
+date = "2024-02-14"
+
+[[notices]]
+name = "FreeBSD-EN-23:22.vfs"
+date = "2023-12-05"
+
+[[notices]]
+name = "FreeBSD-EN-23:21.tty"
+date = "2023-12-05"
+
+[[notices]]
+name = "FreeBSD-EN-23:20.vm"
+date = "2023-12-05"
+
+[[notices]]
+name = "FreeBSD-EN-23:19.pkgbase"
+date = "2023-12-05"
+
+[[notices]]
+name = "FreeBSD-EN-23:18.openzfs"
+date = "2023-12-05"
+
+[[notices]]
+name = "FreeBSD-EN-23:17.ossl"
+date = "2023-12-05"
+
+[[notices]]
+name = "FreeBSD-EN-23:16.openzfs"
+date = "2023-12-01"
+
+[[notices]]
+name = "FreeBSD-EN-23:15.sanitizer"
+date = "2023-12-01"
+
+[[notices]]
+name = "FreeBSD-EN-23:14.regcomp"
+date = "2023-11-08"
+
+[[notices]]
+name = "FreeBSD-EN-23:13.freebsd-update"
+date = "2023-11-08"
+
+[[notices]]
+name = "FreeBSD-EN-23:12.freebsd-update"
+date = "2023-10-03"
+
+[[notices]]
+name = "FreeBSD-EN-23:11.caroot"
+date = "2023-09-06"
+
+[[notices]]
+name = "FreeBSD-EN-23:10.pci"
+date = "2023-09-06"
+
+[[notices]]
+name = "FreeBSD-EN-23:09.freebsd-update"
+date = "2023-09-06"
+
+[[notices]]
 name = "FreeBSD-EN-23:08.vnet"
 date = "2023-08-01"
 

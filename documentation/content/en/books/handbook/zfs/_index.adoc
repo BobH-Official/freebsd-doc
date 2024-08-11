@@ -7,7 +7,7 @@ description: ZFS is an advanced file system designed to solve major problems fou
 tags: ["ZFS", "filesystem", "administration", "zpool", "features", "terminology", "RAID-Z"]
 showBookMenu: true
 weight: 26
-path: "/books/handbook/"
+path: "/books/handbook/zfs/"
 ---
 
 [[zfs]]
@@ -1889,7 +1889,7 @@ See the <<zfs-zfs-send,Replication>> section for more information.
 ==== Snapshot Rollback
 
 When at least one snapshot is available, roll back to it at any time.
-Most often this is the case when the current state of the dataset is no longer and if preferring an older version.
+Most often this is the case when the current state of the dataset is no longer valid or an older version is preferred.
 Scenarios such as local development tests gone wrong, botched system updates hampering the system functionality, or the need to restore deleted files or directories are all too common occurrences.
 To roll back a snapshot, use `zfs rollback _snapshotname_`.
 If a lot of changes are present, the operation will take a long time.
@@ -1900,7 +1900,7 @@ Rolling back to a snapshot discards all other data in that dataset not part of t
 Taking a snapshot of the current state of the dataset before rolling back to a previous one is a good idea when requiring some data later.
 This way, the user can roll back and forth between snapshots without losing data that is still valuable.
 
-In the first example, roll back a snapshot because of a careless `rm` operation that removes too much data than intended.
+In the first example, roll back a snapshot because a careless `rm` operation removed more data than intended.
 
 [source,shell]
 ....
@@ -2619,7 +2619,7 @@ If a user has the `snapshot` permission and the `allow` permission, that user ca
 Adjust tunables to make ZFS perform best for different workloads.
 
 * [[zfs-advanced-tuning-arc_max]] `_vfs.zfs.arc.max_` starting with 13.x (`vfs.zfs.arc_max` for 12.x) - Upper size of the <<zfs-term-arc,ARC>>. The default is all RAM but 1 GB, or 5/8 of all RAM, whichever is more. Use a lower value if the system runs any other daemons or processes that may require memory. Adjust this value at runtime with man:sysctl[8] and set it in [.filename]#/boot/loader.conf# or [.filename]#/etc/sysctl.conf#.
-* [[zfs-advanced-tuning-arc_meta_limit]] `_vfs.zfs.arc.meta_limit_` starting with 13.x (`vfs.zfs.arc_meta_limit` for 12.x)` - Limit the amount of the <<zfs-term-arc,ARC>> used to store metadata. The default is one fourth of `vfs.zfs.arc.max`. Increasing this value will improve performance if the workload involves operations on a large number of files and directories, or frequent metadata operations, at the cost of less file data fitting in the <<zfs-term-arc,ARC>>. Adjust this value at runtime with man:sysctl[8] in [.filename]#/boot/loader.conf# or [.filename]#/etc/sysctl.conf#.
+* [[zfs-advanced-tuning-arc_meta_limit]] `_vfs.zfs.arc.meta_limit_` starting with 13.x (`vfs.zfs.arc_meta_limit` for 12.x) - Limit the amount of the <<zfs-term-arc,ARC>> used to store metadata. The default is one fourth of `vfs.zfs.arc.max`. Increasing this value will improve performance if the workload involves operations on a large number of files and directories, or frequent metadata operations, at the cost of less file data fitting in the <<zfs-term-arc,ARC>>. Adjust this value at runtime with man:sysctl[8] in [.filename]#/boot/loader.conf# or [.filename]#/etc/sysctl.conf#.
 * [[zfs-advanced-tuning-arc_min]] `_vfs.zfs.arc.min_` starting with 13.x (`vfs.zfs.arc_min` for 12.x) - Lower size of the <<zfs-term-arc,ARC>>. The default is one half of `vfs.zfs.arc.meta_limit`. Adjust this value to prevent other applications from pressuring out the entire <<zfs-term-arc,ARC>>. Adjust this value at runtime with man:sysctl[8] and in [.filename]#/boot/loader.conf# or [.filename]#/etc/sysctl.conf#.
 * [[zfs-advanced-tuning-vdev-cache-size]] `_vfs.zfs.vdev.cache.size_` - A preallocated amount of memory reserved as a cache for each device in the pool. The total amount of memory used will be this value multiplied by the number of devices. Set this value at boot time and in [.filename]#/boot/loader.conf#.
 * [[zfs-advanced-tuning-min-auto-ashift]] `_vfs.zfs.min_auto_ashift_` - Lower `ashift` (sector size) used automatically at pool creation time. The value is a power of two. The default value of `9` represents `2^9 = 512`, a sector size of 512 bytes. To avoid _write amplification_ and get the best performance, set this value to the largest sector size used by a device in the pool.
@@ -2813,7 +2813,7 @@ A configuration of two RAID-Z2 vdevs consisting of 8 disks each would create som
 |Instead of a consistency check like man:fsck[8], ZFS has `scrub`. `scrub` reads all data blocks stored on the pool and verifies their checksums against the known good checksums stored in the metadata. A periodic check of all the data stored on the pool ensures the recovery of any corrupted blocks before needing them. A scrub is not required after an unclean shutdown, but good practice is at least once every three months. ZFS verifies the checksum of each block during normal use, but a scrub makes certain to check even infrequently used blocks for silent corruption. ZFS improves data security in archival storage situations. Adjust the relative priority of `scrub` with <<zfs-advanced-tuning-scrub_delay,`vfs.zfs.scrub_delay`>> to prevent the scrub from degrading the performance of other workloads on the pool.
 
 |[[zfs-term-quota]]Dataset Quota
-|ZFS provides fast and accurate dataset, user, and group space accounting as well as quotas and space reservations. This gives the administrator fine grained control over space allocation and allows reserving space for critical file systems. 
+a|ZFS provides fast and accurate dataset, user, and group space accounting as well as quotas and space reservations. This gives the administrator fine grained control over space allocation and allows reserving space for critical file systems.
 
 ZFS supports different types of quotas: the dataset quota, the <<zfs-term-refquota,reference quota (refquota)>>, the <<zfs-term-userquota,user quota>>, and the <<zfs-term-groupquota,group quota>>.
 

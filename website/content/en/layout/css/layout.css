@@ -15,6 +15,7 @@
 #container {
   margin: 0em auto;
   width: 90%;
+  max-width: 1600px;
   padding: 0;
   padding-top: 0px;
   padding-bottom: 15px;
@@ -88,7 +89,7 @@
 }
 
 #search form #words {
-  width: 50%;
+  width: 65%;
   border: 1px solid #DADADA;
   background: #FFFFFF;
   color: #666;
@@ -180,7 +181,7 @@
 #frontfeaturemiddle {
   float: left;
   margin-top: 20px;
-  background: url(../images/beastie.png) no-repeat top left;
+  background: url(../images/beastie.png) no-repeat center left;
   min-height: 196px;
   width: 30%;
 }
@@ -279,7 +280,7 @@
 .newseventslist li {
   padding: 0 0.3em 0 0.5em;
   display: inline;
-  border-right: 1px solid #E1E1E1;
+  border-right: 1px solid #B6B6B6;
 }
 
 .newseventslist li a {
@@ -288,10 +289,16 @@
 .newseventslist li.last-child {
   border-right: 0;
   padding-right: 0;
+  display: inline-block;
+  line-height: 0.9em;
 }
 
 .newseventslist li.first-child {
-  padding-left: 0;
+  margin: 0;
+  padding-left: 12px;
+  background-image: url(../images/blt_red_arrow.png);
+  background-repeat: no-repeat;
+  background-position: 0px 0.5em;
 }
 
 .newseventslist li.only-child {
@@ -336,7 +343,7 @@
 #frontreleases {
   padding: 0;
   margin: 8px;
-  margin-left: 190px;
+  margin-left: 210px;
   margin-top: 5px;
   padding-bottom: 20px;
   color: #666;
@@ -444,7 +451,7 @@
   margin-top: -8px;
   margin-bottom: -8px;
   text-align: center;
-  font-size: 1.4em;
+  font-size: 1.3em;
   font-weight: bold;
 }
 
@@ -454,12 +461,17 @@
 }
 
 .frontgetroundbox {
-  margin-top: 50px;
-  margin-left: 160px;
+  margin-top: 10px;
+  margin-left: 210px;
   padding: 0;
-  width: 190px;
-  background-color: #FACC2E;
+  width: 325px;
+  background-color: #facc2e;
   border-radius: 15px;
+}
+
+.frontgetroundbox.newtofreebsd {
+  margin-top: 50px;
+  background-color: #eee;
 }
 
 /* Secondary Pages */

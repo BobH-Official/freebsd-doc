@@ -124,18 +124,14 @@ For those who do not yet have an OpenPGP key, or need a new key to meet FreeBSD 
 [[pgpkeys-create-steps]]
 [.procedure]
 ====
-. Install [.filename]#security/gnupg#. Enter these lines in [.filename]#~/.gnupg/gpg.conf# to set minimum acceptable defaults:
+. Install [.filename]#security/gnupg#. Enter these lines in [.filename]#~/.gnupg/gpg.conf# to set minimum acceptable defaults for signing and new key preferences (see the link:https://www.gnupg.org/documentation/manuals/gnupg/GPG-Options.html[GnuPG options documentation] for more details):
 +
 [.programlisting]
 ....
-fixed-list-mode
-keyid-format 0xlong
+# Sorted list of preferred algorithms for signing (strongest to weakest).
 personal-digest-preferences SHA512 SHA384 SHA256 SHA224
-default-preference-list SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 BZIP2 ZLIB ZIP Uncompressed
-verify-options show-uid-validity
-list-options show-uid-validity
-sig-notation issuer-fpr@notations.openpgp.fifthhorseman.net=%g
-cert-digest-algo SHA512
+# Default preferences for new keys
+default-preference-list SHA512 SHA384 SHA256 SHA224 AES256 CAMELLIA256 AES192 CAMELLIA192 AES CAMELLIA128 CAST5 BZIP2 ZLIB ZIP Uncompressed
 ....
 . Generate a key:
 +
@@ -395,10 +391,27 @@ Again, note that `gitrepo.freebsd.org` has been canonicalized to `repo.freebsd.o
 
 * Install commit message template hook:
 +
+For doc repository:
++
 [source,shell]
 ....
-% fetch https://cgit.freebsd.org/src/plain/tools/tools/git/hooks/prepare-commit-msg -o .git/hooks
-% chmod 755 .git/hooks/prepare-commit-msg
+% cd .git/hooks
+% ln -s ../../.hooks/prepare-commit-msg
+....
++
+For ports repository:
++
+[source,shell]
+....
+% git config --add core.hooksPath .hooks
+....
++
+For src repository:
++
+[source,shell]
+....
+% cd .git/hooks
+% ln -s ../../tools/tools/git/hooks/prepare-commit-msg
 ....
 
 [[admin-branch]]
@@ -596,7 +609,7 @@ a8163e165c5b (upstream/main) HEAD@{1}: checkout: moving from b6fb97efb682994f59b
 ...
 ....
 shows me moving the working tree to the `main` branch (a816...) and then updating from upstream (to 5ef0...).
-In this case, bad would be HEAD (or 5rf0bd68) and good would be a8163e165.
+In this case, bad would be HEAD (or 5ef0bd68b515) and good would be a8163e165c5b.
 As you can see from the output, HEAD@{1} also often works, but isn't foolproof if you have done other things to your Git tree after updating, but before you discover the need to bisect.
 ====
 
@@ -659,7 +672,7 @@ For example, to encrypt for the subkey `DEADBEEF`, use `DEADBEEF!`.
 
 Commit signatures can be verified by running either `git verify-commit <commit hash>`, or `git log --show-signature`.
 
-Tag signatures can be verified with `git verity-tag <tag name>`, or `git tag -v <tag name>`.
+Tag signatures can be verified with `git verify-tag <tag name>`, or `git tag -v <tag name>`.
 
 ////
 Commented out for now until we decide what to do.
@@ -803,7 +816,7 @@ That is OK.
 Do not panic.
 Instead, handle them the same as any other merge conflicts.
 To keep it simple, I will just describe a common issue that may arise.
-A pointer to a more complete treatment can be found at the end of this section.
+A pointer to a complete treatment can be found at the end of this section.
 
 Let's say the includes changes upstream in a radical shift to terminfo as well as a name change for the option.
 When you updated, you might see something like this:
@@ -1112,8 +1125,24 @@ package:net/rsync[] is commonly installed, so I'll use that.
 % git tag -a vendor/NetBSD/mtree/20201211
 ....
 
-Note: I run the `git diff` and `git status` commands to make sure nothing weird was present.
-Also I used `-m` to illustrate, but you should compose a proper message in an editor (using a commit message template).
+It is critical to verify that the source code you are importing comes from a
+trustworthy source. Many open-source projects use cryptographic signatures to
+sign code changes, git tags, and/or source code tarballs. Always verify these
+signatures, and use isolation mechanisms like jails, chroot, in combination with
+a dedicated, non-privileged user account that is different from the one you
+regularly use (see the Updating the FreeBSD source tree section below for
+more details), until you are confident that the source code you are importing
+looks safe. Following the upstream development and occasionally reviewing the
+upstream code changes can greatly help in improving code quality and benefit
+everyone involved. It is also a good idea to examine the git diff results
+before importing them into the vendor area.
+
+Always run the `git diff` and `git status` commands and examine the results
+carefully. When in doubt, it is useful to do a `git annotate` on the vendor
+branch or the upstream git repository to see who and why a change was made.
+
+In the example above we used `-m` to illustrate, but you should compose a
+proper message in an editor (using a commit message template).
 
 It is also important to create an annotated tag using `git tag -a`, otherwise the push will be rejected.
 Only annotated tags are allowed to be pushed.
@@ -1136,6 +1165,12 @@ At this point you can push the import to `vendor` into our repo.
 Now you need to update the mtree in FreeBSD.
 The sources live in `contrib/mtree` since it is upstream software.
 
+From time to time, we may have to make changes to the contributed code to
+better satisfy FreeBSD's needs. Whenever possible, please try to contribute
+the local changes back to the upstream projects, this helps them to better
+support FreeBSD, and also saves your time for future conflict resolutions
+when importing updates.
+
 [source,shell]
 ....
 % cd ../src
@@ -1143,8 +1178,34 @@ The sources live in `contrib/mtree` since it is upstream software.
 ....
 
 This would generate a subtree merge commit of `contrib/mtree` against the local `vendor/NetBSD/mtree` branch.
+Examine the diff from the merge result and the contents of the
+upstream branch. If the merge reduced our local changes to more
+trivial difference like blank line or indenting changes, try amending
+the local changes to reduce diff against upstream, or try to
+contribute the remaining changes back to the upstream project.
 If there were conflicts, you would need to fix them before committing.
 Include details about the changes being merged in the merge commit message.
+
+Some open-source software includes a `configure` script that generates files
+used to define how the code is built; usually, these generated files like
+`config.h` should be updated as part of the import process. When doing
+this, always keep in mind that these scripts are executable code running
+under the current user's credentials. This process should always be run
+in an isolated environment, ideally inside a jail that does not have
+network access, and with an unprivileged account; or, at minimum, a
+dedicated account that is different from the user account you normally
+use for everyday purposes or for pushing to the FreeBSD source
+code repository. This minimizes the risk of encountering bugs that can
+cause data loss or, in worse cases, maliciously planted code. Using an
+isolated jail also prevents the configure scripts from detecting locally
+installed software packages, which may lead to unexpected results.
+
+When testing your changes, run them in a chroot or jailed environment,
+or even within a virtual machine first, especially for kernel or library
+modifications. This approach helps prevent adverse interactions with
+your working environment. It can be particularly beneficial for
+changes to libraries that many base system components use,
+among others.
 
 ==== Rebasing your change against latest FreeBSD source tree
 
@@ -2283,10 +2344,11 @@ freebsd_smtp:
   hosts_require_auth = smtp.freebsd.org
 
 Authenticators:
-fixed_plain:
+freebsd_plain:
   driver = plaintext
   public_name = PLAIN
   client_send = ^example/mail^examplePassword
+  client_condition = ${if eq{$host}{smtp.freebsd.org}}
 ....
 
 Create [.filename]#/usr/local/etc/exim/freebsd_send# with the following content:
@@ -2350,7 +2412,7 @@ This section contains some suggestions and traditions for how commit logs are fo
 === Why are commit messages important?
 
 When you commit a change in Git, Subversion, or another version control system (VCS), you're prompted to write some text describing the commit -- a commit message.
-How important is this commit message? Should you spend some significant effort writing it? Does it really matter if you write simply fixed a bug?
+How important is this commit message? Should you spend some significant effort writing it? Does it really matter if you write simply `fixed a bug`?
 
 Most projects have more than one developer and last for some length of time.
 Commit messages are a very important method of communicating with other developers, in the present and for the future.
@@ -2851,8 +2913,8 @@ Once your question is answered, if no one pointed you to documentation that spel
 == Bugzilla
 
 The FreeBSD Project utilizes Bugzilla for tracking bugs and change requests.
-Be sure that, if you commit a fix or suggestion found in the PR database, close it.
-It is also considered nice if you take time to close any PRs associated with your commits, if appropriate.
+If you commit a fix or suggestion found in the PR database, be sure to close the PR.
+It is also considered nice if you take time to close any other PRs associated with your commits.
 
 Committers with non-``FreeBSD.org`` Bugzilla accounts can have the old account merged with the `FreeBSD.org` account by following these steps:
 
@@ -3134,8 +3196,8 @@ These compilers have different strengths and weaknesses, and supporting both all
 Clang and GCC support similar dialects of C and C++, necessitating a relatively small amount of conditional code.
 The project gains increased code coverage and improves the code quality by using features from both compilers.
 The project is able to build in more user environments and leverage more CI environments by supporting this range, increasing convenience for users and giving them more tools to test with.
-By carefully constraining the range of versions supported to modern versions of these compilers, the project avoids unduely increasing the testing matrix.
-Older and obscure compilers, as well as older dialects of the langauges, have extremely limited support that allow user programs to build with them, but without constraining the base system to being built with them.
+By carefully constraining the range of versions supported to modern versions of these compilers, the project avoids unduly increasing the testing matrix.
+Older and obscure compilers, as well as older dialects of the languages, have extremely limited support that allow user programs to build with them, but without constraining the base system to being built with them.
 The exact balance continues to evolve to ensure the benefits of extra work remain greater than the burdens it imposes.
 The project used to support really old Intel compilers or old GCC versions, but we traded supporting those obsolete compilers for a carefully selected range of modern compilers.
 This section documents where we use different compilers, and the expectations around that.
@@ -3718,15 +3780,3 @@ Then send an mail to mailto:non-profit@gandi.net[non-profit@gandi.net] using you
 https://rsync.net[rsync.net] provides cloud storage for offsite backup that is optimized for UNIX users. Their service runs entirely on FreeBSD and ZFS.
 
 rsync.net offers a free-forever 500 GB account to FreeBSD developers. Simply sign up at https://www.rsync.net/freebsd.html[https://www.rsync.net/freebsd.html] using your `@freebsd.org` address to receive this free account.
-
-[[benefits-jetbrains]]
-=== `JetBrains`
-
-https://www.jetbrains.com[JetBrains] is a software development company which makes tools for software developers and project managers. The company offers many integrated development environments (IDEs) for different programming languages.
-
-JetBrains offers 100 free yearly licenses for all https://www.jetbrains.com/products[JetBrains IDE products]. Simply sign up at https://account.jetbrains.com/a/322tl3z7[https://account.jetbrains.com/a/322tl3z7] using your `@freebsd.org` address and the account will have a license attached to it automatically. Once the account is active, use it in any of the products to activate them and you're done.
-
-[IMPORTANT]
-====
-Please, only use these licences personally and do not share them with anyone outside of the FreeBSD project, as that would be a violation of the terms of the donation.
-====

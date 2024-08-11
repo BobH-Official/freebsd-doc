@@ -1,0 +1,39 @@
+=== FreeBSD GitHub Pull Request Report
+
+Links: +
+link:https://wiki.freebsd.org/WorkingGroup/Github[GitHub Working Group wiki page] URL: link:https://wiki.freebsd.org/WorkingGroup/GitHub[] +
+link:https://github.com/freebsd/freebsd-src/pulls[FreeBSD Base System Pull Requests] URL: link:https://github.com/freebsd/freebsd-src/pulls[]
+
+Contact: Warner Losh <imp@FreeBSD.org>
+
+The FreeBSD Project has been trying an experiment to accept contributions via GitHub pull requests.
+We have learned a lot in the last year that we've been doing this.
+We have created a number of rules relating to the pull requests.
+In general, pull requests should only be for things that are user-visible, add value to the project and are ready to go, modulo final review.
+
+Current status:
+
+ * We are able to keep up with the pull requests doing everything by hand, but only if we do it at least weekly.
+ * We have discovered the by-hand process is tedious and error-prone.
+ * We can stage multiple pull requests in a testing branch so we can batch-up testing.
+ * We can automatically land the result so merged pull requests show up as merged in GitHub infrastructure.
+
+We need help with automating the process:
+
+ * Add automated testing that's context specific (for example, run igor over man pages).
+ * Add build/install tests that test-boot the resulting image.
+ * Automate common tasks, like man page corrections, into staging process.
+ * Add simple smoke testing for the staging branch for tier 1 architectures.
+ * Investigate optionally integrating Jenkins testing to scale up the size of changes we can accept.
+ * Integrate with Bugzilla problem reports and Phabricator reviews.
+ * Improve the submitter experience on GitHub by automating common feedback to mistakes in the pull requests.
+ * Create checklists for submitters to reduce errors.
+ * Create better reporting about pull requests, especially the frequent contributors of good pull requests.
+
+We are coordinating on FreeBSD's Discord in the #github-hacking channel.
+Join us there to pitch in, or just chat about the project.
+
+Once things are fine-tuned, we want to publicity to steer contributors, at least the base system, to GitHub pull requests.
+We need more developers looking at the FreeBSD GitHub pull requests.
+We will also need more developers to review and land pull requests once it is automated and the automation has matured.
+We sincerely hope that we can improve the FreeBSD contribution experience with this, as well as gain useful fixes from the community.

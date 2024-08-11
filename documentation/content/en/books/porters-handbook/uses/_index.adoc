@@ -6,7 +6,7 @@ description: USES macros make it easy to declare requirements and settings for a
 tags: ["uses", "macros", "introduction", "guide"]
 showBookMenu: true
 weight: 17
-path: "/books/porters-handbook/"
+path: "/books/porters-handbook/uses/"
 ---
 
 [[uses]]
@@ -109,11 +109,10 @@ The `p7zip` option forces a dependency on the `7z` from package:archivers/p7zip[
 [[uses-ada]]
 == `ada`
 
-Possible arguments: (none), `5`, `6`
+Possible arguments: (none), `6`, `12`, `(run)`
 
 Depends on an Ada-capable compiler, and sets `CC` accordingly.
-Defaults to use gcc 5 from ports.
-Use the `:_X_` version option to force building with a different version.
+Defaults to use `gcc6-aux` from ports.
 
 [[uses-autoreconf]]
 == `autoreconf`
@@ -362,6 +361,8 @@ Possible arguments: (none)
 Uses update-desktop-database from package:devel/desktop-file-utils[].
 An extra post-install step will be run without interfering with any post-install steps already in the port [.filename]#Makefile#.
 A line with <<plist-keywords-desktop-file-utils,`@desktop-file-utils`>> will be added to the plist.
+Only use this macro if the port provides a `.desktop` file which contains a
+`MimeType` entry.
 
 [[uses-desthack]]
 == `desthack`
@@ -403,6 +404,20 @@ Automate installation of a port that is a Drupal theme or module.
 Use with the version of Drupal that the port is expecting.
 For example, `USES=drupal:7,module` says that this port creates a Drupal 7 module.
 A Drupal 7 theme can be specified with `USES=drupal:7,theme`.
+
+[[uses-ebur128]]
+== `ebur128`
+
+Possible arguments: (none), `build`, `lib`, `run`, `test`
+
+Adds a dependency on package:audio/ebur128[].
+It allows to transparently depend on the `rust` or `legacy` variants by using
+`DEFAULT_VERSIONS` in [.filename]#make.conf#.
+For instance, to use the legacy version, use `DEFAULT_VERSIONS+=ebur128=legacy`
+
+When no arguments are used, the behavior is the same as if the `lib` argument
+was provided.
+The rest of the arguments provide the corresponding category of dependency.
 
 [[uses-eigen]]
 == `eigen`
@@ -1049,7 +1064,7 @@ Some ports do not ship with their own copy of libtool and need a build time depe
 Possible arguments: `c6`, `c7`
 
 Ports Linux compatibility framework.
-Specify `c6` to depend on CentOS 6 packags.
+Specify `c6` to depend on CentOS 6 packages.
 Specify `c7` to depend on CentOS 7 packages. The available packages are:
 
 * `allegro`
@@ -1351,7 +1366,7 @@ If `build` or `run` arguments are specify, it respectively adds a build or run
 time dependency on package:devel/ninja[].
 If `make` or no arguments are provided, use ninja to build the port instead of make.
 `make` implies `build`.
-If the variable `NINJA_DEFAULT` is set to `samurai`, then the depedencies are set
+If the variable `NINJA_DEFAULT` is set to `samurai`, then the dependencies are set
 on package:devel/samurai[] instead.
 
 [[uses-nodejs]]
@@ -1677,7 +1692,7 @@ If Python is only needed at build time, run time or for the tests, it can be set
 If Python is also needed during the patch phase, use `patch`.
 See crossref:special[using-python, Using Python] for more information.
 
-`PYTHON_NO_DEPENDS=yes` can be used when the variables exported by the framework are needed but a dependency on Python is not.
+`USES=python:env` can be used when the variables exported by the framework are needed but a dependency on Python is not.
 It can happen when using with <<uses-shebangfix,`USES=shebangfix`>>, and the goal is only to fix the shebangs but not add a dependency on Python.
 
 [[uses-qmail]]
@@ -1914,7 +1929,7 @@ Correct paths for supported interpreters are available in `_interp__CMD`.
 
 [TIP]
 ====
-When used with <<uses-python,`USES=python`>>, and the aim is only to fix the shebangs but a dependency on Python itself is not wanted, use `PYTHON_NO_DEPENDS=yes`.
+When used with <<uses-python,`USES=python`>>, and the aim is only to fix the shebangs but a dependency on Python itself is not wanted, use `USES=python:env` instead.
 ====
 
 [[uses-shebangfix-ex-lua]]

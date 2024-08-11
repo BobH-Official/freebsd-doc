@@ -7,7 +7,7 @@ description: この章では、FreeBSD カーネルの設定方法、いつカ�
 tags: ["configuring", "kernel", "custom kernel", "hardware requirements", "pciconf"]
 showBookMenu: true
 weight: 11
-path: "/books/handbook/"
+path: "/books/handbook/kernelconfig/"
 aliases: ["/ja/books/handbook/kernelconfig-custom-kernel/","/ja/books/handbook/kernelconfig-devices/","/ja/books/handbook/kernelconfig-config/","/ja/books/handbook/kernelconfig-building/","/ja/books/handbook/kernelconfig-trouble/"]
 ---
 
@@ -176,7 +176,6 @@ crossref:mirrors[git,「Git の利用」] で説明した Git を使ってソー
 
 [WARNING]
 ====
-
 デバイスやオプションのサポートを外すことは簡単で、 その結果、カーネルを壊すことがあります。 たとえば man:ata[4] ドライバをカーネルコンフィグレーションファイルから除くと、 ATA ディスクドライバを用いているシステムは起動しません。 確信が持てないものについては、 カーネルにサポートを残したままにしてください。
 ====
 
@@ -231,7 +230,7 @@ options         IPDIVERT
 カスタムコンフィグレーションファイルを編集して保存したら、 カーネルのソースコードを以下の手順でコンパイルしてください。
 
 [.procedure]
-+====
+====
 *Procedure: カーネルの構築*
 +
 . 以下のディレクトリに移動してください。

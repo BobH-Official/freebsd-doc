@@ -7,7 +7,7 @@ description: "How to get FreeBSD: CD and DVD sets, FTP sites and how to install 
 tags: ["Obtaining", "CD", "DVD", "FTP", "Git"]
 showBookMenu: true
 weight: 41
-path: "/books/handbook/"
+path: "/books/handbook/mirrors/"
 ---
 
 [appendix]
@@ -52,7 +52,7 @@ endif::[]
 == Mirrors
 
 The official mirrors of the FreeBSD project are made up of many machines operated by the project cluster administrators and behind GeoDNS to direct users to the closest available mirror.
-Current locations are Australia, Brazil, Germany, Japan (two sites), Malaysia, South Africa, Taiwan, United Kingdom, United States of America (California, New Jersey, and Washington).
+Current locations are Australia, Brazil, Germany, Japan (two sites), Malaysia, South Africa, Sweden, Taiwan, United Kingdom, United States of America (California, New Jersey, and Washington).
 
 Official mirrors service:
 
@@ -193,6 +193,14 @@ Mirror list maintained by the community and other companies:
 | ftp6.jp.FreeBSD.org
 | link:http://ftp6.jp.FreeBSD.org/pub/FreeBSD[http] link:http://ftp6.jp.FreeBSD.org/pub/FreeBSD[http_v6] link:ftp://ftp6.jp.FreeBSD.org/pub/FreeBSD[ftp] link:ftp://ftp6.jp.FreeBSD.org/pub/FreeBSD[ftp_v6] link:rsync://ftp6.jp.FreeBSD.org[rsync] link:rsync://ftp6.jp.FreeBSD.org[rsync_v6]
 
+| Kazakhstan icon:envelope[link=mailto:support@ps.kz, title="mirror contact"]
+| mirror.ps.kz
+| http://mirror.ps.kz/freebsd[http] link:ftp://mirror.ps.kz/freebsd[ftp]
+
+|
+| mirror.neolabs.kz
+| link:http://mirror.neolabs.kz/freebsd[http] link:ftp://mirror.neolabs.kz/freebsd[ftp]
+
 | Korea icon:envelope[link=mailto:{mirrors-korea-email}, title="mirror contact"]
 | ftp.kr.FreeBSD.org
 | link:http://ftp.kr.FreeBSD.org/pub/FreeBSD[http] link:https://ftp.kr.FreeBSD.org/pub/FreeBSD[https] link:ftp://ftp.kr.FreeBSD.org/pub/FreeBSD[ftp] link:rsync://ftp.kr.FreeBSD.org[rsync]
@@ -212,6 +220,10 @@ Mirror list maintained by the community and other companies:
 |
 | ftp2.nl.FreeBSD.org
 | link:http://ftp2.nl.FreeBSD.org/pub/FreeBSD[http] link:ftp://ftp2.nl.FreeBSD.org/pub/FreeBSD[ftp] link:rsync://ftp2.nl.FreeBSD.org[rsync]
+
+|
+| mirror.nl.altushost.com
+| link:https://mirror.nl.altushost.com/FreeBSD[https]
 
 | New Zealand icon:envelope[link=mailto:{mirrors-new-zealand-email}, title="mirror contact"]
 | ftp.nz.FreeBSD.org
@@ -252,6 +264,10 @@ Mirror list maintained by the community and other companies:
 | Sweden icon:envelope[link=mailto:{mirrors-sweden-email}, title="mirror contact"]
 | ftp.se.FreeBSD.org
 | link:http://ftp.se.FreeBSD.org/pub/FreeBSD[http] link:http://ftp.se.FreeBSD.org/pub/FreeBSD[http_v6] link:ftp://ftp.se.FreeBSD.org/pub/FreeBSD[ftp] link:ftp://ftp.se.FreeBSD.org/pub/FreeBSD[ftp_v6] link:rsync://ftp.se.FreeBSD.org[rsync] link:rsync://ftp.se.FreeBSD.org[rsync_v6]
+
+|
+| mirror.se.altushost.com
+| link:https://mirror.se.altushost.com/FreeBSD[https]
 
 | Taiwan icon:envelope[link=mailto:{mirrors-taiwan-email}, title="mirror contact"]
 | ftp4.tw.FreeBSD.org
@@ -300,7 +316,7 @@ As of April 2021, FreeBSD uses git as the only version control system for storin
 [NOTE]
 ====
 Git is generally a developer tool.
-Users may prefer to use `freebsd-update` (crossref:cutting-edge[updating-upgrading-freebsdupdate,“FreeBSD Update”]) to update the FreeBSD base system, and `git` (crossref:ports[ports-using,“Using the Ports Collection”]) to update the FreeBSD Ports Collection.
+Users may prefer to use `freebsd-update` (crossref:cutting-edge[updating-upgrading-freebsdupdate,“FreeBSD Update”]) to update the FreeBSD base system.
 ====
 
 This section demonstrates how to install Git on a FreeBSD system and use it to create a local copy of a FreeBSD source code repository.
@@ -555,10 +571,10 @@ HTTPS is the preferred protocol, but the [.filename]#security/ca_root_nss# packa
 
 For other information about using Subversion, please see the "Subversion Book", titled http://svnbook.red-bean.com/[Version Control with Subversion], or the http://subversion.apache.org/docs/[Subversion Documentation].
 
-[[mirrors-cdrom]]
-== CD and DVD Sets
+[[mirrors-disc]]
+== Disc Copies
 
-FreeBSD CD and DVD sets are available from several online retailers:
+FreeBSD disc copies are available from several online retailers:
 
 * FreeBSD Mall, Inc. +
 1164 Claremont Dr +
@@ -568,10 +584,10 @@ USA +
 Phone: +1 925 240-6652 +
 Fax: +1 925 674-0821 +
 Email: info@freebsdmall.com +
-WWW: https://www.freebsdmall.com
+Website: https://www.freebsdmall.com
 
 * Getlinux +
-WWW: https://www.getlinux.fr/
+Website: https://www.getlinux.fr/
 
 * Dr. Hinner EDV +
 Schäftlarnstr. 10 // 4. Stock +
@@ -579,4 +595,4 @@ D-81371 München +
 Germany +
 Phone: +49 171 417 544 6 +
 Email: infow@hinner.de +
-WWW: http://www.hinner.de/linux/freebsd.html
+Website: http://www.hinner.de/linux/freebsd.html

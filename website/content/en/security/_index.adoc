@@ -3,6 +3,7 @@ title: "FreeBSD Security Information"
 sidenav: support
 ---
 
+include::shared/en/urls.adoc[]
 include::shared/releases.adoc[]
 
 = FreeBSD Security Information
@@ -50,6 +51,8 @@ Once it had been determined that a Security Advisory is warranted, either the su
 
 A full list of all security vulnerabilities affecting the base system can be found link:advisories[on this page].
 
+A full list of all other errata affecting the base system can be found link:notices[on this page].
+
 [[advisories]]
 == Understanding FreeBSD security advisories
 
@@ -70,6 +73,8 @@ The FreeBSD Security Officer provides security advisories for _-STABLE Branches_
 
 Issues affecting the FreeBSD Ports Collection are covered separately in https://vuxml.FreeBSD.org/[the FreeBSD VuXML document].
 
+Errata affecting the base system but not classified as security vulnerabilities are covered separately on the link:notices[FreeBSD Errata Notices] page.
+
 [[how]]
 == How to update your system
 
@@ -82,6 +87,8 @@ For users that have previously installed a binary version of FreeBSD (e.g., {rel
 If that fails, follow the other instructions in the security advisory you care about.
 
 Note that the above procedure is only for users who have previously installed a binary distribution. Those who have built from source will need to update their source tree to upgrade.
+
+For more details, read link:{handbook}cutting-edge/#freebsdupdate-security-patches[how to apply security patches].
 
 [[sup]]
 == Supported FreeBSD releases
@@ -96,10 +103,11 @@ link:unsupported[Older releases] are not supported and users are strongly encour
 [cols=",,,",options="header",]
 |===
 |Branch |Release |Release Date |Expected EoL
-|stable/13 |n/a |n/a |January 31, 2026
-|releng/13.2 |13.2-RELEASE |April 11, 2023 |13.3-RELEASE + 3 months
-|stable/12 |n/a |n/a |December 31, 2023
-|releng/12.4 |12.4-RELEASE |December 5, 2022 |December 31, 2023
+|stable/14 |n/a |n/a |November 30, 2028
+|releng/14.1 |14.1-RELEASE |June 4, 2024 |14.2-RELEASE + 3 months
+|releng/14.0 |14.0-RELEASE |November 20, 2023 |September 30, 2024
+|stable/13 |n/a |n/a |April 30, 2026
+|releng/13.3 |13.3-RELEASE |March 5, 2024 |13.4-RELEASE + 3 months
 |===
 
 In the run-up to a release, a number of -BETA and -RC releases may be published for testing purposes. These releases are only supported for a few weeks, as resources permit, and will not be listed as supported on this page. Users are strongly discouraged from running these releases on production systems.

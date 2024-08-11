@@ -70,8 +70,8 @@ Its most recent specifications are in http://www.ietf.org/rfc/rfc4510.txt[RFC451
 Essentially it is a database that expects to be read from more often than it is written to.
 
 The LDAP server http://www.openldap.org/[OpenLDAP] will be used in the examples in this document; while the principles here should be generally applicable to many different servers, most of the concrete administration is OpenLDAP-specific.
-There are several server versions in ports, for example package:net/openldap24-server[].
-Client servers will need the corresponding package:net/openldap24-client[] libraries.
+There are several server versions in ports, for example package:net/openldap26-server[].
+Client servers will need the corresponding package:net/openldap26-client[] libraries.
 
 There are (basically) two areas of the LDAP service which need configuration.
 The first is setting up a server to receive connections properly, and the second is adding entries to the server's directory so that FreeBSD tools know how to interact with it.
@@ -97,7 +97,7 @@ First, install OpenLDAP:
 
 [source,shell]
 ....
-# cd /usr/ports/net/openldap24-server
+# cd /usr/ports/net/openldap26-server
 # make install clean
 ....
 
@@ -209,7 +209,7 @@ ldap     slapd      3261  7  tcp4   *:389                 *:*
 [[ldap-connect-client]]
 ==== Configuring the Client
 
-Install the package:net/openldap24-client[] port for the OpenLDAP libraries.
+Install the package:net/openldap26-client[] port for the OpenLDAP libraries.
 The client machines will always have OpenLDAP libraries since that is all package:security/pam_ldap[] and package:net/nss_ldap[] support, at least for the moment.
 
 The configuration file for the OpenLDAP libraries is [.filename]#/usr/local/etc/openldap/ldap.conf#.
@@ -317,7 +317,7 @@ If it does, your database is properly configured to be used as an LDAP authentic
 [[client]]
 == Client Configuration
 
-The client should already have OpenLDAP libraries from <<ldap-connect-client>>, but if you are installing several client machines you will need to install package:net/openldap24-client[] on each of them.
+The client should already have OpenLDAP libraries from <<ldap-connect-client>>, but if you are installing several client machines you will need to install package:net/openldap26-client[] on each of them.
 
 FreeBSD requires two ports to be installed to authenticate against an LDAP server, package:security/pam_ldap[] and package:net/nss_ldap[].
 
@@ -733,10 +733,6 @@ There are a few other programs that might be useful, particularly if you have ma
 
 package:security/pam_mkhomedir[] is a PAM module that always succeeds; its purpose is to create home directories for users which do not have them.
 If you have dozens of client servers and hundreds of users, it is much easier to use this and set up skeleton directories than to prepare every home directory.
-
-package:sysutils/cpu[] is a man:pw[8]-like utility that can be used to manage users in the LDAP directory.
-You can call it directly, or wrap scripts around it.
-It can handle both TLS (with the `-x` flag) and SSL (directly).
 
 package:sysutils/ldapvi[] is a great utility for editing LDAP values in an LDIF-like syntax.
 The directory (or subsection of the directory) is presented in the editor chosen by the `EDITOR` environment variable.

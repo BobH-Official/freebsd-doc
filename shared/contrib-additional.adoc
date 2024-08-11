@@ -724,7 +724,6 @@
 * Gábor Kincses <mailto:gabor@acm.org[gabor@acm.org]>
 * Gábor Zahemszky <mailto:zgabor@CoDe.hu[zgabor@CoDe.hu]>
 * Gasol Wu <mailto:gasol.wu@gmail.com[gasol.wu@gmail.com]>
-* Gabriel Dutra <mailto:0xdutra@gmail.com[0xdutra@gmail.com]>
 * Gabriel Rizzo <mailto:gabriel96.gsr@gmail.com[gabriel96.gsr@gmail.com]>
 * Gareth McCaughan <mailto:gjm11@dpmms.cam.ac.uk[gjm11@dpmms.cam.ac.uk]>
 * Garrett Rooney <mailto:rooneg@electricjellyfish.net[rooneg@electricjellyfish.net]>
@@ -908,6 +907,7 @@
 * Jacob Bohn Lorensen <mailto:jacob@jblhome.ping.mk[jacob@jblhome.ping.mk]>
 * Jacques Marneweck <mailto:jacques@php.net[jacques@php.net]>
 * Jagane D Sundar <mailto:jagane@netcom.com[jagane@netcom.com]>
+* Jake Freeland <mailto:jake@technologyfriends.net[jake@technologyfriends.net]>
 * Jake Hamby <mailto:jehamby@anobject.com[jehamby@anobject.com]>
 * Jake Smith <mailto:jake@xz.cx[jake@xz.cx]>
 * Jakub Klausa <mailto:jacke@bofh.pl[jacke@bofh.pl]>
@@ -1033,7 +1033,6 @@
 * Joe Orthoefer <mailto:j_orthoefer@tia.net[j_orthoefer@tia.net]>
 * Joe Smith <mailto:inwap@best.com[inwap@best.com]>
 * Joe Traister <mailto:traister@mojozone.org[traister@mojozone.org]>
-* Joel Bodenmann <mailto:jbo@insane.engineer[jbo@insane.engineer]>
 * Joel Diaz <mailto:joeldiaz@bellsouth.net[joeldiaz@bellsouth.net]>
 * Joel Faedi <mailto:Joel.Faedi@esial.u-nancy.fr[Joel.Faedi@esial.u-nancy.fr]>
 * Joel Ray Holveck <mailto:joelh@gnu.org[joelh@gnu.org]>
@@ -1083,6 +1082,7 @@
 * Jon Morgan <mailto:morgan@terminus.trailblazer.com[morgan@terminus.trailblazer.com]>
 * Jon Nistor <mailto:nistor@snickers.org[nistor@snickers.org]>
 * Jon Passki <mailto:cykyc@yahoo.com[cykyc@yahoo.com]>
+* Jon Stuart <mailto:freebsd@zikomo.xyz[freebsd@zikomo.xyz]>
 * Jon Wilson <mailto:jon@phuq.co.uk[jon@phuq.co.uk]>
 * Jona Joachim <mailto:walkingshadow@grummel.net[walkingshadow@grummel.net]>
 * Jonas Ferreira <mailto:jonas.h.ferreira@me.com[jonas.h.ferreira@me.com]>
@@ -1814,7 +1814,6 @@
 * Quentin Stievenart <mailto:acieroid@awesom.eu[acieroid@awesom.eu]>
 * Quinton Dolan <mailto:q@onthenet.com.au[q@onthenet.com.au]>
 * R Joseph Wright <mailto:rjoseph@mammalia.org[rjoseph@mammalia.org]>
-* R. Christian McDonald <mailto:rcm@rcm.sh[rcm@rcm.sh]>
 * R. Kym Horsell
 * R Skinner <mailto:port_maintainer@herveybayaustralia.com.au[port_maintainer@herveybayaustralia.com.au]>
 * Radek Kozlowski <mailto:radek@raadradd.com[radek@raadradd.com]>
@@ -2055,6 +2054,7 @@
 * Stefan Schwarzer <mailto:sschwarzer@sschwarzer.net[sschwarzer@sschwarzer.net]>
 * Stefan Tell <mailto:stefan.tell@crashmail.de[stefan.tell@crashmail.de]>
 * Stefan `Sec` Zehl <mailto:sec@42.org[sec@42.org]>
+* Stefano Marinelli <mailto:stefano@dragas.it[stefano@dragas.it]>
 * Steffen Fritz <mailto:steffen@fritz.wtf[steffen@fritz.wtf]>
 * Steffen Mazanek <mailto:steffen.mazanek@unibw-muenchen.de[steffen.mazanek@unibw-muenchen.de]>
 * Steffen Vogelreuter <mailto:Steffen@Vogelreuter.De[Steffen@Vogelreuter.De]>
@@ -2233,6 +2233,7 @@
 * Trevor Cornpropst <mailto:tcornpropst@cox.net[tcornpropst@cox.net]>
 * Trober <mailto:trober@trober.com[trober@trober.com]>
 * Troels Kofoed Jacobsen <mailto:tkjacobsen@gmail.com[tkjacobsen@gmail.com]>
+* Trond Endrestøl <mailto:Trond.Endrestol@ximalas.info[Trond.Endrestol@ximalas.info]>
 * Tsung-Han Yeh <mailto:snowfly@yuntech.edu.tw[snowfly@yuntech.edu.tw]>
 * Tz-Huan Huang <mailto:tzhuan@gmail.com[tzhuan@gmail.com]>
 * Tzanetos Balitsaris <mailto:tzabal@it.teithe.gr[tzabal@it.teithe.gr]>
@@ -2385,7 +2386,6 @@
 * Zhihao Yuan <mailto:lichray@gmail.com[lichray@gmail.com]>
 * Zhixiang JIANG <mailto:luckrill@yahoo.com.cn[luckrill@yahoo.com.cn]>
 * Zhong Ming-Xun <mailto:zmx@mail.CDPA.nsysu.edu.tw[zmx@mail.CDPA.nsysu.edu.tw]>
-* Zsolt Udvari <mailto:udvzsolt@gmail.com[udvzsolt@gmail.com]>
 * appleboy <mailto:appleboy.tw@gmail.com[appleboy.tw@gmail.com]>
 * arci <mailto:vega@sophia.inria.fr[vega@sophia.inria.fr]>
 * ayunyan <mailto:ayunyan@gmail.com[ayunyan@gmail.com]>
